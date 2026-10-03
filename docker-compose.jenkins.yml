@@ -1,0 +1,10 @@
+# Jenkins local para practicar:  docker compose -f docker-compose.jenkins.yml up -d --build
+# Abre http://localhost:8080 y desbloquea con:  docker compose -f docker-compose.jenkins.yml logs jenkins | grep -A2 "initial"
+services:
+  jenkins:
+    build: ./jenkins
+    ports: ["8080:8080"]
+    volumes: [jenkins_home:/var/jenkins_home]
+    restart: unless-stopped
+volumes:
+  jenkins_home:

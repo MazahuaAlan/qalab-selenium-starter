@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>dev.morewater</groupId>
+  <artifactId>qalab-selenium-starter</artifactId>
+  <version>1.0.0</version>
+  <name>qalab-selenium-starter (Java)</name>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <selenium.version>4.27.0</selenium.version>
+    <junit.version>5.11.3</junit.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <version>3.26.3</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <!-- Propiedades que el pipeline cambia: usuario de prueba de qalab, URL, modo headless... -->
+          <systemPropertyVariables>
+            <qalab.user>${qalab.user}</qalab.user>
+            <qalab.url>${qalab.url}</qalab.url>
+            <qalab.headless>${qalab.headless}</qalab.headless>
+          </systemPropertyVariables>
+                    <rerunFailingTestsCount>0</rerunFailingTestsCount>
+          <trimStackTrace>true</trimStackTrace>
+          <!-- Usa el @DisplayName (con el id del defecto entre corchetes) como nombre de la prueba en el XML -->
+          <statelessTestsetReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5Xml30StatelessReporter">
+            <usePhrasedTestCaseMethodName>true</usePhrasedTestCaseMethodName>
+          </statelessTestsetReporter>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

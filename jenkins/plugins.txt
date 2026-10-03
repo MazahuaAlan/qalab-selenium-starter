@@ -1,0 +1,6 @@
+git
+workflow-aggregator
+junit
+credentials-binding
+timestamper
+pipeline-stage-view

@@ -1,0 +1,50 @@
+name: Selenium contra qalab
+
+on:
+  push:
+    branches: [java]
+  pull_request:
+  workflow_dispatch:
+  # schedule:                      # descomenta para correr cada lunes (UTC)
+  #   - cron: "0 12 * * 1"
+
+jobs:
+  selenium:
+    name: ${{ matrix.persona }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false             # que un usuario con defectos no cancele a los demás
+      matrix:
+        persona: [estandar, lento, intermitente, visual, amnesia, expira, descuadre]
+    # «estandar» no tiene defectos: si falla, el pipeline falla. Los demás FALLAN A PROPÓSITO (eso es lo que se mide),
+    # así que no deben dejar el pipeline en rojo.
+    continue-on-error: ${{ matrix.persona != 'estandar' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Pruebas (usuario ${{ matrix.persona }})
+        run: mvn -B -ntp test -Dqalab.user=${{ matrix.persona }}
+
+      # Se ejecuta siempre, incluso si hubo pruebas fallidas. Si no existe el secreto, se omite sin error.
+      - name: Reportar al panel de QA Playground
+        if: always()
+        env:
+          QALAB_REPORT_TOKEN: ${{ secrets.QALAB_REPORT_TOKEN }}
+          QALAB_USER: ${{ matrix.persona }}
+        run: ./scripts/report.sh
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultados-${{ matrix.persona }}
+          path: |
+            target/surefire-reports
+            target/screenshots
+          if-no-files-found: ignore
+          retention-days: 14

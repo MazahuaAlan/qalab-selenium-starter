@@ -1,0 +1,56 @@
+# Azure Pipelines. Dos formas de ejecutarlo gratis (ver docs/guides/02-azure-pipelines.md):
+#  A) pool Microsoft-hosted (vmImage): requiere que Microsoft te conceda el paralelismo gratuito (formulario, 2-3 días hábiles).
+#  B) agente propio en tu máquina (pool: Default): gratis y sin solicitud.
+trigger:
+  branches:
+    include: [java]
+
+pool:
+  vmImage: ubuntu-latest        # B) cambia estas dos líneas por:  pool:  name: Default
+
+strategy:
+  maxParallel: 4
+  matrix:
+    estandar:      { persona: estandar }
+    lento:         { persona: lento }
+    intermitente:  { persona: intermitente }
+    visual:        { persona: visual }
+    amnesia:       { persona: amnesia }
+    expira:        { persona: expira }
+    descuadre:     { persona: descuadre }
+
+steps:
+  - script: |
+      export JAVA_HOME="${JAVA_HOME_21_X64:-$JAVA_HOME}"
+      mvn -B -ntp test -Dqalab.user=$(persona) -Dmaven.test.failure.ignore=true
+    displayName: Pruebas ($(persona))
+
+  - task: PublishTestResults@2
+    condition: always()
+    inputs:
+      testResultsFormat: JUnit
+      testResultsFiles: target/surefire-reports/TEST-*.xml
+      testRunTitle: qalab-$(persona)
+      failTaskOnFailedTests: false
+
+  - script: ./scripts/report.sh
+    displayName: Reportar al panel de QA Playground
+    condition: always()
+    env:
+      QALAB_REPORT_TOKEN: $(QALAB_REPORT_TOKEN)   # variable secreta del pipeline
+      QALAB_USER: $(persona)
+
+  - task: PublishPipelineArtifact@1
+    condition: always()
+    inputs:
+      targetPath: target/screenshots
+      artifact: capturas-$(persona)
+      publishLocation: pipeline
+
+  # «estandar» no tiene defectos: si falla alguna prueba, esta etapa marca el trabajo en rojo.
+  - script: |
+      if [ "$(persona)" = "estandar" ] && grep -lE "<(failure|error)" target/surefire-reports/TEST-*.xml >/dev/null 2>&1; then
+        echo "##vso[task.logissue type=error]Con el usuario estandar no debería fallar ninguna prueba"; exit 1
+      fi
+    displayName: Verificar usuario estandar
+    condition: always()
