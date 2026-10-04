@@ -21,7 +21,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Evidencia de la prueba en curso. Las capturas viven SOLO en memoria (reducidas a JPEG) y se incrustan en el PDF del módulo;
+ * Evidencia de la prueba en curso. Las capturas viven SOLO en memoria (PNG a tamaño completo, o JPEG reducido en modo «ligera») y se incrustan en el PDF del módulo;
  * nunca se escriben a disco. API pública para las pruebas: {@link #pause()} / {@link #resume()} (ventanas de medición de tiempo).
  */
 public final class Evidence {
@@ -83,7 +83,7 @@ public final class Evidence {
             String hash = hash(png);
             if (!force && hash.equals(t.lastHash)) return;
             t.lastHash = hash;
-            byte[] jpeg = toJpeg(png);
+            byte[] jpeg = Config.evidenceLight() ? toJpeg(png) : png; // alta: el PNG de Selenium tal cual (nítido, la UI es de colores planos)
             synchronized (LOCK) { t.steps.add(new Step(label, jpeg)); }
             if (System.getProperty("qalab.debug") != null) System.err.println("EVD " + (System.nanoTime() - c0) / 1_000_000 + " ms " + jpeg.length + " B " + label);
         } catch (Exception | LinkageError ignored) {
