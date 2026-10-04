@@ -92,6 +92,8 @@ public class EatsPage extends BasePage {
     public boolean plusEnabled() { return visible("eats-opt-plus").isEnabled(); }
     public boolean minusEnabled() { return visible("eats-opt-minus").isEnabled(); }
     public String addButtonText() { return text("eats-opt-add"); }
+    public void press(String dataTest) { click(dataTest); }
+    public String read(String dataTest) { return text(dataTest); }
     public boolean has(String dataTest) { return present(dataTest); }
     public String dialogQty() { return text("eats-opt-qty"); }
     public String dialogTotal() { return text("eats-opt-total"); }
@@ -142,5 +144,17 @@ public class EatsPage extends BasePage {
     public boolean swapModalOpen() { return present("eats-swap-modal"); }
     public void swapConfirm() { click("eats-swap-confirm"); }
     public void swapCancel() { click("eats-swap-cancel"); wait.until(ExpectedConditions.invisibilityOfElementLocated(t("eats-swap-modal"))); }
+    public void waitSwapGone() { wait.until(ExpectedConditions.invisibilityOfElementLocated(t("eats-swap-modal"))); visible("eats-modal"); }
     public void waitSwapModal() { visible("eats-swap-modal"); }
+
+    /** Adelanta el reloj del navegador (Date.now) para no esperar tiempos reales. */
+    public void advanceClock(long ms) { js("const o = Date.now; Date.now = () => o() + arguments[0];", ms); }
+
+    /** true si el elemento (data-test) aparece antes de agotar la espera acotada. */
+    public boolean appearsWithin(String dataTest, int seconds) {
+        try {
+            new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(seconds)).until(d -> present(dataTest));
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) { return false; }
+    }
 }
