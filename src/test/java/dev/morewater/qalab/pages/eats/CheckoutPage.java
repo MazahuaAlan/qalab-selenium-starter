@@ -26,6 +26,8 @@ public class CheckoutPage extends BasePage {
     public void tip(int pct) { click("eats-tip-" + pct); }
     public boolean tipPressed(int pct) { return "true".equals(visible("eats-tip-" + pct).getAttribute("aria-pressed")); }
     public void customTip(String s) { type("eats-tip-custom", s); }
+    /** Asigna el valor completo de una sola vez (como pegar el texto), sin pasos intermedios por tecla. */
+    public void customTipPasted(String s) { setDate("eats-tip-custom", s); }
     public void applyPromo(String code) { type("eats-promo", code); click("eats-promo-apply"); }
     public String promoMsg() { return text("eats-promo-msg"); }
 
@@ -55,4 +57,11 @@ public class CheckoutPage extends BasePage {
 
     /** Saldo de la billetera en centavos (chip de la cabecera). */
     public long wallet() { return cents(text("wallet-chip")); }
+
+    public void press(String dataTest) { click(dataTest); }
+    public String read(String dataTest) { return text(dataTest); }
+    public boolean has(String dataTest) { return present(dataTest); }
+    public void waitText(String dataTest, String expected) {
+        wait.until(d -> present(dataTest) && driver.findElement(t(dataTest)).getText().trim().equals(expected));
+    }
 }
