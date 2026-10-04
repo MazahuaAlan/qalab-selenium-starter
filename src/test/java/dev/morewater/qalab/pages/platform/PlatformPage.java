@@ -44,6 +44,7 @@ public class PlatformPage extends BasePage {
 
     // ---- cabecera ----
     public WebElement visible(String dataTest) { return super.visible(dataTest); }
+    public boolean hasExpiredNotice() { return present("session-expired"); }
     public boolean hasUserChip() { return present("user-chip"); }
     public boolean hasLoginLink() { return present("login-link"); }
     public boolean hasWalletChip() { return present("wallet-chip"); }
@@ -82,4 +83,19 @@ public class PlatformPage extends BasePage {
         new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(seconds)).until(d -> cond.getAsBoolean());
     }
     public <T> T eval(String script, Object... args) { return js(script, args); }
+
+    /** Espera hasta {@code seconds} a que la sesión desaparezca (expiración). true si expiró, false si siguió estable. */
+    public boolean waitSessionLost(int seconds) {
+        try {
+            until(() -> driver.getCurrentUrl().contains("/id/"), seconds);
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) {
+            return false;
+        }
+    }
+
+    /** Retrasa el inicio de sesión guardado (localStorage) para simular que ya pasó ese tiempo. Requiere recargar. */
+    public void ageSession(long millis) {
+        js("const k='qalab.state.v1'; const s=JSON.parse(localStorage.getItem(k)); s.session.startedAt -= arguments[0]; localStorage.setItem(k, JSON.stringify(s));", millis);
+    }
 }
