@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests.stay;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.pages.stay.StayHotelPage;
@@ -117,9 +118,11 @@ class SearchTests extends StayTest {
     @DisplayName("[stay.slow_results] A_STAY_090_LaBusquedaDeHotelesTarda4SStaySlowResults")
     void A_STAY_090_LaBusquedaDeHotelesTarda4SStaySlowResults() {
         StaySearchPage s = search().open();
+        Evidence.pause();
         long t0 = System.nanoTime();
         s.submit();
         StayResultsPage r = new StayResultsPage(driver).waitLoaded();
+        Evidence.resume();
         long ms = (System.nanoTime() - t0) / 1_000_000;
         assertThat(ms).as("ms hasta ver los resultados (esperado < 3500)").isLessThan(3500);
         assertThat(r.count()).isEqualTo(8);

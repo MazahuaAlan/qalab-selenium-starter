@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests.eats;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.core.BaseTest;
@@ -75,9 +76,11 @@ class EatsOrderTests extends BaseTest {
     @DisplayName("[eats.slow_order] A_EATS_067_PersonaLentaConfirmarElPedidoTardaMasDe35S")
     void A_EATS_067_PersonaLentaConfirmarElPedidoTardaMasDe35S() {
         CheckoutPage co = dishToCheckout("r1", 0, 1);
+        Evidence.pause();
         long t0 = System.currentTimeMillis();
         co.place();
         co.orderTitle();
+        Evidence.resume();
         assertThat(System.currentTimeMillis() - t0).as("milisegundos para confirmar").isLessThan(3500);
     }
 

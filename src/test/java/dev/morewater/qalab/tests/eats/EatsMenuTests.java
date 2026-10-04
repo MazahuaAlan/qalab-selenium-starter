@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests.eats;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.core.BaseTest;
@@ -62,8 +63,10 @@ class EatsMenuTests extends BaseTest {
     void A_EATS_016_PersonaLentaElMenuTardaMasDe35S() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.openButton(0).click();
+        Evidence.pause();
         long t0 = System.currentTimeMillis();
         eats.waitMenu();
+        Evidence.resume();
         assertThat(System.currentTimeMillis() - t0).as("milisegundos hasta ver el menú").isLessThan(3500);
     }
 

@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.core.BaseTest;
@@ -44,8 +45,10 @@ class AirTests extends BaseTest {
     @DisplayName("[air.slow_search] A_AIR_904_LaBusquedaDeVuelosRespondeEnMenosDe3Segundos")
     void A_AIR_904_LaBusquedaDeVuelosRespondeEnMenosDe3Segundos() {
         AirPage air = new AirPage(driver).open();
+        Evidence.pause();
         long t0 = System.currentTimeMillis();
         air.search("MEX", "MTY", 1).firstFlightPrice();
+        Evidence.resume();
         assertThat(System.currentTimeMillis() - t0).as("milisegundos").isLessThan(3000);
     }
 

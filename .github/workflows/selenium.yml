@@ -44,20 +44,12 @@ jobs:
           QALAB_USER: ${{ matrix.persona }}
         run: ./scripts/report.sh
 
+      # Los PDF de evidencia no se guardan en GitHub: report.sh los sube al panel de QA Playground y la máquina se destruye.
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: resultados-${{ matrix.persona }}
           path: |
             target/surefire-reports
-          if-no-files-found: ignore
-          retention-days: 14
-
-      # Evidencia en PDF: un PDF por caso de prueba, con una captura por paso
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: evidencia-${{ matrix.persona }}
-          path: target/evidence
           if-no-files-found: ignore
           retention-days: 14

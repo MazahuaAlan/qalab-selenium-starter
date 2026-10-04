@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests.air;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.core.BaseTest;
@@ -57,8 +58,10 @@ class AirPersonaTests extends BaseTest {
     void A_AIR_117_PersonaLentoLaBusquedaTarda4S() {
         AirFlowPage a = new AirFlowPage(driver).open();
         a.fillSearch("MEX", "MTY", AirFlowPage.iso(7), 1);
+        Evidence.pause();
         long t0 = System.currentTimeMillis();
         a.submitSearch().waitResults();
+        Evidence.resume();
         assertThat(System.currentTimeMillis() - t0).as("ms hasta ver resultados").isLessThan(2000);
     }
 
@@ -66,8 +69,10 @@ class AirPersonaTests extends BaseTest {
     @DisplayName("[air.slow_seats] A_AIR_118_PersonaLentoElMapaDeAsientosTarda35S")
     void A_AIR_118_PersonaLentoElMapaDeAsientosTarda35S() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1).selectFirstFlight().fillAllValid(1);
+        Evidence.pause();
         long t0 = System.currentTimeMillis();
         a.submitPassengers().waitSeatMap();
+        Evidence.resume();
         assertThat(System.currentTimeMillis() - t0).as("ms hasta ver el mapa").isLessThan(2000);
     }
 

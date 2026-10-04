@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests.stay;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.pages.stay.StayHotelPage;
@@ -108,8 +109,10 @@ class HotelTests extends StayTest {
         LocalDate in = today().plusDays(14);
         Hotel first = StayModel.byPrice(StayModel.hotelsIn("CUN")).get(0);
         StayHotelPage h = hotelPage().open(first.id(), in.toString(), in.plusDays(3).toString(), 2, 0);
+        Evidence.pause();
         long t0 = System.nanoTime();
         h.waitRoomsOk();
+        Evidence.resume();
         long ms = (System.nanoTime() - t0) / 1_000_000;
         assertThat(ms).as("ms hasta ver las habitaciones (esperado < 3000)").isLessThan(3000);
     }

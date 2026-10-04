@@ -1,5 +1,6 @@
 package dev.morewater.qalab.tests.desk;
 
+import dev.morewater.qalab.core.Evidence;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.core.BaseTest;
@@ -46,8 +47,10 @@ class DeskPersonaTests extends BaseTest {
     @DisplayName("[desk.slow_board] A_DESK_085_PersonaLentoElTableroTarda4SEnCargar")
     void A_DESK_085_PersonaLentoElTableroTarda4SEnCargar() {
         DeskBoardPage board = new DeskBoardPage(driver).openWithoutWaiting();
+        Evidence.pause();
         long t0 = System.nanoTime();
         board.waitForBoard();
+        Evidence.resume();
         long ms = Duration.ofNanos(System.nanoTime() - t0).toMillis();
         assertThat(ms).as("ms hasta ver el tablero").isLessThan(MAX_FAST_MS);
         assertThat(board.totalCards()).isEqualTo(8);
@@ -60,9 +63,11 @@ class DeskPersonaTests extends BaseTest {
     void A_DESK_086_PersonaLentoGuardarUnTicketTarda4S() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.title("Ticket lento de prueba").describe("Descripción suficiente para el ticket");
+        Evidence.pause();
         long t0 = System.nanoTime();
         form.submit();
         form.awaitCreated();
+        Evidence.resume();
         long ms = Duration.ofNanos(System.nanoTime() - t0).toMillis();
         assertThat(ms).as("ms hasta ver la ficha del ticket").isLessThan(MAX_FAST_MS);
     }
