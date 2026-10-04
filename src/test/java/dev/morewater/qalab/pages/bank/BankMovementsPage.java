@@ -52,4 +52,36 @@ public class BankMovementsPage extends BasePage {
     }
     public String debitHeader() { return text("bank-th-debit"); }
     public String creditHeader() { return text("bank-th-credit"); }
+    public boolean hasError() { return present("bank-movements-error"); }
+    public String errorText() { return text("bank-movements-error"); }
+    public BankMovementsPage retry() { click("bank-retry"); return this; }
+    public BankMovementsPage setChaosFail(int pct) { js("window.qalab.setChaos({failPct: arguments[0]})", pct); return this; }
+    public BankMovementsPage reload() { driver.navigate().refresh(); return this; }
+
+    /** Espera a que termine la carga: tabla o error. */
+    public BankMovementsPage waitTableOrError() {
+        wait.until(d -> present("bank-table") || present("bank-movements-error"));
+        return this;
+    }
+
+    /** Milisegundos desde ahora hasta ver la primera fila. */
+    public long millisToFirstRow() {
+        long t0 = System.nanoTime();
+        visible("bank-row-0");
+        return (System.nanoTime() - t0) / 1_000_000;
+    }
+
+    /** Clases CSS del importe (span) de la celda de cargo/abono de la fila. */
+    public String amountClass(boolean debit, int i) {
+        return (debit ? debitCell(i) : creditCell(i)).findElement(By.tagName("span")).getAttribute("class");
+    }
+
+    /** Pulsa Exportar CSV y devuelve el contenido (se intercepta el Blob para no depender de descargas del navegador). */
+    public String exportCsv() {
+        js("window.__csv = null; const o = URL.createObjectURL; URL.createObjectURL = function(b){ b.text().then(t => { window.__csv = t; }); return o.call(URL, b); };");
+        click("bank-export-csv");
+        wait.until(d -> js("return window.__csv") != null);
+        String csv = js("return window.__csv");
+        return csv.startsWith("\uFEFF") ? csv.substring(1) : csv;
+    }
 }
