@@ -76,9 +76,9 @@ class AirPersonaTests extends BaseTest {
     void searchDoesNotFailRandomly() {
         AirFlowPage a = new AirFlowPage(driver);
         a.open().setChaosSeed(SEED_SEARCH_FAILS_FIRST);
-        a.search("MEX", "MTY", 1);
+        a.fillSearch("MEX", "MTY", AirFlowPage.iso(7), 1).submitSearch();
         // con la semilla elegida la primera llamada fallaría para la persona intermitente; aquí no debe aparecer error
-        assertThat(a.exists("air-results-error")).as("error 503 en resultados").isFalse();
+        assertThat(a.resultsFailed()).as("error 503 en resultados").isFalse();
         assertThat(a.flightCount()).isGreaterThan(0);
     }
 
