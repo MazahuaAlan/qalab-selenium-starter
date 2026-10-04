@@ -33,7 +33,8 @@ class PortadaTests extends NoSessionTest {
         assertThat(h.appIds()).containsExactlyInAnyOrder("app-air", "app-bank", "app-stay", "app-eats", "app-care", "app-desk");
         assertThat(h.hrefOf("app-bank")).isEqualTo("/bank/");
         h.clickApp("air");
-        h.until(() -> h.path().startsWith("/air/"));
+        // /air/ exige sesión: sin ella la guardia lleva a /id/?next=%2Fair%2F; en ambos casos la tarjeta navegó a /air/.
+        h.until(() -> driver.getCurrentUrl().contains("/air/") || driver.getCurrentUrl().contains("next=%2Fair%2F"));
     }
 
     @Test
