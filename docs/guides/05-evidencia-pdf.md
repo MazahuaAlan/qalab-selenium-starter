@@ -17,7 +17,7 @@ target/evidence/<persona>/<NombreVisible>.pdf
 
 `NombreVisible` es el `@DisplayName` sin el prefijo `[bug.id]`, saneado a `[A-Za-z0-9_.-]`; conserva el id del caso (`A_AIR_017…`). Cada PDF tiene una primera página con nombre, clase, módulo, persona, fecha UTC, resultado (APROBADA/FALLIDA), duración y error; después los pasos, dos por página, sin cortar ninguna captura.
 
-`scripts/report.sh` / `report.ps1` suben los PDF al panel tras el `ingest` (lotes de hasta 10 por petición a `/api/pipelines/runs/<run_id>/evidence`; si un lote falla, reintenta archivo por archivo; nunca rompe el pipeline). GitHub Actions además guarda `target/evidence` como artefacto `evidencia-<persona>` (14 días).
+`scripts/report.sh` / `report.ps1` suben los PDF al panel tras el `ingest` (lotes de hasta 10 por petición a `/api/pipelines/runs/<run_id>/evidence`; si un lote falla, reintenta archivo por archivo; nunca rompe el pipeline). En GitHub Actions la máquina virtual se destruye al terminar el trabajo, así que no queda nada más que lo subido al panel.
 
 ## Desactivarla
 
