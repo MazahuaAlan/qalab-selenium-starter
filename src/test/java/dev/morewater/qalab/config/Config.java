@@ -26,5 +26,7 @@ public final class Config {
     public static String chromedriverPath() { return get("qalab.chromedriver", "CHROMEDRIVER_PATH", ""); }
     /** Ruta del navegador cuando es Chromium del sistema (p. ej. /usr/bin/chromium). */
     public static String chromeBinary() { return get("qalab.chrome", "CHROME_BIN", ""); }
+    /** Evidencia en PDF (una captura por paso). Se desactiva con -Dqalab.evidence=false o QALAB_EVIDENCE=false. */
+    public static boolean evidence() { return Boolean.parseBoolean(get("qalab.evidence", "QALAB_EVIDENCE", "true")); }
     public static int timeoutSeconds() { return Integer.parseInt(get("qalab.timeout", "QALAB_TIMEOUT", "15")); }
 }

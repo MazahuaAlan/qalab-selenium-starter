@@ -29,6 +29,19 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>1.11.3</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- PDF de evidencia (ligera, sin dependencias nativas) -->
+    <dependency>
+      <groupId>com.github.librepdf</groupId>
+      <artifactId>openpdf</artifactId>
+      <version>2.0.3</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <version>3.26.3</version>
@@ -48,6 +61,7 @@
             <qalab.user>${qalab.user}</qalab.user>
             <qalab.url>${qalab.url}</qalab.url>
             <qalab.headless>${qalab.headless}</qalab.headless>
+            <qalab.evidence>${qalab.evidence}</qalab.evidence>
           </systemPropertyVariables>
                     <rerunFailingTestsCount>0</rerunFailingTestsCount>
           <trimStackTrace>true</trimStackTrace>

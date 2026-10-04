@@ -8,9 +8,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.events.EventFiringDecorator;
 
 public final class DriverFactory {
     private static final ThreadLocal<WebDriver> CURRENT = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> RAW = new ThreadLocal<>();
 
     private DriverFactory() {}
 
@@ -28,6 +30,11 @@ public final class DriverFactory {
             } else {
                 driver = new ChromeDriver(options); // Selenium Manager descarga el chromedriver adecuado
             }
+            RAW.set(driver);
+            if (Config.evidence()) {
+                // Decorado: sigue siendo JavascriptExecutor/TakesScreenshot; cada paso deja una captura en el PDF de evidencia.
+                driver = new EventFiringDecorator<WebDriver>(new EvidenceListener(driver)).decorate(driver);
+            }
             CURRENT.set(driver);
             return driver;
         } catch (MalformedURLException e) {
@@ -37,10 +44,13 @@ public final class DriverFactory {
 
     public static WebDriver current() { return CURRENT.get(); }
 
+    /** Driver sin decorar (para capturar sin disparar eventos). */
+    static WebDriver raw() { return RAW.get(); }
+
     public static void quit() {
         WebDriver d = CURRENT.get();
         if (d != null) {
-            try { d.quit(); } finally { CURRENT.remove(); }
+            try { d.quit(); } finally { CURRENT.remove(); RAW.remove(); }
         }
     }
 }
