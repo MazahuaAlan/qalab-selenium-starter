@@ -64,4 +64,29 @@ public class CheckoutPage extends BasePage {
     public void waitText(String dataTest, String expected) {
         wait.until(d -> present(dataTest) && driver.findElement(t(dataTest)).getText().trim().equals(expected));
     }
+
+    /** Adelanta el reloj del navegador (Date.now); el seguimiento lo lee cada segundo. */
+    public void advanceClock(long ms) { js("const o = Date.now; Date.now = () => o() + arguments[0];", ms); }
+
+    public static int statusIndex(String status) { return java.util.List.of("Recibido", "Preparando", "En camino", "Entregado").indexOf(status); }
+
+    /** Observa el estado hasta {@code seconds} y devuelve true si en algún momento muestra un paso anterior al máximo ya visto. */
+    public boolean statusRegressesWithin(int seconds) {
+        int[] max = {-1};
+        try {
+            new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(seconds))
+                    .pollingEvery(java.time.Duration.ofMillis(150))
+                    .until(d -> {
+                        int cur = statusIndex(text("eats-status-text"));
+                        if (cur < max[0]) return true;
+                        max[0] = Math.max(max[0], cur);
+                        return false;
+                    });
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) { return false; }
+    }
+
+    public boolean stepDone(int i) { return visible("eats-step-" + i).getAttribute("class").contains("done"); }
+    public boolean stepCurrent(int i) { return "step".equals(visible("eats-step-" + i).getAttribute("aria-current")); }
+    public void waitStatus(String expected) { waitText("eats-status-text", expected); }
 }
