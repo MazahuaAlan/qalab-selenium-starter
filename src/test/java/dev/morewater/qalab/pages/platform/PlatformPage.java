@@ -35,6 +35,7 @@ public class PlatformPage extends BasePage {
     public Map<String, Object> chaos() { return (Map<String, Object>) state().get("chaos"); }
     public long walletCents() { return ((Number) state().get("walletCents")).longValue(); }
     public void setWallet(long cents) { js("window.qalab.setWallet(arguments[0])", cents); }
+    public void setChaosFail(int pct) { js("window.qalab.setChaos({failPct: arguments[0]})", pct); }
     public void reset() { js("window.qalab.reset()"); }
     public long callCount() { return calls(); }
 
@@ -42,6 +43,7 @@ public class PlatformPage extends BasePage {
     public static String mxn(long cents) { return String.format(Locale.US, "$%,.2f", cents / 100.0); }
 
     // ---- cabecera ----
+    public WebElement visible(String dataTest) { return super.visible(dataTest); }
     public boolean hasUserChip() { return present("user-chip"); }
     public boolean hasLoginLink() { return present("login-link"); }
     public boolean hasWalletChip() { return present("wallet-chip"); }
