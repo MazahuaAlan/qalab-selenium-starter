@@ -58,9 +58,8 @@
         <configuration>
           <!-- Propiedades que el pipeline cambia: usuario de prueba de qalab, URL, modo headless... -->
           <systemPropertyVariables>
-            <qalab.user>${qalab.user}</qalab.user>
-            <qalab.url>${qalab.url}</qalab.url>
-            <qalab.headless>${qalab.headless}</qalab.headless>
+            <java.util.logging.config.file>${project.basedir}/src/test/resources/logging.properties</java.util.logging.config.file>
+            <webdriver.chrome.silentOutput>true</webdriver.chrome.silentOutput>
             <qalab.evidence>${qalab.evidence}</qalab.evidence>
           </systemPropertyVariables>
                     <rerunFailingTestsCount>0</rerunFailingTestsCount>

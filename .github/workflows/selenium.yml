@@ -21,9 +21,9 @@ jobs:
     # así que no deben dejar el pipeline en rojo.
     continue-on-error: ${{ matrix.persona != 'estandar' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "21"
@@ -45,7 +45,7 @@ jobs:
         run: ./scripts/report.sh
 
       # Los PDF de evidencia no se guardan en GitHub: report.sh los sube al panel de QA Playground y la máquina se destruye.
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: resultados-${{ matrix.persona }}
