@@ -19,8 +19,8 @@ class AirSearchTests extends BaseTest {
     private AirFlowPage air() { return new AirFlowPage(driver).open(); }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Búsqueda exitosa de ruta válida MEX→MTY (CP-AIR-001)")
-    void validRouteSearch() {
+    @DisplayName("A_AIR_001_BusquedaExitosaDeRutaValidaMEXMTY")
+    void A_AIR_001_BusquedaExitosaDeRutaValidaMEXMTY() {
         AirFlowPage a = air().search("MEX", "MTY", 1);
         assertThat(a.path()).contains("/air/results");
         assertThat(a.resultsTitle()).contains("Ciudad de México (MEX)").contains("Monterrey (MTY)");
@@ -28,22 +28,22 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Resolver aeropuerto por nombre de ciudad en minúsculas (CP-AIR-002)")
-    void resolvesCityNameLowercase() {
+    @DisplayName("A_AIR_002_ResolverAeropuertoPorNombreDeCiudadEnMinusculas")
+    void A_AIR_002_ResolverAeropuertoPorNombreDeCiudadEnMinusculas() {
         AirFlowPage a = air().fillSearch("ciudad de méxico", "monterrey", AirFlowPage.iso(7), 1).submitSearch().waitResults();
         assertThat(a.currentUrl()).contains("from=MEX").contains("to=MTY");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Resolver aeropuerto con formato 'Ciudad (CÓDIGO)' y código en minúsculas (CP-AIR-003)")
-    void resolvesListFormatAndLowercaseCode() {
+    @DisplayName("A_AIR_003_ResolverAeropuertoConFormatoCiudadCODIGOYCodigoEnMinusculas")
+    void A_AIR_003_ResolverAeropuertoConFormatoCiudadCODIGOYCodigoEnMinusculas() {
         AirFlowPage a = air().fillSearch("Cancún (CUN)", "gdl", AirFlowPage.iso(7), 1).submitSearch().waitResults();
         assertThat(a.currentUrl()).contains("from=CUN").contains("to=GDL");
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Origen y destino vacíos (CP-AIR-010)")
-    void emptyOriginAndDestination() {
+    @DisplayName("A_AIR_010_OrigenYDestinoVacios")
+    void A_AIR_010_OrigenYDestinoVacios() {
         AirFlowPage a = air();
         a.clearField("air-origin").clearField("air-destination").submitSearch();
         assertThat(a.error("from")).isEqualTo("Escribe el origen.");
@@ -52,56 +52,56 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Origen inexistente 'XXX' (CP-AIR-011)")
-    void unknownOrigin() {
+    @DisplayName("A_AIR_011_OrigenInexistenteXXX")
+    void A_AIR_011_OrigenInexistenteXXX() {
         AirFlowPage a = air().fillSearch("XXX", "MTY", AirFlowPage.iso(7), 1).submitSearch();
         assertThat(a.error("from")).isEqualTo(NOT_FOUND);
         assertThat(a.path()).doesNotContain("results");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Destino inexistente 'Narnia' (CP-AIR-012)")
-    void unknownDestination() {
+    @DisplayName("A_AIR_012_DestinoInexistenteNarnia")
+    void A_AIR_012_DestinoInexistenteNarnia() {
         AirFlowPage a = air().fillSearch("MEX", "Narnia", AirFlowPage.iso(7), 1).submitSearch();
         assertThat(a.error("to")).isEqualTo(NOT_FOUND);
         assertThat(a.path()).doesNotContain("results");
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Origen igual al destino (CP-AIR-013)")
-    void sameOriginAndDestination() {
+    @DisplayName("A_AIR_013_OrigenIgualAlDestino")
+    void A_AIR_013_OrigenIgualAlDestino() {
         AirFlowPage a = air().fillSearch("MEX", "MEX", AirFlowPage.iso(7), 1).submitSearch();
         assertThat(a.error("to")).isEqualTo("El destino debe ser distinto del origen.");
         assertThat(a.path()).doesNotContain("results");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Fecha pasada 2020-01-01 (CP-AIR-014)")
-    void pastDate() {
+    @DisplayName("A_AIR_014_FechaPasada20200101")
+    void A_AIR_014_FechaPasada20200101() {
         AirFlowPage a = air().fillSearch("MEX", "MTY", "2020-01-01", 1).submitSearch();
         assertThat(a.error("date")).isEqualTo(PAST);
         assertThat(a.path()).doesNotContain("results");
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Fecha vacía (CP-AIR-015)")
-    void emptyDate() {
+    @DisplayName("A_AIR_015_FechaVacia")
+    void A_AIR_015_FechaVacia() {
         AirFlowPage a = air().fillSearch("MEX", "MTY", "", 1).submitSearch();
         assertThat(a.error("date")).isEqualTo("Elige la fecha de salida.");
         assertThat(a.path()).doesNotContain("results");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Fecha de ayer (valor frontera) rechazada (CP-AIR-016)")
-    void yesterdayRejected() {
+    @DisplayName("A_AIR_016_FechaDeAyerValorFronteraRechazada")
+    void A_AIR_016_FechaDeAyerValorFronteraRechazada() {
         AirFlowPage a = air().fillSearch("MEX", "MTY", AirFlowPage.iso(-1), 1).submitSearch();
         assertThat(a.error("date")).isEqualTo(PAST);
         assertThat(a.path()).doesNotContain("results");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Los errores se corrigen y la búsqueda procede (CP-AIR-017)")
-    void errorsCanBeCorrected() {
+    @DisplayName("A_AIR_017_LosErroresSeCorrigenYLaBusquedaProcede")
+    void A_AIR_017_LosErroresSeCorrigenYLaBusquedaProcede() {
         AirFlowPage a = air();
         a.clearField("air-origin").clearField("air-destination");
         a.submitSearch();
@@ -111,8 +111,8 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Ver el detalle de cada vuelo en resultados (CP-AIR-019)")
-    void flightDetailsInResults() {
+    @DisplayName("A_AIR_019_VerElDetalleDeCadaVueloEnResultados")
+    void A_AIR_019_VerElDetalleDeCadaVueloEnResultados() {
         AirFlowPage a = air().search("MEX", "MTY", 1);
         for (int i = 0; i < a.flightCount(); i++) {
             String tx = a.flightText(i);
@@ -123,8 +123,8 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Resultados ordenados por hora de salida por defecto (CP-AIR-020)")
-    void sortedByDepartureByDefault() {
+    @DisplayName("A_AIR_020_ResultadosOrdenadosPorHoraDeSalidaPorDefecto")
+    void A_AIR_020_ResultadosOrdenadosPorHoraDeSalidaPorDefecto() {
         List<Integer> mins = air().search("MEX", "MTY", 1).departMinutes();
         List<Integer> sorted = new ArrayList<>(mins);
         Collections.sort(sorted);
@@ -132,8 +132,8 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Ordenar resultados por precio (CP-AIR-021)")
-    void sortByPrice() {
+    @DisplayName("A_AIR_021_OrdenarResultadosPorPrecio")
+    void A_AIR_021_OrdenarResultadosPorPrecio() {
         AirFlowPage a = air().search("MEX", "MTY", 1);
         List<Long> before = a.prices();
         a.sortBy("precio");
@@ -144,8 +144,8 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Filtrar solo vuelos directos (CP-AIR-022)")
-    void directOnlyFilter() {
+    @DisplayName("A_AIR_022_FiltrarSoloVuelosDirectos")
+    void A_AIR_022_FiltrarSoloVuelosDirectos() {
         AirFlowPage a = air().search("MEX", "MTY", 1);
         int all = a.flightCount();
         int stops = 0;
@@ -158,8 +158,8 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("opcional")
-    @DisplayName("Parámetro pax fuera de rango en la URL se limita a 6 (CP-AIR-025)")
-    void paxParamIsCappedAtSix() {
+    @DisplayName("A_AIR_025_ParametroPaxFueraDeRangoEnLaURLSeLimitaA6")
+    void A_AIR_025_ParametroPaxFueraDeRangoEnLaURLSeLimitaA6() {
         AirFlowPage a = new AirFlowPage(driver).openResults("MEX", "MTY", AirFlowPage.iso(7), 9).waitResults();
         assertThat(a.resultsSubtitle()).contains("6 pasajeros");
         a.selectFirstFlight();
@@ -167,8 +167,8 @@ class AirSearchTests extends BaseTest {
     }
 
     @Test @Tag("opcional")
-    @DisplayName("Cada ruta y fecha produce resultados distintos y estables (CP-AIR-026)")
-    void resultsAreDeterministic() {
+    @DisplayName("A_AIR_026_CadaRutaYFechaProduceResultadosDistintosYEstables")
+    void A_AIR_026_CadaRutaYFechaProduceResultadosDistintosYEstables() {
         String d1 = AirFlowPage.iso(7), d2 = AirFlowPage.iso(12);
         AirFlowPage a = new AirFlowPage(driver).openResults("MEX", "MTY", d1, 1).waitResults();
         List<String> first = a.flightIds();

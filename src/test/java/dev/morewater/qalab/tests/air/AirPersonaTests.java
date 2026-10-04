@@ -18,8 +18,8 @@ class AirPersonaTests extends BaseTest {
     private static final long SEED_PAYMENT_FAILS_FIRST = 7;
 
     @Test @Tag("bug") @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] Persona expira: la sesión caduca a los 90 s en pleno flujo (CP-AIR-109)")
-    void sessionDoesNotExpireMidFlow() {
+    @DisplayName("[platform.session_expiry] A_AIR_109_PersonaExpiraLaSesionCaducaALos90SEnPlenoFlujo")
+    void A_AIR_109_PersonaExpiraLaSesionCaducaALos90SEnPlenoFlujo() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1).selectFirstFlight();
         a.shiftClock(95_000);
         assertThat(a.redirectedToLoginWithin(4)).as("redirigido a /id/ por sesión caducada").isFalse();
@@ -28,8 +28,8 @@ class AirPersonaTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("obligatorio")
-    @DisplayName("[air.amnesia_selection] Persona amnesia: al recargar se pierde la reserva en curso (CP-AIR-110)")
-    void draftSurvivesReloadInEveryStep() {
+    @DisplayName("[air.amnesia_selection] A_AIR_110_PersonaAmnesiaAlRecargarSePierdeLaReservaEnCurso")
+    void A_AIR_110_PersonaAmnesiaAlRecargarSePierdeLaReservaEnCurso() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1).selectFirstFlight();
         a.reload();
         assertThat(a.exists("air-no-draft")).as("pasajeros tras recargar").isFalse();
@@ -44,8 +44,8 @@ class AirPersonaTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("recomendado")
-    @DisplayName("[air.visual_overlap] Persona visual: el botón Seleccionar se superpone al precio a 400 px (CP-AIR-111)")
-    void selectButtonDoesNotOverlapPrice() {
+    @DisplayName("[air.visual_overlap] A_AIR_111_PersonaVisualElBotonSeleccionarSeSuperponeAlPrecioA400Px")
+    void A_AIR_111_PersonaVisualElBotonSeleccionarSeSuperponeAlPrecioA400Px() {
         AirFlowPage a = new AirFlowPage(driver).resizeTo(400, 800);
         a.openResults("MEX", "MTY", AirFlowPage.iso(7), 1).waitResults();
         assertThat(a.viewportWidth()).as("ancho de ventana efectivo").isLessThanOrEqualTo(500);
@@ -53,8 +53,8 @@ class AirPersonaTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("recomendado")
-    @DisplayName("[air.slow_search] Persona lento: la búsqueda tarda 4 s (CP-AIR-117)")
-    void searchIsFast() {
+    @DisplayName("[air.slow_search] A_AIR_117_PersonaLentoLaBusquedaTarda4S")
+    void A_AIR_117_PersonaLentoLaBusquedaTarda4S() {
         AirFlowPage a = new AirFlowPage(driver).open();
         a.fillSearch("MEX", "MTY", AirFlowPage.iso(7), 1);
         long t0 = System.currentTimeMillis();
@@ -63,8 +63,8 @@ class AirPersonaTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("recomendado")
-    @DisplayName("[air.slow_seats] Persona lento: el mapa de asientos tarda 3.5 s (CP-AIR-118)")
-    void seatMapIsFast() {
+    @DisplayName("[air.slow_seats] A_AIR_118_PersonaLentoElMapaDeAsientosTarda35S")
+    void A_AIR_118_PersonaLentoElMapaDeAsientosTarda35S() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1).selectFirstFlight().fillAllValid(1);
         long t0 = System.currentTimeMillis();
         a.submitPassengers().waitSeatMap();
@@ -72,8 +72,8 @@ class AirPersonaTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("obligatorio")
-    @DisplayName("[air.flaky_results] Persona intermitente: la búsqueda falla con 503 y Reintentar recupera (CP-AIR-119)")
-    void searchDoesNotFailRandomly() {
+    @DisplayName("[air.flaky_results] A_AIR_119_PersonaIntermitenteLaBusquedaFallaCon503YReintentarRecupera")
+    void A_AIR_119_PersonaIntermitenteLaBusquedaFallaCon503YReintentarRecupera() {
         AirFlowPage a = new AirFlowPage(driver);
         a.open().setChaosSeed(SEED_SEARCH_FAILS_FIRST);
         a.fillSearch("MEX", "MTY", AirFlowPage.iso(7), 1).submitSearch();
@@ -83,8 +83,8 @@ class AirPersonaTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("obligatorio")
-    @DisplayName("[air.flaky_payment] Persona intermitente: un pago fallido descuenta el saldo y el reintento cobra de nuevo (CP-AIR-120)")
-    void failedPaymentDoesNotCharge() {
+    @DisplayName("[air.flaky_payment] A_AIR_120_PersonaIntermitenteUnPagoFallidoDescuentaElSaldoYElReintento")
+    void A_AIR_120_PersonaIntermitenteUnPagoFallidoDescuentaElSaldoYElReintento() {
         AirFlowPage a = new AirFlowPage(driver);
         a.open().setChaosSeed(SEED_PAYMENT_FAILS_FIRST);
         a.toPayment(1);

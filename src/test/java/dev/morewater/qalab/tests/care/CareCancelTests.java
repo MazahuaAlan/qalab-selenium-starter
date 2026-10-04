@@ -27,8 +27,8 @@ class CareCancelTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cancelación gratuita con 24 h o más: reembolso 100 % (CP-CARE-080)")
-    void freeCancellationRefundsEverything() {
+    @DisplayName("A_CARE_080_CancelacionGratuitaCon24HOMasReembolso100")
+    void A_CARE_080_CancelacionGratuitaCon24HOMasReembolso100() {
         CarePage c = care();
         long before = bookIn(c, 3);
         c.openCancelModal();
@@ -41,8 +41,8 @@ class CareCancelTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cancelación con menos de 24 h retiene el 50 % (CP-CARE-081)")
-    void lateCancellationKeepsHalf() {
+    @DisplayName("A_CARE_081_CancelacionConMenosDe24HRetieneEl50")
+    void A_CARE_081_CancelacionConMenosDe24HRetieneEl50() {
         CarePage c = care();
         long before = bookIn(c, 1);
         String date = c.stateString("s.care.appts[0].date"), time = c.stateString("s.care.appts[0].time");
@@ -59,8 +59,8 @@ class CareCancelTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[care.cancel_fee_wrong] Persona descuadre: cancelación con más de 24 h retiene el 50 % (CP-CARE-085)")
-    void cancellationWithMoreThan24HoursIsFree() {
+    @DisplayName("[care.cancel_fee_wrong] A_CARE_085_PersonaDescuadreCancelacionConMasDe24HRetieneEl50")
+    void A_CARE_085_PersonaDescuadreCancelacionConMasDe24HRetieneEl50() {
         CarePage c = care();
         long before = bookIn(c, 3);
         c.openCancelModal();

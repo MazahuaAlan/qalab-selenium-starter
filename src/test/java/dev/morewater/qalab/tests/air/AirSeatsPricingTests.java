@@ -23,8 +23,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Mapa de asientos: estructura y encabezado A B C D E F (CP-AIR-050)")
-    void seatMapStructure() {
+    @DisplayName("A_AIR_050_MapaDeAsientosEstructuraYEncabezadoABCDEF")
+    void A_AIR_050_MapaDeAsientosEstructuraYEncabezadoABCDEF() {
         AirFlowPage a = atSeats(1);
         assertThat(a.headerLetters()).containsExactly("A", "B", "C", "D", "E", "F");
         assertThat(a.exists("seat-1A")).isTrue();
@@ -34,8 +34,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Los asientos de más espacio se cobran en el resumen (CP-AIR-057)")
-    void legroomSeatIsCharged() {
+    @DisplayName("A_AIR_057_LosAsientosDeMasEspacioSeCobranEnElResumen")
+    void A_AIR_057_LosAsientosDeMasEspacioSeCobranEnElResumen() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1);
         long fare = a.firstFlightPrice();
         a.selectFirstFlight().fillAllValid(1).submitPassengers().waitPath("/air/seats").waitSeatMap();
@@ -50,8 +50,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("recomendado")
-    @DisplayName("[air.visual_seat_labels] Persona visual: letras D y E intercambiadas en el encabezado del mapa (CP-AIR-059)")
-    void seatHeaderLettersMatchSeats() {
+    @DisplayName("[air.visual_seat_labels] A_AIR_059_PersonaVisualLetrasDYEIntercambiadasEnElEncabezadoDelMapa")
+    void A_AIR_059_PersonaVisualLetrasDYEIntercambiadasEnElEncabezadoDelMapa() {
         AirFlowPage a = atSeats(1);
         assertThat(a.headerLetters()).containsExactly("A", "B", "C", "D", "E", "F");
         assertThat(a.seatLabel("5D")).startsWith("Asiento 5D");
@@ -59,8 +59,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Desglose correcto para 1 pasajero sin extras (CP-AIR-060)")
-    void breakdownOnePassenger() {
+    @DisplayName("A_AIR_060_DesgloseCorrectoPara1PasajeroSinExtras")
+    void A_AIR_060_DesgloseCorrectoPara1PasajeroSinExtras() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1);
         long fare = a.firstFlightPrice();
         a.selectFirstFlight().fillAllValid(1).submitPassengers().waitPath("/air/seats").chooseStandardSeats(1).nextToPayment();
@@ -76,8 +76,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Desglose correcto para 2 pasajeros (CP-AIR-061)")
-    void breakdownTwoPassengers() {
+    @DisplayName("A_AIR_061_DesgloseCorrectoPara2Pasajeros")
+    void A_AIR_061_DesgloseCorrectoPara2Pasajeros() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 2);
         long unit = a.firstFlightPrice();
         a.selectFirstFlight().fillAllValid(2).submitPassengers().waitPath("/air/seats").chooseStandardSeats(2).nextToPayment();
@@ -89,8 +89,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Equipaje: 1 maleta y 1 asiento con más espacio (CP-AIR-062)")
-    void baggageAndLegroom() {
+    @DisplayName("A_AIR_062_Equipaje1MaletaY1AsientoConMasEspacio")
+    void A_AIR_062_Equipaje1MaletaY1AsientoConMasEspacio() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1);
         long fare = a.firstFlightPrice();
         a.selectFirstFlight().fillAllValid(1).setBags(0, 1).submitPassengers().waitPath("/air/seats").waitSeatMap();
@@ -103,8 +103,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("opcional")
-    @DisplayName("[air.visual_price_format] Persona visual: formato de precio europeo en resultados (CP-AIR-065)")
-    void priceFormatConsistent() {
+    @DisplayName("[air.visual_price_format] A_AIR_065_PersonaVisualFormatoDePrecioEuropeoEnResultados")
+    void A_AIR_065_PersonaVisualFormatoDePrecioEuropeoEnResultados() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1);
         assertThat(a.priceText(0)).matches(PRICE_FORMAT);
         a.selectFirstFlight().fillAllValid(1).submitPassengers().waitPath("/air/seats").chooseStandardSeats(1).nextToPayment();
@@ -112,8 +112,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("obligatorio")
-    @DisplayName("[air.passenger_count] Persona descuadre: el precio no se multiplica por el número de pasajeros (CP-AIR-066)")
-    void fareMultipliedByPassengers() {
+    @DisplayName("[air.passenger_count] A_AIR_066_PersonaDescuadreElPrecioNoSeMultiplicaPorElNumeroDePasajeros")
+    void A_AIR_066_PersonaDescuadreElPrecioNoSeMultiplicaPorElNumeroDePasajeros() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 2);
         long unit = a.firstFlightPrice();
         a.selectFirstFlight().fillAllValid(2).submitPassengers().waitPath("/air/seats").chooseStandardSeats(2).nextToPayment();
@@ -123,8 +123,8 @@ class AirSeatsPricingTests extends BaseTest {
     }
 
     @Test @Tag("bug") @Tag("obligatorio")
-    @DisplayName("[air.tax_mismatch] Persona descuadre: el total omite la TUA (CP-AIR-067)")
-    void totalIncludesTua() {
+    @DisplayName("[air.tax_mismatch] A_AIR_067_PersonaDescuadreElTotalOmiteLaTUA")
+    void A_AIR_067_PersonaDescuadreElTotalOmiteLaTUA() {
         AirFlowPage a = new AirFlowPage(driver).toPayment(1);
         long expected = a.sum("fare") + a.sumOpt("bags") + a.sumOpt("legroom") + a.sum("iva") + a.sum("tua");
         assertThat(a.total()).as("total = suma del desglose").isEqualTo(expected);

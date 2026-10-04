@@ -26,8 +26,8 @@ class ResultsTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Listado inicial de Cancún ordenado por precio (CP-STAY-016)")
-    void initialListSortedByPrice() {
+    @DisplayName("A_STAY_016_ListadoInicialDeCancunOrdenadoPorPrecio")
+    void A_STAY_016_ListadoInicialDeCancunOrdenadoPorPrecio() {
         StaySearchPage s = search().open();
         s.setLatency(1500); // hace observable el estado de carga
         s.submit();
@@ -47,8 +47,8 @@ class ResultsTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Filtro de precio máximo: valor frontera inclusivo (CP-STAY-017)")
-    void maxPriceFilterIsInclusive() {
+    @DisplayName("A_STAY_017_FiltroDePrecioMaximoValorFronteraInclusivo")
+    void A_STAY_017_FiltroDePrecioMaximoValorFronteraInclusivo() {
         StayResultsPage r = openCancun();
         long cheapest = StayModel.byPrice(all).get(0).baseCents();
         int limit = (int) (cheapest / 100);
@@ -77,8 +77,8 @@ class ResultsTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Filtro por estrellas: OR entre categorías (CP-STAY-018)")
-    void starsFilterIsOr() {
+    @DisplayName("A_STAY_018_FiltroPorEstrellasOREntreCategorias")
+    void A_STAY_018_FiltroPorEstrellasOREntreCategorias() {
         StayResultsPage r = openCancun();
         int n5 = (int) all.stream().filter(h -> h.stars() == 5).count();
         int n4 = (int) all.stream().filter(h -> h.stars() == 4).count();
@@ -98,8 +98,8 @@ class ResultsTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Filtro de servicios: AND entre amenidades (CP-STAY-019)")
-    void amenitiesFilterIsAnd() {
+    @DisplayName("A_STAY_019_FiltroDeServiciosANDEntreAmenidades")
+    void A_STAY_019_FiltroDeServiciosANDEntreAmenidades() {
         StayResultsPage r = openCancun();
         r.toggleAmenity("wifi");
         r.eventually(() -> assertThat(r.countText()).isEqualTo(countLabel((int) countWith("wifi"))));
@@ -123,8 +123,8 @@ class ResultsTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Ordenar por calificación y las estrellas siguen siendo la categoría (CP-STAY-020)")
-    void sortByRatingKeepsStarCategory() {
+    @DisplayName("A_STAY_020_OrdenarPorCalificacionYLasEstrellasSiguenSiendoLaCategoria")
+    void A_STAY_020_OrdenarPorCalificacionYLasEstrellasSiguenSiendoLaCategoria() {
         StayResultsPage r = openCancun();
         List<Hotel> byRating = StayModel.byRating(all);
         r.sortBy("calificacion");
@@ -146,8 +146,8 @@ class ResultsTests extends StayTest {
     @Test
     @Tag("opcional")
     @Tag("bug")
-    @DisplayName("[stay.visual_stars] Las estrellas se redondean hacia arriba (stay.visual_stars) (CP-STAY-095)")
-    void starsAreTheHotelCategory() {
+    @DisplayName("[stay.visual_stars] A_STAY_095_LasEstrellasSeRedondeanHaciaArribaStayVisualStars")
+    void A_STAY_095_LasEstrellasSeRedondeanHaciaArribaStayVisualStars() {
         StayResultsPage r = openCancun();
         assertThat(r.shown()).isEqualTo(8);
         for (int i = 0; i < 8; i++) {

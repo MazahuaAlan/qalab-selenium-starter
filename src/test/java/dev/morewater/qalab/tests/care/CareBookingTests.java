@@ -28,8 +28,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Sin perfil no se puede agendar (CP-CARE-043)")
-    void bookingRequiresProfile() {
+    @DisplayName("A_CARE_043_SinPerfilNoSePuedeAgendar")
+    void A_CARE_043_SinPerfilNoSePuedeAgendar() {
         CarePage c = care().openBooking();
         assertThat(c.el("care-need-profile").getText()).contains("Primero completa tu perfil");
         c.clickOn("care-need-profile-link");
@@ -43,8 +43,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cada especialidad lista 3 médicos con años de experiencia (CP-CARE-044)")
-    void eachSpecialtyListsThreeDoctors() {
+    @DisplayName("A_CARE_044_CadaEspecialidadLista3MedicosConAnosDeExperiencia")
+    void A_CARE_044_CadaEspecialidadLista3MedicosConAnosDeExperiencia() {
         CarePage c = care();
         c.completeProfile();
         c.openBooking();
@@ -62,8 +62,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Continuar deshabilitado sin médico y cambio de especialidad limpia la selección (CP-CARE-045)")
-    void changingSpecialtyClearsDoctor() {
+    @DisplayName("A_CARE_045_ContinuarDeshabilitadoSinMedicoYCambioDeEspecialidadLimpiaLa")
+    void A_CARE_045_ContinuarDeshabilitadoSinMedicoYCambioDeEspecialidadLimpiaLa() {
         CarePage c = care();
         c.completeProfile();
         c.openBooking();
@@ -80,8 +80,8 @@ class CareBookingTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[care.slow_doctors] Persona lenta: la lista de médicos tarda 3.5 s (CP-CARE-046)")
-    void doctorsListLoadsQuickly() {
+    @DisplayName("[care.slow_doctors] A_CARE_046_PersonaLentaLaListaDeMedicosTarda35S")
+    void A_CARE_046_PersonaLentaLaListaDeMedicosTarda35S() {
         CarePage c = care();
         c.completeProfile();
         c.openBooking();
@@ -94,8 +94,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Paso 2 muestra 7 días y 18 horarios de 30 minutos (CP-CARE-048)")
-    void step2ShowsSevenDaysAndEighteenSlots() {
+    @DisplayName("A_CARE_048_Paso2Muestra7DiasY18HorariosDe30Minutos")
+    void A_CARE_048_Paso2Muestra7DiasY18HorariosDe30Minutos() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0);
@@ -121,8 +121,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Horarios ocupados y pasados están deshabilitados (CP-CARE-049)")
-    void pastSlotsAreDisabled() {
+    @DisplayName("A_CARE_049_HorariosOcupadosYPasadosEstanDeshabilitados")
+    void A_CARE_049_HorariosOcupadosYPasadosEstanDeshabilitados() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0);
@@ -140,8 +140,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Elegir horario habilita Continuar; cambiar de día lo limpia (CP-CARE-050)")
-    void pickingSlotEnablesContinueAndChangingDayClearsIt() {
+    @DisplayName("A_CARE_050_ElegirHorarioHabilitaContinuarCambiarDeDiaLoLimpia")
+    void A_CARE_050_ElegirHorarioHabilitaContinuarCambiarDeDiaLoLimpia() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0);
@@ -158,8 +158,8 @@ class CareBookingTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Horario ya reservado por mí aparece ocupado (CP-CARE-051)")
-    void slotBookedByMeShowsAsTaken() {
+    @DisplayName("A_CARE_051_HorarioYaReservadoPorMiApareceOcupado")
+    void A_CARE_051_HorarioYaReservadoPorMiApareceOcupado() {
         CarePage c = care();
         c.completeProfile();
         String h = c.toStep3("general", 0, 1);
@@ -171,8 +171,8 @@ class CareBookingTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("opcional")
-    @DisplayName("[care.visual_slot_time] Persona visual: formato de hora distinto en lista y resumen (CP-CARE-053)")
-    void slotTimeFormatIsConsistent() {
+    @DisplayName("[care.visual_slot_time] A_CARE_053_PersonaVisualFormatoDeHoraDistintoEnListaYResumen")
+    void A_CARE_053_PersonaVisualFormatoDeHoraDistintoEnListaYResumen() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0).pickDay(1);
@@ -188,8 +188,8 @@ class CareBookingTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[care.slow_slots] Persona lenta: los horarios tardan 4 s (CP-CARE-054)")
-    void slotsLoadQuickly() {
+    @DisplayName("[care.slow_slots] A_CARE_054_PersonaLentaLosHorariosTardan4S")
+    void A_CARE_054_PersonaLentaLosHorariosTardan4S() {
         CarePage c = care();
         c.completeProfile();
         c.openBooking().chooseSpecialty("general");
@@ -203,8 +203,8 @@ class CareBookingTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[care.flaky_slots] Persona intermitente: error 503 de horarios y reintento (CP-CARE-055)")
-    void slotsAreAlwaysAvailable() {
+    @DisplayName("[care.flaky_slots] A_CARE_055_PersonaIntermitenteError503DeHorariosYReintento")
+    void A_CARE_055_PersonaIntermitenteError503DeHorariosYReintento() {
         CarePage c = care();
         c.completeProfile();
         c.openBooking().chooseSpecialty("general");

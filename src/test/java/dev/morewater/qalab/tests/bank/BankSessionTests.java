@@ -21,8 +21,8 @@ class BankSessionTests extends BaseTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[platform.session_expiry] Persona expira: la sesión caduca a los 90 s sin aviso (CP-BANK-098)")
-    void sessionDoesNotExpireAfter90Seconds() {
+    @DisplayName("[platform.session_expiry] A_BANK_098_PersonaExpiraLaSesionCaducaALos90SSinAviso")
+    void A_BANK_098_PersonaExpiraLaSesionCaducaALos90SSinAviso() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("100", "Pago de prueba");
         // Se adelanta el inicio de sesión 91 s (en vez de esperar 91 s reales) y se recarga.
         ((org.openqa.selenium.JavascriptExecutor) driver).executeScript(

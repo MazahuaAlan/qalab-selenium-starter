@@ -18,8 +18,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Guardia: /wallet/ sin sesión redirige a login con next (CP-PLAT-020)")
-    void guardiaRedirigeALogin() {
+    @DisplayName("A_PLAT_020_GuardiaWalletSinSesionRedirigeALoginConNext")
+    void A_PLAT_020_GuardiaWalletSinSesionRedirigeALoginConNext() {
         var w = new WalletPage(driver);
         w.go("/wallet/");
         w.until(() -> driver.getCurrentUrl().contains("/id/"));
@@ -29,8 +29,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Login con next vuelve a la ruta original (CP-PLAT-021)")
-    void loginConNextVuelveALaRuta() {
+    @DisplayName("A_PLAT_021_LoginConNextVuelveALaRutaOriginal")
+    void A_PLAT_021_LoginConNextVuelveALaRutaOriginal() {
         var id = new IdPage(driver);
         id.go("/wallet/");
         id.until(() -> driver.getCurrentUrl().contains("/id/?next="));
@@ -42,8 +42,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("next ajeno sin «/» inicial se ignora (CP-PLAT-022)")
-    void nextAjenoSeIgnora() {
+    @DisplayName("A_PLAT_022_NextAjenoSinInicialSeIgnora")
+    void A_PLAT_022_NextAjenoSinInicialSeIgnora() {
         var id = new IdPage(driver).openId("?next=https%3A%2F%2Fevil.com");
         id.clickPersona("estandar").submit();
         id.until(() -> !driver.getCurrentUrl().contains("/id/"));
@@ -53,8 +53,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("next protocolo-relativo //evil.com (open redirect) (CP-PLAT-023)")
-    void nextProtocoloRelativoNoRedirigeAFuera() {
+    @DisplayName("A_PLAT_023_NextProtocoloRelativoEvilComOpenRedirect")
+    void A_PLAT_023_NextProtocoloRelativoEvilComOpenRedirect() {
         var id = new IdPage(driver).openId("?next=//evil.com");
         id.clickPersona("estandar").submit();
         id.until(() -> !driver.getCurrentUrl().contains("/id/"));
@@ -64,8 +64,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("La sesión sobrevive a una recarga (CP-PLAT-024)")
-    void sesionSobreviveARecarga() {
+    @DisplayName("A_PLAT_024_LaSesionSobreviveAUnaRecarga")
+    void A_PLAT_024_LaSesionSobreviveAUnaRecarga() {
         var id = new IdPage(driver).openId().loginOk("estandar");
         var w = new WalletPage(driver).openWallet();
         String antes = w.balanceText();
@@ -78,8 +78,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cerrar sesión (CP-PLAT-025)")
-    void cerrarSesion() {
+    @DisplayName("A_PLAT_025_CerrarSesion")
+    void A_PLAT_025_CerrarSesion() {
         var id = new IdPage(driver).openId().loginOk("estandar");
         id.logout();
         id.until(() -> id.path().equals("/id/") && id.hasLoginLink());
@@ -92,8 +92,8 @@ class SesionTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Mensaje de sesión expirada accesible por URL directa (CP-PLAT-030)")
-    void mensajeExpiradaPorUrl() {
+    @DisplayName("A_PLAT_030_MensajeDeSesionExpiradaAccesiblePorURLDirecta")
+    void A_PLAT_030_MensajeDeSesionExpiradaAccesiblePorURLDirecta() {
         var id = new IdPage(driver).openId("?motivo=expirada");
         var aviso = id.expiredNotice();
         assertThat(aviso.getDomAttribute("role")).isEqualTo("alert");

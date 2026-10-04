@@ -13,8 +13,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Transferencia: validaciones de campos vacíos (CP-BANK-011)")
-    void emptyFieldsValidation() {
+    @DisplayName("A_BANK_011_TransferenciaValidacionesDeCamposVacios")
+    void A_BANK_011_TransferenciaValidacionesDeCamposVacios() {
         BankTransferPage p = new BankTransferPage(driver).open();
         assertThat(p.stepperCurrent()).isEqualTo("Datos");
         assertThat(p.beneficiaryOptions().get(0)).isEqualTo("Ana Torres · Banco Nimbo ···5675");
@@ -35,8 +35,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Transferencia: monto mínimo $1.00 (frontera 0.99 / 1.00) (CP-BANK-012)")
-    void minimumAmountBoundary() {
+    @DisplayName("A_BANK_012_TransferenciaMontoMinimo100Frontera099100")
+    void A_BANK_012_TransferenciaMontoMinimo100Frontera099100() {
         BankTransferPage p = new BankTransferPage(driver).open();
         p.fill("0.99", "Frontera").next();
         assertThat(p.amountError()).isEqualTo("El monto mínimo es $1.00.");
@@ -47,8 +47,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Transferencia: saldo insuficiente y frontera del saldo (CP-BANK-014)")
-    void insufficientFundsBoundary() {
+    @DisplayName("A_BANK_014_TransferenciaSaldoInsuficienteYFronteraDelSaldo")
+    void A_BANK_014_TransferenciaSaldoInsuficienteYFronteraDelSaldo() {
         BankTransferPage p = new BankTransferPage(driver).open();
         p.setWallet(50000);
         p.reload().waitAnyStep();
@@ -64,8 +64,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Transferencia: concepto solo con espacios cuenta como vacío (CP-BANK-016)")
-    void blankConceptIsEmpty() {
+    @DisplayName("A_BANK_016_TransferenciaConceptoSoloConEspaciosCuentaComoVacio")
+    void A_BANK_016_TransferenciaConceptoSoloConEspaciosCuentaComoVacio() {
         BankTransferPage p = new BankTransferPage(driver).open();
         p.fill("100", "     ").next();
         assertThat(p.conceptError()).isEqualTo("Escribe un concepto.");
@@ -77,8 +77,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Lista de beneficiarios precargados con banco y últimos 4 dígitos (CP-BANK-017)")
-    void preloadedBeneficiaries() {
+    @DisplayName("A_BANK_017_ListaDeBeneficiariosPrecargadosConBancoYUltimos4Digitos")
+    void A_BANK_017_ListaDeBeneficiariosPrecargadosConBancoYUltimos4Digitos() {
         BankTransferPage p = new BankTransferPage(driver).open();
         assertThat(p.beneficiaryOptions()).containsExactly(
                 "Ana Torres · Banco Nimbo ···5675",
@@ -93,8 +93,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Pantalla de confirmación muestra todos los datos correctos (CP-BANK-018)")
-    void confirmationShowsAllData() {
+    @DisplayName("A_BANK_018_PantallaDeConfirmacionMuestraTodosLosDatosCorrectos")
+    void A_BANK_018_PantallaDeConfirmacionMuestraTodosLosDatosCorrectos() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("1500.50", "Renta de octubre");
         assertThat(p.stepperCurrent()).isEqualTo("Confirmar");
         assertThat(p.confirmName()).isEqualTo("Ana Torres");
@@ -107,8 +107,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Editar datos regresa al formulario conservando lo capturado (CP-BANK-019)")
-    void editKeepsCapturedValues() {
+    @DisplayName("A_BANK_019_EditarDatosRegresaAlFormularioConservandoLoCapturado")
+    void A_BANK_019_EditarDatosRegresaAlFormularioConservandoLoCapturado() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("50", "hola");
         assertThat(p.confirmAmount()).isEqualTo("$50.00");
         p.edit();
@@ -121,8 +121,8 @@ class BankTransferFormTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Al recargar se conserva la transferencia en el paso Confirmar y Código (CP-BANK-020)")
-    void reloadKeepsStep() {
+    @DisplayName("A_BANK_020_AlRecargarSeConservaLaTransferenciaEnElPasoConfirmarYCodigo")
+    void A_BANK_020_AlRecargarSeConservaLaTransferenciaEnElPasoConfirmarYCodigo() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("100", "Pago de prueba");
         p.reload().waitAnyStep();
         assertThat(p.onConfirm()).as("paso Confirmar tras recargar").isTrue();

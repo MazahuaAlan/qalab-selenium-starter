@@ -27,8 +27,8 @@ class BankLoginRedirectTests {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Redirección al login sin sesión y retorno a la ruta pedida (CP-BANK-094)")
-    void redirectsToLoginAndReturns() {
+    @DisplayName("A_BANK_094_RedireccionAlLoginSinSesionYRetornoALaRutaPedida")
+    void A_BANK_094_RedireccionAlLoginSinSesionYRetornoALaRutaPedida() {
         WebDriver d = DriverFactory.create();
         d.get(Config.baseUrl() + "/bank/transfer/");
         waitUrlContains(d, "/id/");

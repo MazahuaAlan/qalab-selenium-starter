@@ -19,8 +19,8 @@ class ModifyTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Modificar fechas a más noches cobra la diferencia (CP-STAY-060)")
-    void moreNightsChargesDifference() {
+    @DisplayName("A_STAY_060_ModificarFechasAMasNochesCobraLaDiferencia")
+    void A_STAY_060_ModificarFechasAMasNochesCobraLaDiferencia() {
         Plan p = defaultPlan(14);
         String code = completeBooking(p);
         long afterBooking = search().walletCents();
@@ -45,8 +45,8 @@ class ModifyTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Modificar a menos noches reembolsa la diferencia (CP-STAY-061)")
-    void fewerNightsRefundsDifference() {
+    @DisplayName("A_STAY_061_ModificarAMenosNochesReembolsaLaDiferencia")
+    void A_STAY_061_ModificarAMenosNochesReembolsaLaDiferencia() {
         Plan p = defaultPlan(14);
         String code = completeBooking(p);
         long afterBooking = search().walletCents();
@@ -70,8 +70,8 @@ class ModifyTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Validar la selección de fechas al modificar (CP-STAY-063)")
-    void modifyValidatesDateSelection() {
+    @DisplayName("A_STAY_063_ValidarLaSeleccionDeFechasAlModificar")
+    void A_STAY_063_ValidarLaSeleccionDeFechasAlModificar() {
         Plan p = defaultPlan(14);
         completeBooking(p);
         StayStaysPage s = stays().open();

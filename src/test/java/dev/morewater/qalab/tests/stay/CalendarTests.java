@@ -17,8 +17,8 @@ class CalendarTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Selección de entrada y salida en el calendario (CP-STAY-007)")
-    void pickCheckInAndCheckOut() {
+    @DisplayName("A_STAY_007_SeleccionDeEntradaYSalidaEnElCalendario")
+    void A_STAY_007_SeleccionDeEntradaYSalidaEnElCalendario() {
         StaySearchPage s = search().open();
         LocalDate today = s.today(), in = today.plusDays(20), out = today.plusDays(24);
         YearMonth ym = YearMonth.from(today);
@@ -40,8 +40,8 @@ class CalendarTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Días pasados deshabilitados y hoy seleccionable (CP-STAY-008)")
-    void pastDaysDisabledTodaySelectable() {
+    @DisplayName("A_STAY_008_DiasPasadosDeshabilitadosYHoySeleccionable")
+    void A_STAY_008_DiasPasadosDeshabilitadosYHoySeleccionable() {
         StaySearchPage s = search().open();
         LocalDate today = s.today();
         Calendar cal = s.calendar;
@@ -63,8 +63,8 @@ class CalendarTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Navegación de meses: anterior deshabilitado en el mes actual (CP-STAY-009)")
-    void monthNavigation() {
+    @DisplayName("A_STAY_009_NavegacionDeMesesAnteriorDeshabilitadoEnElMesActual")
+    void A_STAY_009_NavegacionDeMesesAnteriorDeshabilitadoEnElMesActual() {
         StaySearchPage s = search().open();
         YearMonth ym = YearMonth.from(s.today());
         Calendar cal = s.calendar;
@@ -85,8 +85,8 @@ class CalendarTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Sombreado de los días intermedios del rango (CP-STAY-010)")
-    void rangeShadingCoversInnerDays() {
+    @DisplayName("A_STAY_010_SombreadoDeLosDiasIntermediosDelRango")
+    void A_STAY_010_SombreadoDeLosDiasIntermediosDelRango() {
         StaySearchPage s = search().open();
         LocalDate t = s.today();
         Calendar cal = s.calendar;
@@ -107,8 +107,8 @@ class CalendarTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Buscar sin fecha de salida muestra error (CP-STAY-012)")
-    void searchWithoutCheckOutShowsError() {
+    @DisplayName("A_STAY_012_BuscarSinFechaDeSalidaMuestraError")
+    void A_STAY_012_BuscarSinFechaDeSalidaMuestraError() {
         StaySearchPage s = search().open();
         LocalDate in = s.today().plusDays(20), out = s.today().plusDays(22);
         s.calendar.pick(in);
@@ -124,8 +124,8 @@ class CalendarTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Límite superior de noches: 14 válido, 15 rechazado (CP-STAY-013)")
-    void maxNightsBoundary() {
+    @DisplayName("A_STAY_013_LimiteSuperiorDeNoches14Valido15Rechazado")
+    void A_STAY_013_LimiteSuperiorDeNoches14Valido15Rechazado() {
         StaySearchPage s = search().open();
         LocalDate in = s.today().plusDays(17);
         s.calendar.selectRange(in, in.plusDays(15));
@@ -145,8 +145,8 @@ class CalendarTests extends StayTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[stay.visual_range_highlight] El sombreado del rango está corrido un día (stay.visual_range_highlight) (CP-STAY-094)")
-    void shadingIsNotShifted() {
+    @DisplayName("[stay.visual_range_highlight] A_STAY_094_ElSombreadoDelRangoEstaCorridoUnDiaStayVisualRangeHighlight")
+    void A_STAY_094_ElSombreadoDelRangoEstaCorridoUnDiaStayVisualRangeHighlight() {
         StaySearchPage s = search().open();
         LocalDate t = s.today();
         Calendar cal = s.calendar;

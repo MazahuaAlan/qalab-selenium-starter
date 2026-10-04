@@ -14,8 +14,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Login exitoso con estandar (CP-PLAT-006)")
-    void loginExitosoEstandar() {
+    @DisplayName("A_PLAT_006_LoginExitosoConEstandar")
+    void A_PLAT_006_LoginExitosoConEstandar() {
         var id = new IdPage(driver).openId();
         id.fill("estandar", IdPage.PASSWORD);
         assertThat(id.attr("password", "type")).isEqualTo("password");
@@ -31,8 +31,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Rellenar con botón de persona (CP-PLAT-007)")
-    void rellenarConBotonDePersona() {
+    @DisplayName("A_PLAT_007_RellenarConBotonDePersona")
+    void A_PLAT_007_RellenarConBotonDePersona() {
         var id = new IdPage(driver).openId();
         assertThat(id.personaButtons()).isEqualTo(8);
         id.clickPersona("lento");
@@ -45,8 +45,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Los ocho usuarios de prueba pueden listarse y (salvo bloqueado) entrar (CP-PLAT-008)")
-    void ochoUsuariosListadosYSieteEntran() {
+    @DisplayName("A_PLAT_008_LosOchoUsuariosDePruebaPuedenListarseYSalvoBloqueadoEntrar")
+    void A_PLAT_008_LosOchoUsuariosDePruebaPuedenListarseYSalvoBloqueadoEntrar() {
         var id = new IdPage(driver).openId();
         assertThat(id.personaButtons()).isEqualTo(IdPage.PERSONAS.size());
         for (String p : IdPage.PERSONAS) {
@@ -68,8 +68,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Contraseña incorrecta (CP-PLAT-009)")
-    void contrasenaIncorrecta() {
+    @DisplayName("A_PLAT_009_ContrasenaIncorrecta")
+    void A_PLAT_009_ContrasenaIncorrecta() {
         var id = new IdPage(driver).openId().loginAs("estandar", "qalab12");
         id.waitError();
         assertThat(id.error()).contains("No se pudo entrar.").contains("Usuario o contraseña incorrectos.");
@@ -80,8 +80,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Formulario vacío (CP-PLAT-011)")
-    void formularioVacio() {
+    @DisplayName("A_PLAT_011_FormularioVacio")
+    void A_PLAT_011_FormularioVacio() {
         var id = new IdPage(driver).openId().submit();
         id.waitError();
         assertThat(id.error()).contains("Usuario o contraseña incorrectos.");
@@ -91,8 +91,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Campo contraseña enmascarado y autocompletado correcto (CP-PLAT-015)")
-    void campoPasswordEnmascarado() {
+    @DisplayName("A_PLAT_015_CampoContrasenaEnmascaradoYAutocompletadoCorrecto")
+    void A_PLAT_015_CampoContrasenaEnmascaradoYAutocompletadoCorrecto() {
         var id = new IdPage(driver).openId();
         assertThat(id.attr("password", "type")).isEqualTo("password");
         assertThat(id.attr("password", "autocomplete")).isEqualTo("current-password");
@@ -102,8 +102,8 @@ class IdLoginTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Login falla con caos fail=100 (CP-PLAT-016)")
-    void loginFallaConCaos100() {
+    @DisplayName("A_PLAT_016_LoginFallaConCaosFail100")
+    void A_PLAT_016_LoginFallaConCaosFail100() {
         var id = new IdPage(driver).openId("?fail=100");
         id.clickPersona("estandar").submit();
         id.waitError();

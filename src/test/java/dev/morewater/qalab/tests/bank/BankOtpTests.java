@@ -29,9 +29,9 @@ class BankOtpTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Envío del código genera SMS y bloquea el reenvío 10 s (CP-BANK-032)")
+    @DisplayName("A_BANK_032_EnvioDelCodigoGeneraSMSYBloqueaElReenvio10S")
     @Tag("slow")
-    void sendCodeCreatesSmsAndBlocksResend() {
+    void A_BANK_032_EnvioDelCodigoGeneraSMSYBloqueaElReenvio10S() {
         BankTransferPage p = toOtp();
         assertThat(p.stepperCurrent()).isEqualTo("Código");
         assertThat(p.resendEnabled()).isFalse();
@@ -47,8 +47,8 @@ class BankOtpTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Código correcto autoriza y debita exactamente el monto (CP-BANK-033)")
-    void correctCodeDebitsExactAmount() {
+    @DisplayName("A_BANK_033_CodigoCorrectoAutorizaYDebitaExactamenteElMonto")
+    void A_BANK_033_CodigoCorrectoAutorizaYDebitaExactamenteElMonto() {
         BankTransferPage p = toOtp();
         long before = p.walletCents();
         assertThat(before).isEqualTo(WALLET);
@@ -61,8 +61,8 @@ class BankOtpTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Código incorrecto: aviso de intentos restantes (CP-BANK-034)")
-    void wrongCodeShowsRemainingAttempts() {
+    @DisplayName("A_BANK_034_CodigoIncorrectoAvisoDeIntentosRestantes")
+    void A_BANK_034_CodigoIncorrectoAvisoDeIntentosRestantes() {
         BankTransferPage p = toOtp();
         String bad = wrongCode(p);
         p.enterCode(bad).submitCode();
@@ -75,8 +75,8 @@ class BankOtpTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Tres códigos incorrectos cancelan la transferencia (CP-BANK-035)")
-    void threeWrongCodesCancel() {
+    @DisplayName("A_BANK_035_TresCodigosIncorrectosCancelanLaTransferencia")
+    void A_BANK_035_TresCodigosIncorrectosCancelanLaTransferencia() {
         BankTransferPage p = toOtp();
         String bad = wrongCode(p);
         for (int i = 0; i < 3; i++) p.enterCode(bad).submitCode();
@@ -90,8 +90,8 @@ class BankOtpTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("slow")
-    @DisplayName("Código vigente 2 minutos (frontera 11 s válido, 125 s expira) (CP-BANK-036)")
-    void codeValidFor2Minutes() {
+    @DisplayName("A_BANK_036_CodigoVigente2MinutosFrontera11SValido125SExpira")
+    void A_BANK_036_CodigoVigente2MinutosFrontera11SValido125SExpira() {
         BankTransferPage p = toOtp();
         long t0 = System.currentTimeMillis();
         new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> System.currentTimeMillis() - t0 > 11_000);
@@ -109,8 +109,8 @@ class BankOtpTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("slow")
-    @DisplayName("Reenviar código invalida el anterior y reinicia intentos (CP-BANK-037)")
-    void resendInvalidatesPreviousCode() {
+    @DisplayName("A_BANK_037_ReenviarCodigoInvalidaElAnteriorYReiniciaIntentos")
+    void A_BANK_037_ReenviarCodigoInvalidaElAnteriorYReiniciaIntentos() {
         BankTransferPage p = toOtp();
         String first = p.currentCode();
         String bad = first.equals("111111") ? "222222" : "111111";
@@ -133,9 +133,9 @@ class BankOtpTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("[bank.amnesia_transfer] Persona amnesia: al recargar se pierde la transferencia en curso (CP-BANK-022)")
+    @DisplayName("[bank.amnesia_transfer] A_BANK_022_PersonaAmnesiaAlRecargarSePierdeLaTransferenciaEnCurso")
     @Tag("bug")
-    void draftSurvivesReloadAtCodeStep() {
+    void A_BANK_022_PersonaAmnesiaAlRecargarSePierdeLaTransferenciaEnCurso() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("100", "Pago de prueba");
         p.sendCode();
         p.reload().waitAnyStep();

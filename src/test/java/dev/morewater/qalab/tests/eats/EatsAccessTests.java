@@ -19,8 +19,8 @@ class EatsAccessTests {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Sin sesión, Eats redirige al login y regresa (CP-EATS-089)")
-    void withoutSessionRedirectsToLoginAndBack() {
+    @DisplayName("A_EATS_089_SinSesionEatsRedirigeAlLoginYRegresa")
+    void A_EATS_089_SinSesionEatsRedirigeAlLoginYRegresa() {
         WebDriver driver = DriverFactory.create();
         EatsPage eats = new EatsPage(driver);
         eats.go("/eats/checkout/");
@@ -39,8 +39,8 @@ class EatsAccessTests {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] Persona expira: la sesión caduca a los 90 s sin aviso (CP-EATS-094)")
-    void sessionSurvivesNinetySeconds() {
+    @DisplayName("[platform.session_expiry] A_EATS_094_PersonaExpiraLaSesionCaducaALos90SSinAviso")
+    void A_EATS_094_PersonaExpiraLaSesionCaducaALos90SSinAviso() {
         WebDriver driver = DriverFactory.create();
         new LoginPage(driver).open().loginAsConfiguredUser();
         EatsPage eats = new EatsPage(driver).openListReady();

@@ -15,15 +15,15 @@ import org.junit.jupiter.api.Test;
 class AirTests extends BaseTest {
 
     @Test
-    @DisplayName("La búsqueda no acepta el mismo origen y destino")
-    void searchRejectsSameOriginAndDestination() {
+    @DisplayName("A_AIR_901_LaBusquedaNoAceptaElMismoOrigenYDestino")
+    void A_AIR_901_LaBusquedaNoAceptaElMismoOrigenYDestino() {
         AirPage air = new AirPage(driver).open().search("MEX", "MEX", 1);
         assertThat(air.searchError("to")).contains("distinto");
     }
 
     @Test
-    @DisplayName("[air.tax_mismatch] El total incluye tarifa, IVA y TUA")
-    void totalIncludesFareVatAndAirportFee() {
+    @DisplayName("[air.tax_mismatch] A_AIR_902_ElTotalIncluyeTarifaIVAYTUA")
+    void A_AIR_902_ElTotalIncluyeTarifaIVAYTUA() {
         AirPage air = new AirPage(driver).toPayment(1);
         // el resumen puede traer además equipaje o asientos con más espacio, según el asiento elegido
         long expected = air.summaryCents("fare") + air.optionalCents("bags") + air.optionalCents("legroom")
@@ -32,8 +32,8 @@ class AirTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("[air.passenger_count] La tarifa se multiplica por el número de pasajeros")
-    void fareIsMultipliedByPassengers() {
+    @DisplayName("[air.passenger_count] A_AIR_903_LaTarifaSeMultiplicaPorElNumeroDePasajeros")
+    void A_AIR_903_LaTarifaSeMultiplicaPorElNumeroDePasajeros() {
         AirPage air = new AirPage(driver).open().search("MEX", "MTY", 2);
         long unit = air.firstFlightPrice();
         air.selectFirstFlight().fillPassengers(2).pickFreeSeats(2);
@@ -41,8 +41,8 @@ class AirTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("[air.slow_search] La búsqueda de vuelos responde en menos de 3 segundos")
-    void searchRespondsQuickly() {
+    @DisplayName("[air.slow_search] A_AIR_904_LaBusquedaDeVuelosRespondeEnMenosDe3Segundos")
+    void A_AIR_904_LaBusquedaDeVuelosRespondeEnMenosDe3Segundos() {
         AirPage air = new AirPage(driver).open();
         long t0 = System.currentTimeMillis();
         air.search("MEX", "MTY", 1).firstFlightPrice();
@@ -50,8 +50,8 @@ class AirTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("[air.visual_price_format] El precio usa el mismo formato en resultados y en el resumen")
-    void priceFormatIsConsistent() {
+    @DisplayName("[air.visual_price_format] A_AIR_905_ElPrecioUsaElMismoFormatoEnResultadosYEnElResumen")
+    void A_AIR_905_ElPrecioUsaElMismoFormatoEnResultadosYEnElResumen() {
         AirPage air = new AirPage(driver).open().search("MEX", "MTY", 1);
         String inResults = air.firstFlightPriceText();
         air.selectFirstFlight().fillPassengers(1).pickFreeSeats(1);

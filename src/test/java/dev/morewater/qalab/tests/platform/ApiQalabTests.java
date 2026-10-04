@@ -15,8 +15,8 @@ class ApiQalabTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("window.qalab expone la API completa (CP-PLAT-056)")
-    void apiCompleta() {
+    @DisplayName("A_PLAT_056_WindowQalabExponeLaAPICompleta")
+    void A_PLAT_056_WindowQalabExponeLaAPICompleta() {
         var p = new PlatformPage(driver).open("/");
         List<String> keys = p.eval("return Object.keys(window.qalab)");
         assertThat(keys).containsExactlyInAnyOrder("version", "reset", "state", "setChaos", "calls", "setWallet", "personas");
@@ -26,8 +26,8 @@ class ApiQalabTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("reset() restablece el estado inicial (CP-PLAT-057)")
-    void resetRestableceEstadoInicial() {
+    @DisplayName("A_PLAT_057_ResetRestableceElEstadoInicial")
+    void A_PLAT_057_ResetRestableceElEstadoInicial() {
         var p = new PlatformPage(driver).open("/");
         assertThat(p.hasUserChip()).isTrue();
         p.setWallet(123_400);
@@ -48,8 +48,8 @@ class ApiQalabTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("calls() cuenta peticiones terminadas (CP-PLAT-061)")
-    void callsCuentaPeticiones() {
+    @DisplayName("A_PLAT_061_CallsCuentaPeticionesTerminadas")
+    void A_PLAT_061_CallsCuentaPeticionesTerminadas() {
         var p = new IdPage(driver).openId();
         p.reset();
         driver.navigate().refresh();

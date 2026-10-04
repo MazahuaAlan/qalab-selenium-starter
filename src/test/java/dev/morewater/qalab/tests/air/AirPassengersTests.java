@@ -21,8 +21,8 @@ class AirPassengersTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Elegir un vuelo crea la reserva en curso (CP-AIR-027)")
-    void choosingFlightCreatesDraft() {
+    @DisplayName("A_AIR_027_ElegirUnVueloCreaLaReservaEnCurso")
+    void A_AIR_027_ElegirUnVueloCreaLaReservaEnCurso() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1);
         String id = a.flightIds().get(0);
         a.selectFirstFlight();
@@ -31,16 +31,16 @@ class AirPassengersTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Capturar datos válidos de un pasajero (CP-AIR-028)")
-    void validPassengerData() {
+    @DisplayName("A_AIR_028_CapturarDatosValidosDeUnPasajero")
+    void A_AIR_028_CapturarDatosValidosDeUnPasajero() {
         AirFlowPage a = atPassengers(1).fillAllValid(1).submitPassengers();
         a.waitPath("/air/seats");
         assertThat(a.exists("air-first-error-0")).isFalse();
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Formulario de pasajeros vacío muestra todos los errores (CP-AIR-029)")
-    void emptyFormShowsAllErrors() {
+    @DisplayName("A_AIR_029_FormularioDePasajerosVacioMuestraTodosLosErrores")
+    void A_AIR_029_FormularioDePasajerosVacioMuestraTodosLosErrores() {
         AirFlowPage a = atPassengers(1).submitPassengers();
         assertThat(a.textOf("air-first-error-0")).isEqualTo("Escribe el nombre (mínimo 2 letras).");
         assertThat(a.textOf("air-last-error-0")).isEqualTo("Escribe los apellidos (mínimo 2 letras).");
@@ -53,8 +53,8 @@ class AirPassengersTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Documento 8 caracteres (mínimo válido) (CP-AIR-033)")
-    void documentWithEightCharsIsValid() {
+    @DisplayName("A_AIR_033_Documento8CaracteresMinimoValido")
+    void A_AIR_033_Documento8CaracteresMinimoValido() {
         AirFlowPage a = atPassengers(1);
         a.fillPassenger(0, "Ana", "Pérez", "1990-05-20", "ABCD1234").fillContact("ana@example.com", "5512345678").submitPassengers();
         a.waitPath("/air/seats");
@@ -62,24 +62,24 @@ class AirPassengersTests extends BaseTest {
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Documento con guion (inválido) (CP-AIR-036)")
-    void documentWithHyphenIsInvalid() {
+    @DisplayName("A_AIR_036_DocumentoConGuionInvalido")
+    void A_AIR_036_DocumentoConGuionInvalido() {
         AirFlowPage a = atPassengers(1);
         a.fillPassenger(0, "Ana", "Pérez", "1990-05-20", "ABCD-1234").fillContact("ana@example.com", "5512345678").submitPassengers();
         assertStaysOnPassengersWithError(a, "air-doc-error-0", "El documento debe tener de 8 a 12 letras o números.");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Correo de contacto sin arroba (CP-AIR-037)")
-    void emailWithoutAtSign() {
+    @DisplayName("A_AIR_037_CorreoDeContactoSinArroba")
+    void A_AIR_037_CorreoDeContactoSinArroba() {
         AirFlowPage a = atPassengers(1);
         a.fillPassenger(0, "Ana", "Pérez", "1990-05-20", "ABCD123450").fillContact("ana.example.com", "5512345678").submitPassengers();
         assertStaysOnPassengersWithError(a, "air-email-error", "Escribe un correo válido.");
     }
 
     @Test @Tag("recomendado")
-    @DisplayName("Correo de contacto sin dominio con punto (CP-AIR-038)")
-    void emailWithoutDotDomain() {
+    @DisplayName("A_AIR_038_CorreoDeContactoSinDominioConPunto")
+    void A_AIR_038_CorreoDeContactoSinDominioConPunto() {
         AirFlowPage a = atPassengers(1);
         a.fillPassenger(0, "Ana", "Pérez", "1990-05-20", "ABCD123450").fillContact("ana@example", "5512345678").submitPassengers();
         assertStaysOnPassengersWithError(a, "air-email-error", "Escribe un correo válido.");

@@ -22,8 +22,8 @@ class CareDashboardTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Progreso 100 % tras guardar un perfil completo (CP-CARE-010)")
-    void progressIs100AfterFullProfile() {
+    @DisplayName("A_CARE_010_Progreso100TrasGuardarUnPerfilCompleto")
+    void A_CARE_010_Progreso100TrasGuardarUnPerfilCompleto() {
         CarePage care = new CarePage(driver);
         care.completeProfile();
         care.clickOn("nav-care");
@@ -36,8 +36,8 @@ class CareDashboardTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("opcional")
-    @DisplayName("[care.visual_progress] Persona visual: la barra de progreso no coincide con el porcentaje (CP-CARE-011)")
-    void progressBarMatchesPercentage() {
+    @DisplayName("[care.visual_progress] A_CARE_011_PersonaVisualLaBarraDeProgresoNoCoincideConElPorcentaje")
+    void A_CARE_011_PersonaVisualLaBarraDeProgresoNoCoincideConElPorcentaje() {
         CarePage care = new CarePage(driver);
         care.completeProfile();
         care.clickOn("nav-care");
@@ -47,8 +47,8 @@ class CareDashboardTests extends BaseTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Resumen del rol Médico (CP-CARE-013)")
-    void doctorRoleSummary() {
+    @DisplayName("A_CARE_013_ResumenDelRolMedico")
+    void A_CARE_013_ResumenDelRolMedico() {
         CarePage care = new CarePage(driver);
         care.openPath("/care/");
         care.el("care-role");

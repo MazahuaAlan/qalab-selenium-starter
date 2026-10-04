@@ -19,8 +19,8 @@ class DeskAccessTests {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Redirección a login sin sesión (CP-DESK-004)")
-    void protectedRoutesRedirectToLogin() {
+    @DisplayName("A_DESK_004_RedireccionALoginSinSesion")
+    void A_DESK_004_RedireccionALoginSinSesion() {
         DeskAccessPage access = new DeskAccessPage(DriverFactory.create());
         assertThat(access.openProtected("/desk/")).contains("/id/?next=%2Fdesk%2F");
         assertThat(access.openProtected("/desk/list/")).contains("/id/?next=%2Fdesk%2Flist%2F");

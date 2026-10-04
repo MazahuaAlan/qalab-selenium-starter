@@ -14,8 +14,8 @@ class WalletTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Saldo inicial y sin movimientos (CP-PLAT-032)")
-    void saldoInicialSinMovimientos() {
+    @DisplayName("A_PLAT_032_SaldoInicialYSinMovimientos")
+    void A_PLAT_032_SaldoInicialYSinMovimientos() {
         var w = new WalletPage(driver);
         w.openWallet();
         assertThat(w.walletCents()).isEqualTo(6_600_000L);
@@ -26,8 +26,8 @@ class WalletTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("setWallet actualiza saldo y chip (CP-PLAT-033)")
-    void setWalletActualizaSaldoYChip() {
+    @DisplayName("A_PLAT_033_SetWalletActualizaSaldoYChip")
+    void A_PLAT_033_SetWalletActualizaSaldoYChip() {
         var w = new WalletPage(driver).openWallet();
         w.setWallet(1_234_567);
         w.until(() -> w.balanceText().equals("$12,345.67"));
@@ -36,8 +36,8 @@ class WalletTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Saldo persiste tras recargar (CP-PLAT-037)")
-    void saldoPersisteTrasRecargar() {
+    @DisplayName("A_PLAT_037_SaldoPersisteTrasRecargar")
+    void A_PLAT_037_SaldoPersisteTrasRecargar() {
         var w = new WalletPage(driver).openWallet();
         w.setWallet(50_000);
         w.until(() -> w.balanceText().equals("$500.00"));
@@ -50,8 +50,8 @@ class WalletTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Wallet chip visible solo con sesión y enlaza a /wallet/ (CP-PLAT-038)")
-    void walletChipSoloConSesion() {
+    @DisplayName("A_PLAT_038_WalletChipVisibleSoloConSesionYEnlazaAWallet")
+    void A_PLAT_038_WalletChipVisibleSoloConSesionYEnlazaAWallet() {
         var p = new IdPage(driver);
         p.open("/");
         p.reset();

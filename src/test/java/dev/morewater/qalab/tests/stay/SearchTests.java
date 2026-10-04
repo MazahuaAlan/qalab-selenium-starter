@@ -18,8 +18,8 @@ class SearchTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Búsqueda con valores por defecto (CP-STAY-001)")
-    void defaultSearch() {
+    @DisplayName("A_STAY_001_BusquedaConValoresPorDefecto")
+    void A_STAY_001_BusquedaConValoresPorDefecto() {
         StaySearchPage s = search().open();
         LocalDate in = s.today().plusDays(14), out = s.today().plusDays(17);
         assertThat(s.h1()).isEqualTo("¿Dónde quieres hospedarte?");
@@ -37,8 +37,8 @@ class SearchTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Búsqueda en cada uno de los seis destinos (CP-STAY-002)")
-    void searchInEverySixDestinations() {
+    @DisplayName("A_STAY_002_BusquedaEnCadaUnoDeLosSeisDestinos")
+    void A_STAY_002_BusquedaEnCadaUnoDeLosSeisDestinos() {
         StaySearchPage s = search().open();
         assertThat(s.cityOptions()).containsExactlyInAnyOrderElementsOf(CITY_NAMES.values());
         for (String code : StayModel.CITY_CODES) {
@@ -55,8 +55,8 @@ class SearchTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Valores frontera de huéspedes: mínimo y máximo (CP-STAY-003)")
-    void guestBoundaries() {
+    @DisplayName("A_STAY_003_ValoresFronteraDeHuespedesMinimoYMaximo")
+    void A_STAY_003_ValoresFronteraDeHuespedesMinimoYMaximo() {
         StaySearchPage s = search().open();
         s.adultsMinus();
         assertThat(s.adults()).isEqualTo(1);
@@ -81,8 +81,8 @@ class SearchTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Rechazar más de 4 huéspedes por habitación (CP-STAY-004)")
-    void rejectMoreThanFourGuests() {
+    @DisplayName("A_STAY_004_RechazarMasDe4HuespedesPorHabitacion")
+    void A_STAY_004_RechazarMasDe4HuespedesPorHabitacion() {
         StaySearchPage s = search().open();
         s.adultsPlus().adultsPlus();
         assertThat(s.adultsPlusEnabled()).isFalse();
@@ -96,8 +96,8 @@ class SearchTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Borde: la búsqueda conserva los parámetros en la URL de resultados y de hotel (CP-STAY-006)")
-    void parametersSurviveToResultsAndHotel() {
+    @DisplayName("A_STAY_006_BordeLaBusquedaConservaLosParametrosEnLaURLDeResultadosYDe")
+    void A_STAY_006_BordeLaBusquedaConservaLosParametrosEnLaURLDeResultadosYDe() {
         StaySearchPage s = search().open();
         LocalDate in = s.today().plusDays(14), out = s.today().plusDays(17);
         s.adultsPlus().kidsPlus();
@@ -114,8 +114,8 @@ class SearchTests extends StayTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[stay.slow_results] La búsqueda de hoteles tarda 4 s (stay.slow_results) (CP-STAY-090)")
-    void resultsLoadQuickly() {
+    @DisplayName("[stay.slow_results] A_STAY_090_LaBusquedaDeHotelesTarda4SStaySlowResults")
+    void A_STAY_090_LaBusquedaDeHotelesTarda4SStaySlowResults() {
         StaySearchPage s = search().open();
         long t0 = System.nanoTime();
         s.submit();

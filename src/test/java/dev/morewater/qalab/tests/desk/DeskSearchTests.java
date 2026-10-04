@@ -13,8 +13,8 @@ class DeskSearchTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Buscar por texto del título (CP-DESK-006)")
-    void searchByTitleText() {
+    @DisplayName("A_DESK_006_BuscarPorTextoDelTitulo")
+    void A_DESK_006_BuscarPorTextoDelTitulo() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.search("csv");
         board.waitCardCount(1);
@@ -29,8 +29,8 @@ class DeskSearchTests extends BaseTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Búsqueda sin resultados (CP-DESK-008)")
-    void searchWithoutResults() {
+    @DisplayName("A_DESK_008_BusquedaSinResultados")
+    void A_DESK_008_BusquedaSinResultados() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.search("zzzxxx");
         board.waitCardCount(0);
@@ -45,8 +45,8 @@ class DeskSearchTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Filtros combinados por responsable y prioridad (CP-DESK-009)")
-    void combinedAssigneeAndPriorityFilters() {
+    @DisplayName("A_DESK_009_FiltrosCombinadosPorResponsableYPrioridad")
+    void A_DESK_009_FiltrosCombinadosPorResponsableYPrioridad() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.filterAssignee("Ana");
         board.waitCardCount(2);

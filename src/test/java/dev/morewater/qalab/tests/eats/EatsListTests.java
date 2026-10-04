@@ -14,8 +14,8 @@ class EatsListTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Lista completa de restaurantes con sus datos (CP-EATS-001)")
-    void fullRestaurantList() {
+    @DisplayName("A_EATS_001_ListaCompletaDeRestaurantesConSusDatos")
+    void A_EATS_001_ListaCompletaDeRestaurantesConSusDatos() {
         EatsPage eats = new EatsPage(driver).openListReady();
         assertThat(eats.count()).isEqualTo("8 restaurantes");
         assertThat(eats.restNames()).containsExactly("Taquería El Cóndor", "Pizza Nimbo", "Sushi Aurora", "Burger Jacaranda",
@@ -31,8 +31,8 @@ class EatsListTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Filtrar por un tipo de comida con chip (CP-EATS-002)")
-    void filterByCuisineChip() {
+    @DisplayName("A_EATS_002_FiltrarPorUnTipoDeComidaConChip")
+    void A_EATS_002_FiltrarPorUnTipoDeComidaConChip() {
         EatsPage eats = new EatsPage(driver).openListReady();
         assertThat(eats.count()).isEqualTo("8 restaurantes");
         eats.chip("pizza");
@@ -46,8 +46,8 @@ class EatsListTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Combinar varios chips de tipo de comida (CP-EATS-003)")
-    void combineChips() {
+    @DisplayName("A_EATS_003_CombinarVariosChipsDeTipoDeComida")
+    void A_EATS_003_CombinarVariosChipsDeTipoDeComida() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.chip("tacos");
         eats.chip("sushi");
@@ -61,8 +61,8 @@ class EatsListTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Búsqueda por nombre sin distinguir mayúsculas ni espacios (CP-EATS-004)")
-    void searchIgnoresCaseAndSpaces() {
+    @DisplayName("A_EATS_004_BusquedaPorNombreSinDistinguirMayusculasNiEspacios")
+    void A_EATS_004_BusquedaPorNombreSinDistinguirMayusculasNiEspacios() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.search("  NIMBO  ");
         assertThat(eats.count()).isEqualTo("1 restaurante");
@@ -74,8 +74,8 @@ class EatsListTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Restaurante cerrado no permite pedir (CP-EATS-006)")
-    void closedRestaurantCannotBeOpened() {
+    @DisplayName("A_EATS_006_RestauranteCerradoNoPermitePedir")
+    void A_EATS_006_RestauranteCerradoNoPermitePedir() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.search("sirena");
         assertThat(eats.count()).isEqualTo("1 restaurante");
@@ -92,8 +92,8 @@ class EatsListTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Abrir el menú desde la lista (CP-EATS-007)")
-    void openMenuFromList() {
+    @DisplayName("A_EATS_007_AbrirElMenuDesdeLaLista")
+    void A_EATS_007_AbrirElMenuDesdeLaLista() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.openButton(1).click();
         eats.waitMenu();
@@ -107,8 +107,8 @@ class EatsListTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[eats.visual_open_badge] Persona visual: restaurante cerrado etiquetado «Abierto» (CP-EATS-009)")
-    void closedRestaurantBadgeSaysClosed() {
+    @DisplayName("[eats.visual_open_badge] A_EATS_009_PersonaVisualRestauranteCerradoEtiquetadoAbierto")
+    void A_EATS_009_PersonaVisualRestauranteCerradoEtiquetadoAbierto() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.search("sirena");
         assertThat(eats.restStatus(0)).as("etiqueta del restaurante cerrado").isEqualTo("Cerrado");
@@ -118,8 +118,8 @@ class EatsListTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[eats.flaky_list] Persona intermitente: la lista falla con 503 y Reintentar (CP-EATS-010)")
-    void listAlwaysLoads() {
+    @DisplayName("[eats.flaky_list] A_EATS_010_PersonaIntermitenteLaListaFallaCon503YReintentar")
+    void A_EATS_010_PersonaIntermitenteLaListaFallaCon503YReintentar() {
         EatsPage eats = new EatsPage(driver);
         for (int i = 0; i < 12; i++) {
             eats.openList();

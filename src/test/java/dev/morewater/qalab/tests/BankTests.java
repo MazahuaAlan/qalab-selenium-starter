@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 class BankTests extends BaseTest {
 
     @Test
-    @DisplayName("[bank.transfer_fee_mismatch] Una transferencia descuenta solo el monto indicado")
-    void transferDebitsOnlyTheAmount() {
+    @DisplayName("[bank.transfer_fee_mismatch] A_BANK_901_UnaTransferenciaDescuentaSoloElMontoIndicado")
+    void A_BANK_901_UnaTransferenciaDescuentaSoloElMontoIndicado() {
         BankPage bank = new BankPage(driver);
         bank.startTransfer("200", "Pago de prueba").reachedConfirmStep();
         long before = bank.walletCents();
@@ -21,16 +21,16 @@ class BankTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("[bank.daily_limit_ignored] No permite transferir por encima del límite diario")
-    void dailyLimitIsEnforced() {
+    @DisplayName("[bank.daily_limit_ignored] A_BANK_902_NoPermiteTransferirPorEncimaDelLimiteDiario")
+    void A_BANK_902_NoPermiteTransferirPorEncimaDelLimiteDiario() {
         BankPage bank = new BankPage(driver).startTransfer("10500", "Monto alto");
         bank.amountError();
         assertThat(bank.amountErrorText()).contains("límite diario");
     }
 
     @Test
-    @DisplayName("[bank.visual_columns] Los encabezados Cargo y Abono corresponden a sus columnas")
-    void columnHeadersMatchTheirData() {
+    @DisplayName("[bank.visual_columns] A_BANK_903_LosEncabezadosCargoYAbonoCorrespondenASusColumnas")
+    void A_BANK_903_LosEncabezadosCargoYAbonoCorrespondenASusColumnas() {
         BankPage bank = new BankPage(driver).openMovements();
         assertThat(bank.debitHeader()).startsWith("Cargo");
         assertThat(bank.creditHeader()).isEqualTo("Abono");

@@ -42,8 +42,8 @@ class HotelTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Detalle del hotel con política y tres habitaciones (CP-STAY-024)")
-    void hotelDetailShowsPolicyAndThreeRooms() {
+    @DisplayName("A_STAY_024_DetalleDelHotelConPoliticaYTresHabitaciones")
+    void A_STAY_024_DetalleDelHotelConPoliticaYTresHabitaciones() {
         LocalDate t = today();
         Hotel first = StayModel.byPrice(StayModel.hotelsIn("CUN")).get(0);
         StayResultsPage r = results().open("CUN", t.plusDays(14).toString(), t.plusDays(17).toString(), 2, 0);
@@ -65,8 +65,8 @@ class HotelTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Disponibilidad: agotada, pocas habitaciones y disponible (CP-STAY-025)")
-    void availabilityStates() {
+    @DisplayName("A_STAY_025_DisponibilidadAgotadaPocasHabitacionesYDisponible")
+    void A_STAY_025_DisponibilidadAgotadaPocasHabitacionesYDisponible() {
         LocalDate from = today().plusDays(14);
         for (IntPredicate state : new IntPredicate[] {l -> l == 0, l -> l == 1 || l == 2, l -> l >= 3}) {
             Sample s = find(state, from);
@@ -83,8 +83,8 @@ class HotelTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Capacidad insuficiente según huéspedes (CP-STAY-027)")
-    void insufficientCapacity() {
+    @DisplayName("A_STAY_027_CapacidadInsuficienteSegunHuespedes")
+    void A_STAY_027_CapacidadInsuficienteSegunHuespedes() {
         Hotel hotel = StayModel.hotelById("CUN-5");
         LocalDate in = today().plusDays(14);
         int[][] guests = {{2, 0}, {2, 1}, {3, 1}, {4, 1}};
@@ -103,8 +103,8 @@ class HotelTests extends StayTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[stay.slow_availability] La disponibilidad de habitaciones tarda 3.5 s (stay.slow_availability) (CP-STAY-091)")
-    void availabilityIsFast() {
+    @DisplayName("[stay.slow_availability] A_STAY_091_LaDisponibilidadDeHabitacionesTarda35SStaySlowAvailability")
+    void A_STAY_091_LaDisponibilidadDeHabitacionesTarda35SStaySlowAvailability() {
         LocalDate in = today().plusDays(14);
         Hotel first = StayModel.byPrice(StayModel.hotelsIn("CUN")).get(0);
         StayHotelPage h = hotelPage().open(first.id(), in.toString(), in.plusDays(3).toString(), 2, 0);
@@ -117,8 +117,8 @@ class HotelTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.flaky_availability] La disponibilidad falla con 503 al azar (stay.flaky_availability) (CP-STAY-092)")
-    void availabilityNeverFails() {
+    @DisplayName("[stay.flaky_availability] A_STAY_092_LaDisponibilidadFallaCon503AlAzarStayFlakyAvailability")
+    void A_STAY_092_LaDisponibilidadFallaCon503AlAzarStayFlakyAvailability() {
         LocalDate in = today().plusDays(14);
         Hotel first = StayModel.byPrice(StayModel.hotelsIn("CUN")).get(0);
         // Semilla elegida para que la primera consulta caiga en el 35 % de fallos si el defecto está activo.

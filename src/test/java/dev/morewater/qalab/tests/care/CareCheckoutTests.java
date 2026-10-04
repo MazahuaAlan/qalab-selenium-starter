@@ -19,8 +19,8 @@ class CareCheckoutTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cita presencial sin seguro: copago completo (CP-CARE-057)")
-    void uninsuredPaysFullCopay() {
+    @DisplayName("A_CARE_057_CitaPresencialSinSeguroCopagoCompleto")
+    void A_CARE_057_CitaPresencialSinSeguroCopagoCompleto() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0);
@@ -46,8 +46,8 @@ class CareCheckoutTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cita con seguro: copago del 20 % (CP-CARE-058)")
-    void insuredPaysTwentyPercent() {
+    @DisplayName("A_CARE_058_CitaConSeguroCopagoDel20")
+    void A_CARE_058_CitaConSeguroCopagoDel20() {
         CarePage c = care();
         c.completeProfile(Prof.valid().insured());
         c.toStep2("cardiologia", 0);
@@ -69,8 +69,8 @@ class CareCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[care.copay_wrong] Persona descuadre: copago con seguro es 80 % en lugar de 20 % (CP-CARE-060)")
-    void insuredCopayIsTwentyPercent() {
+    @DisplayName("[care.copay_wrong] A_CARE_060_PersonaDescuadreCopagoConSeguroEs80EnLugarDe20")
+    void A_CARE_060_PersonaDescuadreCopagoConSeguroEs80EnLugarDe20() {
         CarePage c = care();
         c.completeProfile(Prof.valid().insured());
         c.toStep3("general", 0, 1);
@@ -85,8 +85,8 @@ class CareCheckoutTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Retención del horario: temporizador inicia en 05:00 y expira (CP-CARE-065)")
-    void holdTimerStartsAtFiveMinutesAndExpires() {
+    @DisplayName("A_CARE_065_RetencionDelHorarioTemporizadorIniciaEn0500YExpira")
+    void A_CARE_065_RetencionDelHorarioTemporizadorIniciaEn0500YExpira() {
         CarePage c = care();
         c.completeProfile();
         c.toStep3("general", 0, 1);
@@ -102,8 +102,8 @@ class CareCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[care.slot_hold_short] Persona sesión corta: la retención dura 15 s en lugar de 5 min (CP-CARE-066)")
-    void holdLastsFiveMinutes() {
+    @DisplayName("[care.slot_hold_short] A_CARE_066_PersonaSesionCortaLaRetencionDura15SEnLugarDe5Min")
+    void A_CARE_066_PersonaSesionCortaLaRetencionDura15SEnLugarDe5Min() {
         CarePage c = care();
         c.completeProfile();
         c.toStep3("general", 0, 1);
@@ -121,8 +121,8 @@ class CareCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[care.amnesia_wizard] Persona amnesia: recargar el asistente pierde el borrador (CP-CARE-069)")
-    void wizardSurvivesReload() {
+    @DisplayName("[care.amnesia_wizard] A_CARE_069_PersonaAmnesiaRecargarElAsistentePierdeElBorrador")
+    void A_CARE_069_PersonaAmnesiaRecargarElAsistentePierdeElBorrador() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0).pickDay(1);
@@ -139,8 +139,8 @@ class CareCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[care.flaky_booking] Persona intermitente: reserva fallida deja cita duplicada (CP-CARE-071)")
-    void failedBookingCreatesNoAppointmentAndRetryBooksOnce() {
+    @DisplayName("[care.flaky_booking] A_CARE_071_PersonaIntermitenteReservaFallidaDejaCitaDuplicada")
+    void A_CARE_071_PersonaIntermitenteReservaFallidaDejaCitaDuplicada() {
         CarePage c = care();
         c.completeProfile();
         c.toStep2("general", 0);

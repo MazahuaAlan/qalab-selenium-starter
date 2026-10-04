@@ -29,8 +29,8 @@ class EatsCheckoutTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Desglose de totales con tamaño, extra y cantidad (CP-EATS-036)")
-    void totalsBreakdown() {
+    @DisplayName("A_EATS_036_DesgloseDeTotalesConTamanoExtraYCantidad")
+    void A_EATS_036_DesgloseDeTotalesConTamanoExtraYCantidad() {
         CheckoutPage co = toCheckout("r1", 0, "md", 2, "queso");
         long sub = (base + 2500 + 1500) * 2;
         assertThat(co.read("eats-summary")).contains("Taquería El Cóndor").contains("2 × Tacos al pastor (Mediano, Queso extra)");
@@ -47,8 +47,8 @@ class EatsCheckoutTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Restaurante con envío gratis (Burger Jacaranda) (CP-EATS-037)")
-    void freeDeliveryRestaurant() {
+    @DisplayName("A_EATS_037_RestauranteConEnvioGratisBurgerJacaranda")
+    void A_EATS_037_RestauranteConEnvioGratisBurgerJacaranda() {
         CheckoutPage co = toCheckout("r4", 0, null, 1);
         assertThat(co.subtotal()).isEqualTo(base);
         assertThat(co.delivery()).isZero();
@@ -60,8 +60,8 @@ class EatsCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[eats.extras_not_charged] Persona descuadre: los extras se muestran pero no se cobran (CP-EATS-042)")
-    void extrasAreCharged() {
+    @DisplayName("[eats.extras_not_charged] A_EATS_042_PersonaDescuadreLosExtrasSeMuestranPeroNoSeCobran")
+    void A_EATS_042_PersonaDescuadreLosExtrasSeMuestranPeroNoSeCobran() {
         CheckoutPage co = toCheckout("r1", 0, "gd", 1, "queso", "guac");
         long unit = base + 5000 + 1500 + 2500;
         co.tip(0);
@@ -72,8 +72,8 @@ class EatsCheckoutTests extends BaseTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Límite superior de la propina personalizada: 50 % (CP-EATS-045)")
-    void customTipUpperLimit() {
+    @DisplayName("A_EATS_045_LimiteSuperiorDeLaPropinaPersonalizada50")
+    void A_EATS_045_LimiteSuperiorDeLaPropinaPersonalizada50() {
         CheckoutPage co = toCheckout("r1", 0, null, 1);
         long fixed = base + pct(base, 0.08) + 2900;
         co.customTip("50");
@@ -88,8 +88,8 @@ class EatsCheckoutTests extends BaseTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Propina personalizada inválida se ignora (CP-EATS-046)")
-    void invalidCustomTipIsIgnored() {
+    @DisplayName("A_EATS_046_PropinaPersonalizadaInvalidaSeIgnora")
+    void A_EATS_046_PropinaPersonalizadaInvalidaSeIgnora() {
         CheckoutPage co = toCheckout("r1", 0, null, 1);
         long fixed = base + pct(base, 0.08) + 2900;
         co.tip(15);
@@ -106,8 +106,8 @@ class EatsCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[eats.visual_tip] Persona visual: el botón de propina resaltado no es el elegido (CP-EATS-048)")
-    void highlightedTipMatchesChosen() {
+    @DisplayName("[eats.visual_tip] A_EATS_048_PersonaVisualElBotonDePropinaResaltadoNoEsElElegido")
+    void A_EATS_048_PersonaVisualElBotonDePropinaResaltadoNoEsElElegido() {
         CheckoutPage co = toCheckout("r1", 0, null, 1);
         assertThat(co.tipPressed(10)).as("propina inicial 10 % resaltada").isTrue();
         co.tip(20);
@@ -120,8 +120,8 @@ class EatsCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[eats.tip_percent_wrong] Persona descuadre: la propina se calcula sobre subtotal + servicio + envío (CP-EATS-049)")
-    void tipIsPercentOfFoodSubtotal() {
+    @DisplayName("[eats.tip_percent_wrong] A_EATS_049_PersonaDescuadreLaPropinaSeCalculaSobreSubtotalServicioEnvio")
+    void A_EATS_049_PersonaDescuadreLaPropinaSeCalculaSobreSubtotalServicioEnvio() {
         CheckoutPage co = toCheckout("r1", 0, null, 1);
         assertThat(co.subtotal()).isEqualTo(base);
         co.tip(20);
@@ -131,8 +131,8 @@ class EatsCheckoutTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("PRIMERA: 20 % de descuento por debajo del tope (CP-EATS-050)")
-    void primeraDiscountBelowCap() {
+    @DisplayName("A_EATS_050_PRIMERA20DeDescuentoPorDebajoDelTope")
+    void A_EATS_050_PRIMERA20DeDescuentoPorDebajoDelTope() {
         CheckoutPage co = toCheckout("r1", 0, null, 1);
         long before = co.total();
         co.applyPromo("PRIMERA");
@@ -144,8 +144,8 @@ class EatsCheckoutTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("ENVIOGRATIS elimina el costo de envío (CP-EATS-053)")
-    void freeShippingPromo() {
+    @DisplayName("A_EATS_053_ENVIOGRATISEliminaElCostoDeEnvio")
+    void A_EATS_053_ENVIOGRATISEliminaElCostoDeEnvio() {
         CheckoutPage co = toCheckout("r1", 0, null, 1);
         assertThat(co.delivery()).isEqualTo(2900);
         long before = co.total();
@@ -159,8 +159,8 @@ class EatsCheckoutTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[eats.promo_not_capped] Persona descuadre: PRIMERA ignora el tope de $80.00 (CP-EATS-059)")
-    void primeraDiscountIsCapped() {
+    @DisplayName("[eats.promo_not_capped] A_EATS_059_PersonaDescuadrePRIMERAIgnoraElTopeDe8000")
+    void A_EATS_059_PersonaDescuadrePRIMERAIgnoraElTopeDe8000() {
         CheckoutPage co = toCheckout("r1", 0, null, 10);
         long sub = base * 10;
         assertThat(pct(sub, 0.20)).as("el 20 % debe superar el tope para que la prueba aplique").isGreaterThan(8000);

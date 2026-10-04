@@ -23,8 +23,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Guardar el formulario vacío muestra todos los errores obligatorios (CP-CARE-014)")
-    void emptyFormShowsAllErrors() {
+    @DisplayName("A_CARE_014_GuardarElFormularioVacioMuestraTodosLosErroresObligatorios")
+    void A_CARE_014_GuardarElFormularioVacioMuestraTodosLosErroresObligatorios() {
         CarePage c = care().openProfile();
         c.save();
         c.awaitSaveOutcome();
@@ -41,8 +41,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Perfil válido se guarda y persiste al recargar (CP-CARE-015)")
-    void validProfileSavesAndPersists() {
+    @DisplayName("A_CARE_015_PerfilValidoSeGuardaYPersisteAlRecargar")
+    void A_CARE_015_PerfilValidoSeGuardaYPersisteAlRecargar() {
         CarePage c = care().completeProfile();
         assertThat(c.textOf("care-saved")).isEqualTo("Perfil guardado.");
         driver.navigate().refresh();
@@ -65,8 +65,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Fecha de nacimiento: hoy y futuro no son válidas (CP-CARE-017)")
-    void birthDateMustBeBeforeToday() {
+    @DisplayName("A_CARE_017_FechaDeNacimientoHoyYFuturoNoSonValidas")
+    void A_CARE_017_FechaDeNacimientoHoyYFuturoNoSonValidas() {
         CarePage c = care().openProfile();
         String err = "La fecha de nacimiento debe ser anterior a hoy.";
         String yesterday = c.isoPlus(-1);
@@ -81,8 +81,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Sexo es obligatorio (CP-CARE-018)")
-    void sexIsRequired() {
+    @DisplayName("A_CARE_018_SexoEsObligatorio")
+    void A_CARE_018_SexoEsObligatorio() {
         CarePage c = care().openProfile();
         c.fillProfile(Prof.valid().sex(null)).save().awaitSaveOutcome();
         assertThat(c.error("sex")).isEqualTo("Elige una opción.");
@@ -94,8 +94,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Teléfono de emergencia: exactamente 10 dígitos (CP-CARE-019)")
-    void emergencyPhoneMustHave10Digits() {
+    @DisplayName("A_CARE_019_TelefonoDeEmergenciaExactamente10Digitos")
+    void A_CARE_019_TelefonoDeEmergenciaExactamente10Digitos() {
         CarePage c = care().openProfile();
         for (String bad : new String[] {"551234567", "55123456789", "55123abc78"}) {
             c.fillProfile(Prof.valid().phone(bad)).save().awaitSaveOutcome();
@@ -109,8 +109,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Aviso de privacidad obligatorio (CP-CARE-021)")
-    void privacyNoticeIsRequired() {
+    @DisplayName("A_CARE_021_AvisoDePrivacidadObligatorio")
+    void A_CARE_021_AvisoDePrivacidadObligatorio() {
         CarePage c = care().openProfile();
         c.fillProfile(Prof.valid().consent(false)).save().awaitSaveOutcome();
         assertThat(c.error("consent")).isEqualTo("Debes aceptar el aviso de privacidad.");
@@ -122,8 +122,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("CURP con formato inválido por longitud (CP-CARE-024)")
-    void curpWithInvalidFormatIsRejected() {
+    @DisplayName("A_CARE_024_CURPConFormatoInvalidoPorLongitud")
+    void A_CARE_024_CURPConFormatoInvalidoPorLongitud() {
         CarePage c = care().openProfile();
         for (String bad : new String[] {"123", "PEGA900520HDFRRN0", "PBGA900520HDFRRN09"}) {
             c.fillProfile(Prof.valid().curp(bad)).save().awaitSaveOutcome();
@@ -134,8 +134,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("CURP no coincide con la fecha de nacimiento (CP-CARE-026)")
-    void curpMustMatchBirthDate() {
+    @DisplayName("A_CARE_026_CURPNoCoincideConLaFechaDeNacimiento")
+    void A_CARE_026_CURPNoCoincideConLaFechaDeNacimiento() {
         CarePage c = care().openProfile();
         c.fillProfile(Prof.valid().birth("1991-01-01")).save().awaitSaveOutcome();
         assertThat(c.error("curp")).isEqualTo("La CURP no coincide con la fecha de nacimiento.");
@@ -152,8 +152,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("CURP no coincide con el sexo (CP-CARE-027)")
-    void curpMustMatchSex() {
+    @DisplayName("A_CARE_027_CURPNoCoincideConElSexo")
+    void A_CARE_027_CURPNoCoincideConElSexo() {
         CarePage c = care().openProfile();
         c.fillProfile(Prof.valid().sex("M")).save().awaitSaveOutcome();
         assertThat(c.error("curp")).isEqualTo("La CURP no coincide con el sexo indicado.");
@@ -167,8 +167,8 @@ class CareProfileTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[care.curp_unvalidated] Persona descuadre: la CURP no se valida contra fecha ni sexo (CP-CARE-028)")
-    void curpIsValidatedAgainstBirthAndSex() {
+    @DisplayName("[care.curp_unvalidated] A_CARE_028_PersonaDescuadreLaCURPNoSeValidaContraFechaNiSexo")
+    void A_CARE_028_PersonaDescuadreLaCURPNoSeValidaContraFechaNiSexo() {
         CarePage c = care().openProfile();
         c.fillProfile(Prof.valid().birth("1991-01-01").sex("M")).save().awaitSaveOutcome();
         assertThat(c.saved()).as("un perfil incoherente no debe guardarse").isFalse();
@@ -177,8 +177,8 @@ class CareProfileTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("CURP en minúsculas se acepta y se guarda en mayúsculas (CP-CARE-029)")
-    void lowercaseCurpIsStoredUppercase() {
+    @DisplayName("A_CARE_029_CURPEnMinusculasSeAceptaYSeGuardaEnMayusculas")
+    void A_CARE_029_CURPEnMinusculasSeAceptaYSeGuardaEnMayusculas() {
         CarePage c = care().openProfile();
         c.fillProfile(Prof.valid().curp("pega900520hdfrrn09"));
         assertThat(c.el("care-curp").getCssValue("text-transform")).isEqualTo("uppercase");

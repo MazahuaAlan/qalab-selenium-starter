@@ -13,8 +13,8 @@ class HoldTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Reservar una habitación inicia la retención de 10 minutos (CP-STAY-031)")
-    void reservingStartsTenMinuteHold() {
+    @DisplayName("A_STAY_031_ReservarUnaHabitacionIniciaLaRetencionDe10Minutos")
+    void A_STAY_031_ReservarUnaHabitacionIniciaLaRetencionDe10Minutos() {
         Plan p = defaultPlan(14);
         StayBookPage b = startBooking(p);
         assertThat(b.holdText()).contains("Tu habitación está retenida");
@@ -26,8 +26,8 @@ class HoldTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Expira la retención a los 10 minutos y libera la habitación (CP-STAY-032)")
-    void holdExpiresAfterTenMinutes() {
+    @DisplayName("A_STAY_032_ExpiraLaRetencionALos10MinutosYLiberaLaHabitacion")
+    void A_STAY_032_ExpiraLaRetencionALos10MinutosYLiberaLaHabitacion() {
         StayBookPage b = startBooking(defaultPlan(14));
         assertThat(b.timer()).matches("^(10:00|09:5\\d)$");
 
@@ -47,8 +47,8 @@ class HoldTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Recargar conserva el borrador y el temporizador continúa (CP-STAY-033)")
-    void reloadKeepsDraftAndTimer() {
+    @DisplayName("A_STAY_033_RecargarConservaElBorradorYElTemporizadorContinua")
+    void A_STAY_033_RecargarConservaElBorradorYElTemporizadorContinua() {
         StayBookPage b = startBooking(defaultPlan(14));
         b.name("Ana Pérez López");
         int noted = b.timerSeconds();
@@ -63,8 +63,8 @@ class HoldTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.amnesia_booking] Al recargar se pierde la reserva en curso (stay.amnesia_booking) (CP-STAY-096)")
-    void reloadKeepsBookingInProgress() {
+    @DisplayName("[stay.amnesia_booking] A_STAY_096_AlRecargarSePierdeLaReservaEnCursoStayAmnesiaBooking")
+    void A_STAY_096_AlRecargarSePierdeLaReservaEnCursoStayAmnesiaBooking() {
         StayBookPage b = startBooking(defaultPlan(14));
         b.name("Ana Pérez López");
         b.reload();
@@ -77,8 +77,8 @@ class HoldTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.hold_short] La retención dura 20 s en vez de 10 min (stay.hold_short) (CP-STAY-097)")
-    void holdLastsTenMinutesNotTwentySeconds() {
+    @DisplayName("[stay.hold_short] A_STAY_097_LaRetencionDura20SEnVezDe10MinStayHoldShort")
+    void A_STAY_097_LaRetencionDura20SEnVezDe10MinStayHoldShort() {
         StayBookPage b = startBooking(defaultPlan(14));
         assertThat(b.timer()).as("temporizador inicial").matches("^(10:00|09:5\\d)$");
         b.ageHold(22);

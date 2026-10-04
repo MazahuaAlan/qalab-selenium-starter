@@ -15,8 +15,8 @@ class DeskTicketTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Ficha de un ticket con todos sus datos (CP-DESK-047)")
-    void ticketDetailShowsAllData() {
+    @DisplayName("A_DESK_047_FichaDeUnTicketConTodosSusDatos")
+    void A_DESK_047_FichaDeUnTicketConTodosSusDatos() {
         DeskTicketPage ticket = new DeskTicketPage(driver).open("DK-4");
         assertThat(ticket.id()).isEqualTo("DK-4");
         assertThat(ticket.title()).isEqualTo("Error 500 al exportar CSV grande");
@@ -33,8 +33,8 @@ class DeskTicketTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Editar el título correctamente con Enter (CP-DESK-049)")
-    void editTitleWithEnter() {
+    @DisplayName("A_DESK_049_EditarElTituloCorrectamenteConEnter")
+    void A_DESK_049_EditarElTituloCorrectamenteConEnter() {
         String title = "Filtro por rango de fechas en movimientos";
         DeskTicketPage ticket = new DeskTicketPage(driver).open("DK-3");
         ticket.startTitleEdit();
@@ -49,8 +49,8 @@ class DeskTicketTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Editar un título tardando más de 20 s se guarda (comportamiento correcto) (CP-DESK-052)")
-    void slowTitleEditIsSaved() {
+    @DisplayName("A_DESK_052_EditarUnTituloTardandoMasDe20SSeGuardaComportamientoCorrecto")
+    void A_DESK_052_EditarUnTituloTardandoMasDe20SSeGuardaComportamientoCorrecto() {
         DeskTicketPage ticket = new DeskTicketPage(driver).open("DK-3");
         ticket.startTitleEdit();
         ticket.typeNewTitle(NEW_TITLE);
@@ -63,8 +63,8 @@ class DeskTicketTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cambiar estado, responsable, prioridad y etiqueta desde la ficha (CP-DESK-053)")
-    void changeSideFields() {
+    @DisplayName("A_DESK_053_CambiarEstadoResponsablePrioridadYEtiquetaDesdeLaFicha")
+    void A_DESK_053_CambiarEstadoResponsablePrioridadYEtiquetaDesdeLaFicha() {
         DeskTicketPage ticket = new DeskTicketPage(driver).open("DK-3");
         ticket.changeStatus("revision");
         ticket.waitLogFirst("Estado: En revisión");
@@ -86,8 +86,8 @@ class DeskTicketTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("El Administrador elimina un ticket con confirmación (CP-DESK-076)")
-    void adminDeletesTicketWithConfirmation() {
+    @DisplayName("A_DESK_076_ElAdministradorEliminaUnTicketConConfirmacion")
+    void A_DESK_076_ElAdministradorEliminaUnTicketConConfirmacion() {
         DeskTicketPage ticket = new DeskTicketPage(driver).open("DK-1");
         ticket.setRole("admin");
         ticket.clickDelete();

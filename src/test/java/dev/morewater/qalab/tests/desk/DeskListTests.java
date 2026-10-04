@@ -14,8 +14,8 @@ class DeskListTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Vista de lista con todas las filas y orden inicial por id (CP-DESK-059)")
-    void listShowsAllRowsOrderedById() {
+    @DisplayName("A_DESK_059_VistaDeListaConTodasLasFilasYOrdenInicialPorId")
+    void A_DESK_059_VistaDeListaConTodasLasFilasYOrdenInicialPorId() {
         DeskListPage list = new DeskListPage(driver).open();
         assertThat(list.rowIds()).containsExactly("DK-1", "DK-2", "DK-3", "DK-4", "DK-5", "DK-6", "DK-7", "DK-8");
         assertThat(list.sortAria("id")).isEqualTo("ascending");
@@ -26,8 +26,8 @@ class DeskListTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Marca de «Vencido» solo si la fecha es anterior a hoy y no está Hecho (CP-DESK-063)")
-    void overdueOnlyWhenBeforeTodayAndNotDone() {
+    @DisplayName("A_DESK_063_MarcaDeVencidoSoloSiLaFechaEsAnteriorAHoyYNoEstaHecho")
+    void A_DESK_063_MarcaDeVencidoSoloSiLaFechaEsAnteriorAHoyYNoEstaHecho() {
         DeskNewPage form = new DeskNewPage(driver);
         String today = form.open().today();
         String id = form.createTicket("Ticket que vence hoy mismo", DeskNewPage.DEFAULT_DESC, today);
@@ -44,8 +44,8 @@ class DeskListTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cambiar tres tickets a Hecho en lote (CP-DESK-066)")
-    void bulkChangeThreeTicketsToDone() {
+    @DisplayName("A_DESK_066_CambiarTresTicketsAHechoEnLote")
+    void A_DESK_066_CambiarTresTicketsAHechoEnLote() {
         DeskListPage list = new DeskListPage(driver).open();
         list.check("DK-1");
         list.check("DK-2");
