@@ -26,10 +26,26 @@ public abstract class BasePage {
 
     protected void click(String dataTest) { wait.until(ExpectedConditions.elementToBeClickable(t(dataTest))).click(); }
 
+    /**
+     * Escribe en un campo sin heredar texto anterior. En una página de React, clear() puede ejecutarse mientras el campo se vuelve a
+     * pintar y conservar el valor viejo (el texto nuevo se concatena al anterior). Se verifica el valor y se reintenta borrando con el teclado.
+     */
     protected void type(String dataTest, String text) {
         WebElement el = visible(dataTest);
-        el.clear();
-        el.sendKeys(text);
+        boolean secret = "password".equals(el.getAttribute("type"));
+        dev.morewater.qalab.core.Evidence.pause();
+        try {
+            for (int attempt = 0; attempt < 3; attempt++) {
+                el.clear();
+                String left = el.getAttribute("value");
+                if (left != null && !left.isEmpty()) el.sendKeys(org.openqa.selenium.Keys.chord(org.openqa.selenium.Keys.CONTROL, "a"), org.openqa.selenium.Keys.DELETE);
+                el.sendKeys(text);
+                if (text.equals(el.getAttribute("value"))) break;
+            }
+        } finally {
+            dev.morewater.qalab.core.Evidence.resume();
+        }
+        dev.morewater.qalab.core.Evidence.snapshot("Escribir \"" + (secret ? "•".repeat(text.length()) : text) + "\" en [data-test='" + dataTest + "']");
     }
 
     /**

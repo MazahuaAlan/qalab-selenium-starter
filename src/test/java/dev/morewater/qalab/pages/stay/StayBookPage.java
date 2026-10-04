@@ -53,7 +53,13 @@ public class StayBookPage extends StayBase {
     public String termsError() { return errorOf("stay-terms-error"); }
     private String errorOf(String id) { return present(id) ? text(id) : ""; }
 
-    public StayBookPage clickConfirm() { click("stay-confirm"); return this; }
+    /** Clic por JavaScript: al aparecer o desaparecer un mensaje de error el botón se desplaza y un clic por coordenadas puede caer fuera. */
+    public StayBookPage clickConfirm() {
+        org.openqa.selenium.WebElement b = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable(t("stay-confirm")));
+        ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'}); arguments[0].click();", b);
+        dev.morewater.qalab.core.Evidence.snapshot("Clic en [data-test=stay-confirm] \"" + b.getText().trim() + "\"");
+        return this;
+    }
     public String confirmText() { return text("stay-confirm"); }
     public boolean confirmEnabled() { return enabled("stay-confirm"); }
     public boolean payErrorVisible() { return present("stay-pay-error"); }

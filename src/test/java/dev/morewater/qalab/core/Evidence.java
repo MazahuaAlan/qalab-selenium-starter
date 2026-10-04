@@ -74,6 +74,9 @@ public final class Evidence {
     /** Registra un paso con captura del driver crudo; omite la captura si es idéntica a la anterior. */
     static void step(WebDriver raw, String label) { capture(raw, label, false, false); }
 
+    /** Captura manual de un paso (para acciones que no pasan por el decorador, como un clic ejecutado con JavaScript). */
+    public static void snapshot(String label) { step(DriverFactory.raw(), label); }
+
     static void capture(WebDriver raw, String label, boolean force, boolean ignorePause) {
         TestRecord t = current;
         if (!enabled() || t == null || (paused > 0 && !ignorePause) || !(raw instanceof TakesScreenshot shot)) return;
