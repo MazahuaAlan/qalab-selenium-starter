@@ -140,6 +140,29 @@ public class BankTransferPage extends BasePage {
     public Number attempts() { return js("return window.qalab.state().bank.otp.attempts"); }
     public BankTransferPage clickResend(long callsBefore) { click("bank-resend"); waitForCallsAfter(callsBefore); return this; }
 
+    /** Escribe el código vigente, pulsa verificar y devuelve los ms hasta ver el comprobante. */
+    public long submitCorrectCodeMillis() {
+        enterCode(currentCode());
+        long t0 = System.nanoTime();
+        click("bank-otp-submit");
+        visible("bank-receipt-title");
+        return (System.nanoTime() - t0) / 1_000_000;
+    }
+
+    /** true si tras verificar apareció el comprobante; false si apareció el error del servicio. */
+    public boolean submitCodeSucceeded() {
+        enterCode(currentCode());
+        long before = calls();
+        click("bank-otp-submit");
+        wait.until(d -> present("bank-receipt-title") || calls() > before);
+        wait.until(d -> present("bank-receipt-title") || present("bank-otp-error"));
+        return present("bank-receipt-title");
+    }
+
+    public boolean otpErrorVisible() { return present("bank-otp-error"); }
+
+    public String smsTextFromState() { return js("return window.qalab.state().bank.sms[0].text"); }
+
     public BankTransferPage setWallet(long cents) { js("window.qalab.setWallet(arguments[0])", cents); return this; }
 
     public long smsCount() { return ((Number) js("return window.qalab.state().bank.sms.length")).longValue(); }

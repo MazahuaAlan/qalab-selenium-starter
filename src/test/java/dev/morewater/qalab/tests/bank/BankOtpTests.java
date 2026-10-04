@@ -133,7 +133,7 @@ class BankOtpTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Persona amnesia: al recargar se pierde la transferencia en curso (CP-BANK-022)")
+    @DisplayName("[bank.amnesia_transfer] Persona amnesia: al recargar se pierde la transferencia en curso (CP-BANK-022)")
     @Tag("bug")
     void draftSurvivesReloadAtCodeStep() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("100", "Pago de prueba");
