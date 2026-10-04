@@ -1,0 +1,88 @@
+package dev.morewater.qalab.tests.stay;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import dev.morewater.qalab.pages.stay.StayStaysPage;
+import dev.morewater.qalab.pages.stay.WalletPage;
+import dev.morewater.qalab.stay.StayModel;
+import java.time.LocalDate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+
+/** HU-STAY-11: cancelación y política de reembolso (gratis con 3 o más días; si no, se pierde la primera noche). */
+class CancelTests extends StayTest {
+
+    private static String mxn(long c) { return StayModel.mxn(c); }
+
+    @Test
+    @Tag("obligatorio")
+    @DisplayName("Cancelación gratuita con 14 días de anticipación (CP-STAY-067)")
+    void freeCancellationWithTwoWeeksNotice() {
+        Plan p = defaultPlan(14);
+        long total = p.quote().total();
+        long start = search().walletCents();
+        String code = completeBooking(p);
+        StayStaysPage s = stays().open().openCancel();
+        assertThat(s.modalTitle()).isEqualTo("¿Cancelar la reserva " + code + "?");
+        assertThat(s.cancelPolicy()).isEqualTo("Cancelación gratuita: recibirás " + mxn(total) + " en tu billetera.");
+        s.confirmCancel().waitModalClosed();
+        assertThat(s.message()).isEqualTo("Reserva " + code + " cancelada.");
+        assertThat(s.status()).isEqualTo("cancelada");
+        assertThat(s.hasModify()).isFalse();
+        assertThat(s.hasCancel()).isFalse();
+        assertThat(s.walletCents()).isEqualTo(start);
+        s.eventually(() -> assertThat(s.walletChipCents()).isEqualTo(start));
+
+        WalletPage w = wallet().open();
+        w.waitRows();
+        assertThat(w.label(0)).isEqualTo("Reembolso estancia " + code);
+        assertThat(w.amount(0)).isEqualTo(mxn(total));
+    }
+
+    /** Reserva con entrada mañana (3 noches), cancela y devuelve {saldo inicial, total, reembolso anunciado}. */
+    private long[] lateCancellation(Plan p, String expectedPolicy) {
+        long start = search().walletCents();
+        String code = completeBooking(p);
+        long total = p.quote().total();
+        StayStaysPage s = stays().open().openCancel();
+        String policy = s.cancelPolicy();
+        if (expectedPolicy != null) assertThat(policy).isEqualTo(expectedPolicy);
+        Matcher m = Pattern.compile("recibirás (\\$[\\d,]+\\.\\d{2})").matcher(policy);
+        assertThat(m.find()).as("monto anunciado en: " + policy).isTrue();
+        long announced = dev.morewater.qalab.pages.BasePage.cents(m.group(1));
+        s.confirmCancel().waitModalClosed();
+        assertThat(s.message()).isEqualTo("Reserva " + code + " cancelada.");
+        assertThat(s.status()).isEqualTo("cancelada");
+        return new long[] {start, total, announced};
+    }
+
+    @Test
+    @Tag("obligatorio")
+    @DisplayName("Cancelación tardía pierde la primera noche (CP-STAY-069)")
+    void lateCancellationLosesFirstNight() {
+        LocalDate tomorrow = today().plusDays(1);
+        Plan p = planOn(tomorrow, 3);
+        long total = p.quote().total();
+        long refund = StayModel.refund(total, 3, tomorrow, today());
+        long[] r = lateCancellation(p, "Cancelación tardía: se cobra la primera noche y recibirás " + mxn(refund) + ".");
+        assertThat(r[2]).isEqualTo(refund);
+        assertThat(stays().walletCents()).as("saldo final").isEqualTo(r[0] - total + refund);
+        stays().eventually(() -> assertThat(stays().walletChipCents()).isEqualTo(r[0] - total + refund));
+    }
+
+    @Test
+    @Tag("obligatorio")
+    @Tag("bug")
+    @DisplayName("[stay.refund_wrong] El reembolso ignora la política (stay.refund_wrong) (CP-STAY-100)")
+    void refundMatchesAnnouncedAmount() {
+        LocalDate tomorrow = today().plusDays(1);
+        Plan p = planOn(tomorrow, 3);
+        long[] r = lateCancellation(p, null);
+        long refund = StayModel.refund(r[1], 3, tomorrow, today());
+        assertThat(r[2]).as("monto anunciado").isEqualTo(refund);
+        assertThat(stays().walletCents() - (r[0] - r[1])).as("monto acreditado = anunciado").isEqualTo(r[2]);
+    }
+}
