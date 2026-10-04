@@ -113,6 +113,33 @@ public class BankTransferPage extends BasePage {
 
     public String amountHint() { return visible("bank-amount").findElement(By.xpath("following-sibling::span[contains(@class,'hint')]")).getText(); }
 
+    /** Elige «Nuevo beneficiario…» y captura nombre y CLABE. */
+    public BankTransferPage newBeneficiary(String name, String clabe) {
+        chooseBeneficiary("new");
+        visible("bank-new-beneficiary");
+        setValue("bank-ben-name", name);
+        setValue("bank-ben-clabe", clabe);
+        return this;
+    }
+    public String clabeExample() { return text("bank-clabe-example"); }
+    public String clabeError() { return text("bank-ben-clabe-error"); }
+    public boolean hasClabeError() { return present("bank-ben-clabe-error"); }
+    public boolean saveChecked() { return visible("bank-ben-save").isSelected(); }
+    public BankTransferPage toggleSave() { click("bank-ben-save"); return this; }
+    public String smsText(int i) { return text("sms-text-" + i); }
+
+    public Number jsExpiresInMs() { return js("return window.qalab.state().bank.otp.expiresAt - Date.now()"); }
+    /** Adelanta el vencimiento del código vigente (simula el paso de 2 minutos sin esperarlos). */
+    public BankTransferPage expireCodeNow() {
+        js("const k='qalab.state.v1'; const s=JSON.parse(localStorage.getItem(k)); s.bank.otp.expiresAt=Date.now()-1000; localStorage.setItem(k, JSON.stringify(s));");
+        reload().waitAnyStep();
+        visible("bank-otp-form");
+        return this;
+    }
+    public long callsNow() { return calls(); }
+    public Number attempts() { return js("return window.qalab.state().bank.otp.attempts"); }
+    public BankTransferPage clickResend(long callsBefore) { click("bank-resend"); waitForCallsAfter(callsBefore); return this; }
+
     public BankTransferPage setWallet(long cents) { js("window.qalab.setWallet(arguments[0])", cents); return this; }
 
     public long smsCount() { return ((Number) js("return window.qalab.state().bank.sms.length")).longValue(); }
