@@ -91,6 +91,8 @@ public class EatsPage extends BasePage {
     public void minus() { click("eats-opt-minus"); }
     public boolean plusEnabled() { return visible("eats-opt-plus").isEnabled(); }
     public boolean minusEnabled() { return visible("eats-opt-minus").isEnabled(); }
+    public String addButtonText() { return text("eats-opt-add"); }
+    public boolean has(String dataTest) { return present(dataTest); }
     public String dialogQty() { return text("eats-opt-qty"); }
     public String dialogTotal() { return text("eats-opt-total"); }
     public long dialogTotalCents() { return cents(dialogTotal()); }
@@ -98,7 +100,7 @@ public class EatsPage extends BasePage {
     public String notesValue() { return visible("eats-notes").getAttribute("value"); }
     public void confirmAdd() { click("eats-opt-add"); wait.until(ExpectedConditions.invisibilityOfElementLocated(t("eats-modal"))); }
     public void cancelDialog() { click("eats-opt-close"); wait.until(ExpectedConditions.invisibilityOfElementLocated(t("eats-modal"))); }
-    public void pressEscape() { driver.switchTo().activeElement().sendKeys(Keys.ESCAPE); }
+    public void pressEscape() { driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE); }
     public void waitDialogClosed() { wait.until(ExpectedConditions.invisibilityOfElementLocated(t("eats-modal"))); }
 
     /** Agrega un platillo con opciones desde el menú actual. */
@@ -129,6 +131,8 @@ public class EatsPage extends BasePage {
     public void linePlus(String itemId) { click("eats-plus-" + itemId); }
     public void lineMinus(String itemId) { click("eats-minus-" + itemId); }
     public void lineRemove(String itemId) { click("eats-remove-" + itemId); }
+    public String navCart() { return text("nav-eats-checkout"); }
+    public List<WebElement> lines(String itemId) { return driver.findElements(t("eats-line-" + itemId)); }
     public boolean cartCleared() { return present("eats-cart-empty"); }
     public void goCheckout() { click("eats-go-checkout"); visibleEither(); }
 
