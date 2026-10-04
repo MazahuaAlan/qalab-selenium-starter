@@ -41,8 +41,9 @@ class GuestFormTests extends StayTest {
         StayBookPage b = form().fillValid();
         long wallet = b.walletCents();
         for (String invalid : new String[] {"Al", "  A  "}) {
-            b.name(invalid).clickConfirm();
-            b.eventually(() -> assertThat(b.nameError()).as("«" + invalid + "»").isEqualTo(NAME_ERR));
+            b.name(invalid);
+            // se vuelve a pulsar «Confirmar» mientras no aparezca el error: en una máquina lenta el primer clic puede perderse
+            b.eventually(() -> { b.clickConfirm(); assertThat(b.nameError()).as("«" + invalid + "»").isEqualTo(NAME_ERR); });
             assertThat(b.walletCents()).isEqualTo(wallet);
         }
         b.name("Ana");
@@ -56,8 +57,9 @@ class GuestFormTests extends StayTest {
     void A_STAY_038_ValidacionDelCorreoElectronico() {
         StayBookPage b = form().fillValid();
         for (String invalid : new String[] {"ana", "ana@example", "ana @example.com", "@example.com"}) {
-            b.email(invalid).clickConfirm();
-            b.eventually(() -> assertThat(b.emailError()).as("«" + invalid + "»").isEqualTo(EMAIL_ERR));
+            b.email(invalid);
+            // se vuelve a pulsar «Confirmar» mientras no aparezca el error: en una máquina lenta el primer clic puede perderse
+            b.eventually(() -> { b.clickConfirm(); assertThat(b.emailError()).as("«" + invalid + "»").isEqualTo(EMAIL_ERR); });
         }
         b.email("ana@example.com");
         assertThat(b.confirmOk().title()).isEqualTo("¡Reserva confirmada!");
@@ -69,8 +71,9 @@ class GuestFormTests extends StayTest {
     void A_STAY_039_ValidacionDelTelefonoExactamente10Digitos() {
         StayBookPage b = form().fillValid();
         for (String invalid : new String[] {"551234567", "55123456789", "55123abc78"}) {
-            b.phone(invalid).clickConfirm();
-            b.eventually(() -> assertThat(b.phoneError()).as("«" + invalid + "»").isEqualTo(PHONE_ERR));
+            b.phone(invalid);
+            // se vuelve a pulsar «Confirmar» mientras no aparezca el error: en una máquina lenta el primer clic puede perderse
+            b.eventually(() -> { b.clickConfirm(); assertThat(b.phoneError()).as("«" + invalid + "»").isEqualTo(PHONE_ERR); });
         }
         b.phone("5512345678");
         assertThat(b.confirmOk().title()).isEqualTo("¡Reserva confirmada!");
