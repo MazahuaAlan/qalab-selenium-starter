@@ -1,8 +1,8 @@
-name: Selenium contra qalab
+name: Selenium contra qalab (referencia)
 
 on:
   push:
-    branches: [java]
+    branches: [java-reference]
   pull_request:
   workflow_dispatch:
   # schedule:                      # descomenta para correr cada lunes (UTC)
@@ -12,6 +12,7 @@ jobs:
   selenium:
     name: ${{ matrix.persona }}
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     strategy:
       fail-fast: false             # que un usuario con defectos no cancele a los demás
       matrix:
@@ -28,8 +29,12 @@ jobs:
           java-version: "21"
           cache: maven
 
+      # «estandar» corre toda la suite de referencia. Los demás usuarios corren solo las pruebas etiquetadas con un defecto
+      # (@Tag("bug")): son las que miden la detección, y así cada trabajo dura minutos en vez de una hora.
       - name: Pruebas (usuario ${{ matrix.persona }})
-        run: mvn -B -ntp test -Dqalab.user=${{ matrix.persona }}
+        run: |
+          if [ "${{ matrix.persona }}" = "estandar" ]; then GROUPS_ARG=""; else GROUPS_ARG="-Dgroups=bug"; fi
+          mvn -B -ntp test -Dqalab.user=${{ matrix.persona }} $GROUPS_ARG
 
       # Se ejecuta siempre, incluso si hubo pruebas fallidas. Si no existe el secreto, se omite sin error.
       - name: Reportar al panel de QA Playground
