@@ -46,7 +46,7 @@ public class PlatformPage extends BasePage {
     public boolean hasLoginLink() { return present("login-link"); }
     public boolean hasWalletChip() { return present("wallet-chip"); }
     public String userChip() { return text("user-chip"); }
-    public String walletChipText() { return text("wallet-chip"); }
+    public String walletChipText() { return text("wallet-chip").replaceAll("\\s+", " "); }
     public WebElement walletChip() { return visible("wallet-chip"); }
     public void logout() { click("logout"); }
     public void clickFooter(String which) { click("footer-" + which); }

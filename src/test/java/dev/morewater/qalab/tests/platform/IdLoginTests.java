@@ -21,7 +21,7 @@ class IdLoginTests extends NoSessionTest {
         assertThat(id.attr("password", "type")).isEqualTo("password");
         assertThat(id.username()).isEqualTo("estandar");
         id.submit();
-        id.until(() -> id.hasUserChip());
+        id.until(() -> id.hasUserChip() && id.path().equals("/"));
         assertThat(id.path()).isEqualTo("/");
         assertThat(id.userChip()).isEqualTo("Usuario estándar");
         assertThat(id.walletChipText()).isEqualTo("Saldo " + IdPage.mxn(id.walletCents()));
