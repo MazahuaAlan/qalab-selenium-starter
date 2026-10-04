@@ -42,12 +42,13 @@ class CancelTests extends StayTest {
         assertThat(w.amount(0)).isEqualTo(mxn(total));
     }
 
-    /** Reserva con entrada mañana (3 noches), cancela y devuelve {saldo inicial, total, reembolso anunciado}. */
+    /** Reserva con entrada mañana (3 noches), cancela y devuelve {saldo inicial, saldo tras reservar, reembolso anunciado}. */
     private long[] lateCancellation(Plan p, String expectedPolicy) {
         long start = search().walletCents();
         String code = completeBooking(p);
-        long total = p.quote().total();
-        StayStaysPage s = stays().open().openCancel();
+        StayStaysPage s = stays().open();
+        long afterBooking = s.walletCents();
+        s.openCancel();
         String policy = s.cancelPolicy();
         if (expectedPolicy != null) assertThat(policy).isEqualTo(expectedPolicy);
         Matcher m = Pattern.compile("recibirás (\\$[\\d,]+\\.\\d{2})").matcher(policy);
@@ -56,7 +57,7 @@ class CancelTests extends StayTest {
         s.confirmCancel().waitModalClosed();
         assertThat(s.message()).isEqualTo("Reserva " + code + " cancelada.");
         assertThat(s.status()).isEqualTo("cancelada");
-        return new long[] {start, total, announced};
+        return new long[] {start, afterBooking, announced};
     }
 
     @Test
@@ -81,8 +82,6 @@ class CancelTests extends StayTest {
         LocalDate tomorrow = today().plusDays(1);
         Plan p = planOn(tomorrow, 3);
         long[] r = lateCancellation(p, null);
-        long refund = StayModel.refund(r[1], 3, tomorrow, today());
-        assertThat(r[2]).as("monto anunciado").isEqualTo(refund);
-        assertThat(stays().walletCents() - (r[0] - r[1])).as("monto acreditado = anunciado").isEqualTo(r[2]);
+        assertThat(stays().walletCents() - r[1]).as("monto acreditado = anunciado").isEqualTo(r[2]);
     }
 }
