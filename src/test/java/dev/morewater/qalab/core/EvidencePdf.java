@@ -37,7 +37,7 @@ final class EvidencePdf {
     static final Color GREEN = new Color(0x28, 0xA7, 0x45), RED = new Color(0xE6, 0x39, 0x46), BG = new Color(0xF2, 0xF5, 0xF9);
     static final Color LINE = new Color(0xE4, 0xE9, 0xF0), LINE2 = new Color(0xCD, 0xD6, 0xE1), MUTED = new Color(0x5A, 0x6B, 0x7A), CYAN_TXT = new Color(0x08, 0x6D, 0x8F);
     private static final Pattern NAME = Pattern.compile("^(?:\\[([a-z]+\\.[a-z0-9_]+)]\\s*)?(A_([A-Z]+)_(\\d+))_(.*)$");
-    private static final float IMG_W = 450, IMG_H = 312;
+    private static final float IMG_W = 430, IMG_H = 300;
     private static final DateTimeFormatter WHEN = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm 'UTC'").withZone(ZoneOffset.UTC);
 
     private static BaseFont mont5, mont6, mont7, mono6;
@@ -62,8 +62,9 @@ final class EvidencePdf {
     /** Encabezado navy con logo y franja cyan/naranja; pie con numeración «Página N de M». */
     private static final class Frame extends PdfPageEventHelper {
         private final String id;
+        private final Image logoImg; // una sola instancia: así el logo se incrusta una vez y no en cada página
         private PdfTemplate total;
-        Frame(String id) { this.id = id; }
+        Frame(String id, Image logoImg) { this.id = id; this.logoImg = logoImg; }
 
         @Override public void onOpenDocument(PdfWriter w, Document d) { total = w.getDirectContent().createTemplate(40, 10); }
 
@@ -74,7 +75,7 @@ final class EvidencePdf {
                 cb.setColorFill(NAVY); cb.rectangle(0, H - 46, W, 46); cb.fill();
                 cb.setColorFill(CYAN); cb.rectangle(0, H - 49, W * 0.72f, 3); cb.fill();
                 cb.setColorFill(ORANGE); cb.rectangle(W * 0.72f, H - 49, W * 0.28f, 3); cb.fill();
-                if (logo != null) { Image l = Image.getInstance(logo); l.scaleToFit(48, 26); l.setAbsolutePosition(36, H - 36); w.getDirectContent().addImage(l); }
+                if (logoImg != null) w.getDirectContent().addImage(logoImg);
                 PdfContentByte c = w.getDirectContent();
                 c.beginText(); c.setFontAndSize(mont6, 10.5f); c.setColorFill(Color.WHITE);
                 c.setTextMatrix(92, H - 28); c.showText("Evidencia de prueba"); c.endText();
@@ -119,7 +120,9 @@ final class EvidencePdf {
         try (OutputStream out = Files.newOutputStream(file)) {
             PdfWriter w = PdfWriter.getInstance(doc, out);
             w.setCompressionLevel(9);
-            w.setPageEvent(new Frame(id));
+            Image logoImg = null;
+            if (logo != null) { logoImg = Image.getInstance(logo); logoImg.scaleToFit(48, 26); logoImg.setAbsolutePosition(36, PageSize.A4.getHeight() - 36); }
+            w.setPageEvent(new Frame(id, logoImg));
             doc.addTitle(id + " · " + title); doc.addAuthor("MoreWater"); doc.addCreator("qalab-selenium-starter");
             doc.open();
             Paragraph pid = new Paragraph(id, f(mono6, 10, CYAN_TXT));

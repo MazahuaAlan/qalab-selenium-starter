@@ -83,7 +83,7 @@ public final class Evidence {
             String hash = hash(png);
             if (!force && hash.equals(t.lastHash)) return;
             t.lastHash = hash;
-            byte[] jpeg = Config.evidenceLight() ? toJpeg(png) : png; // alta: el PNG de Selenium tal cual (nítido, la UI es de colores planos)
+            byte[] jpeg = switch (Config.evidenceQuality()) { case "ligera" -> toJpeg(png); case "maxima" -> png; default -> palettePng(png); };
             synchronized (LOCK) { t.steps.add(new Step(label, jpeg)); }
             if (System.getProperty("qalab.debug") != null) System.err.println("EVD " + (System.nanoTime() - c0) / 1_000_000 + " ms " + jpeg.length + " B " + label);
         } catch (Exception | LinkageError ignored) {
@@ -146,5 +146,44 @@ public final class Evidence {
             writer.write(null, new IIOImage(dst, null, null), p);
         } finally { writer.dispose(); }
         return out.toByteArray();
+    }
+
+    /** PNG de 256 colores: la interfaz es de colores planos, así que casi no se nota y pesa ~3 veces menos que el PNG completo. */
+    static byte[] palettePng(byte[] png) throws Exception {
+        BufferedImage src = ImageIO.read(new ByteArrayInputStream(png));
+        int w = src.getWidth(), h = src.getHeight();
+        int[] px = src.getRGB(0, 0, w, h, null, 0, w);
+        java.util.Map<Integer, long[]> buckets = new java.util.HashMap<>(); // cubo de 5 bits por canal -> {n, sumR, sumG, sumB}
+        for (int p : px) {
+            int r = (p >> 16) & 255, g = (p >> 8) & 255, b = p & 255;
+            long[] c = buckets.computeIfAbsent(((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3), k -> new long[4]);
+            c[0]++; c[1] += r; c[2] += g; c[3] += b;
+        }
+        java.util.List<long[]> top = new java.util.ArrayList<>(buckets.values());
+        top.sort((a, b) -> Long.compare(b[0], a[0]));
+        int n = Math.min(256, top.size());
+        byte[] rr = new byte[n], gg = new byte[n], bb = new byte[n];
+        for (int i = 0; i < n; i++) { long[] c = top.get(i); rr[i] = (byte) (c[1] / c[0]); gg[i] = (byte) (c[2] / c[0]); bb[i] = (byte) (c[3] / c[0]); }
+        java.awt.image.IndexColorModel icm = new java.awt.image.IndexColorModel(8, n, rr, gg, bb);
+        BufferedImage dst = new BufferedImage(w, h, BufferedImage.TYPE_BYTE_INDEXED, icm);
+        java.util.Map<Integer, Integer> cache = new java.util.HashMap<>();
+        java.awt.image.WritableRaster ras = dst.getRaster();
+        for (int y = 0; y < h; y++) for (int x = 0; x < w; x++) {
+            int p = px[y * w + x], r = (p >> 16) & 255, g = (p >> 8) & 255, b = p & 255;
+            int key = (r << 16) | (g << 8) | b;
+            Integer idx = cache.get(key);
+            if (idx == null) {
+                int best = 0, bd = Integer.MAX_VALUE;
+                for (int i = 0; i < n; i++) {
+                    int dr = r - (rr[i] & 255), dg = g - (gg[i] & 255), db = b - (bb[i] & 255), d = dr * dr * 3 + dg * dg * 4 + db * db * 2;
+                    if (d < bd) { bd = d; best = i; if (d == 0) break; }
+                }
+                idx = best; cache.put(key, idx);
+            }
+            ras.setSample(x, y, 0, idx);
+        }
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(dst, "png", out);
+        return out.size() < png.length ? out.toByteArray() : png;
     }
 }

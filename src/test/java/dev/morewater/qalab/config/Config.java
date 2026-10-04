@@ -28,7 +28,7 @@ public final class Config {
     public static String chromeBinary() { return get("qalab.chrome", "CHROME_BIN", ""); }
     /** Evidencia en PDF (una captura por paso). Se desactiva con -Dqalab.evidence=false o QALAB_EVIDENCE=false. */
     public static boolean evidence() { return Boolean.parseBoolean(get("qalab.evidence", "QALAB_EVIDENCE", "true")); }
-    /** Calidad de las capturas de la evidencia: «alta» (PNG sin pérdida a 1280 px, predeterminada) o «ligera» (JPEG de 640 px, ~4 veces más pequeña). */
-    public static boolean evidenceLight() { return "ligera".equalsIgnoreCase(get("qalab.evidence.quality", "QALAB_EVIDENCE_QUALITY", "alta")); }
+    /** Calidad de las capturas de la evidencia: «alta» (PNG de 256 colores a 1280 px, predeterminada: nítida y compacta), «maxima» (PNG sin reducir) o «ligera» (JPEG de 640 px). */
+    public static String evidenceQuality() { return get("qalab.evidence.quality", "QALAB_EVIDENCE_QUALITY", "alta").toLowerCase(); }
     public static int timeoutSeconds() { return Integer.parseInt(get("qalab.timeout", "QALAB_TIMEOUT", "15")); }
 }
