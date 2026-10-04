@@ -53,7 +53,7 @@ class AirBookingTests extends BaseTest {
         assertThat(a.textOf("air-trip-code")).isEqualTo(code);
         assertThat(a.textOf("air-trip-status")).isEqualTo("confirmada");
         assertThat(a.textOf("air-trip")).contains("Ciudad de México (MEX) → Monterrey (MTY)").contains("1 pasajero(s)");
-        assertThat(AirFlowPage.cents(a.textOf("air-trip").replaceAll("(?s).*· (\\$[\\d,.]+)\\s*$", "$1"))).isEqualTo(total);
+        assertThat(AirFlowPage.cents(a.textOf("air-trip").replaceAll("(?s).*1 pasajero\\(s\\) · (\\$[\\d,.]+).*", "$1"))).isEqualTo(total);
     }
 
     @Test @Tag("obligatorio")

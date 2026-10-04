@@ -178,4 +178,46 @@ public class AirFlowPage extends BasePage {
     public Map<String, Object> state() { return js("return window.qalab.state()"); }
     public AirFlowPage reload() { driver.navigate().refresh(); return this; }
     public AirFlowPage setChaosSeed(long seed) { js("window.qalab.setChaos({seed: arguments[0]})", seed); return this; }
+
+    // ---------- utilidades para pruebas de personas ----------
+    /** Adelanta el reloj del navegador (Date.now) para simular el paso del tiempo sin esperar. */
+    public AirFlowPage shiftClock(long ms) {
+        js("const o = Date.now.bind(Date); Date.now = () => o() + arguments[0];", ms);
+        return this;
+    }
+    /** ¿Aparece la pantalla de login (sesión caducada) en los próximos segundos? */
+    public boolean redirectedToLoginWithin(int seconds) {
+        try {
+            new org.openqa.selenium.support.ui.WebDriverWait(driver, java.time.Duration.ofSeconds(seconds)).until(d -> path().startsWith("/id"));
+            return true;
+        } catch (org.openqa.selenium.TimeoutException e) {
+            return false;
+        }
+    }
+    public boolean userChipVisible() { return present("user-chip"); }
+    public AirFlowPage resizeTo(int w, int h) {
+        driver.manage().window().setSize(new org.openqa.selenium.Dimension(w, h));
+        return this;
+    }
+    public long viewportWidth() { return ((Number) js("return window.innerWidth")).longValue(); }
+    /** ¿Se intersectan las cajas de dos elementos? */
+    public boolean boxesIntersect(String dtA, String dtB) {
+        Boolean r = js("const a = arguments[0].getBoundingClientRect(), b = arguments[1].getBoundingClientRect();"
+                + "return !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);", visible(dtA), visible(dtB));
+        return Boolean.TRUE.equals(r);
+    }
+    /** Espera resultados o error de resultados; devuelve true si hubo error. */
+    public boolean resultsFailed() {
+        wait.until(d -> present("air-flight-0") || present("air-results-error"));
+        return present("air-results-error");
+    }
+    /** Espera confirmación o error de pago; devuelve true si el pago falló. */
+    public boolean paymentFailed() {
+        wait.until(d -> path().contains("/air/confirmation") || present("air-payment-error"));
+        return !path().contains("/air/confirmation");
+    }
+    public AirFlowPage waitPayEnabled() {
+        wait.until(d -> visible("air-pay").isEnabled());
+        return this;
+    }
 }
