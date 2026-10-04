@@ -10,9 +10,7 @@ import java.security.MessageDigest;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
@@ -42,7 +40,6 @@ public final class Evidence {
     }
 
     private static final Object LOCK = new Object();
-    private static final Map<String, EvidencePdf> PDFS = new LinkedHashMap<>();
     private static volatile TestRecord current;
     private static volatile int paused;
 
@@ -80,6 +77,7 @@ public final class Evidence {
     static void capture(WebDriver raw, String label, boolean force, boolean ignorePause) {
         TestRecord t = current;
         if (!enabled() || t == null || (paused > 0 && !ignorePause) || !(raw instanceof TakesScreenshot shot)) return;
+        long c0 = System.nanoTime();
         try {
             byte[] png = shot.getScreenshotAs(OutputType.BYTES);
             String hash = hash(png);
@@ -87,6 +85,7 @@ public final class Evidence {
             t.lastHash = hash;
             byte[] jpeg = toJpeg(png);
             synchronized (LOCK) { t.steps.add(new Step(label, jpeg)); }
+            if (System.getProperty("qalab.debug") != null) System.err.println("EVD " + (System.nanoTime() - c0) / 1_000_000 + " ms " + jpeg.length + " B " + label);
         } catch (Exception | LinkageError ignored) {
             // la evidencia es un extra: nunca debe romper la prueba
         }
@@ -101,29 +100,27 @@ public final class Evidence {
         capture(raw, "FALLO: " + msg.lines().findFirst().orElse(""), true, true);
     }
 
-    /** Cierra el bloque de la prueba actual y lo escribe al PDF de su módulo. */
+    /** Cierra la prueba actual y escribe su PDF: target/evidence/<persona>/<NombreVisible>.pdf */
     static void end(boolean passed) {
         TestRecord t = current;
         current = null;
         if (t == null) return;
         long ms = (System.nanoTime() - t.startNanos) / 1_000_000;
-        synchronized (LOCK) {
-            try {
-                PDFS.computeIfAbsent(t.module, m -> EvidencePdf.open(m, Config.user(), Instant.now())).addTest(t, passed, ms);
-            } catch (Exception e) {
-                System.err.println("Evidence: no se pudo escribir el PDF (" + e + ")");
-            }
+        try {
+            EvidencePdf.write(t, passed, ms, Config.user(), Instant.now());
+        } catch (Exception e) {
+            System.err.println("Evidence: no se pudo escribir el PDF (" + e + ")");
         }
     }
 
-    static void closeAll() {
-        synchronized (LOCK) {
-            PDFS.values().forEach(EvidencePdf::close);
-            PDFS.clear();
-        }
+    /** Nombre de archivo: el @DisplayName sin el prefijo [bug.id], saneado a [A-Za-z0-9_.-]. */
+    static String fileName(String display) {
+        String n = display.replaceFirst("^\\s*\\[[^\\]]*\\]\\s*", "").strip();
+        n = java.text.Normalizer.normalize(n, java.text.Normalizer.Form.NFD).replaceAll("\\p{M}+", "");
+        n = n.replaceAll("[^A-Za-z0-9_.-]+", "_").replaceAll("^_+|_+$", "");
+        if (n.length() > 120) n = n.substring(0, 120);
+        return n.isEmpty() ? "prueba" : n;
     }
-
-    static { Runtime.getRuntime().addShutdownHook(new Thread(Evidence::closeAll)); }
 
     private static String hash(byte[] b) throws Exception {
         return Arrays.toString(MessageDigest.getInstance("SHA-256").digest(b));

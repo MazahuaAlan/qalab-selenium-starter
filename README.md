@@ -30,5 +30,6 @@ docs/guides/                     Guías de uso gratuito de cada motor
 ## Empezar
 1. Lee [docs/guides/00-primeros-pasos.md](docs/guides/00-primeros-pasos.md).
 2. Elige tu motor: [GitHub Actions](docs/guides/01-github-actions.md) · [Azure Pipelines](docs/guides/02-azure-pipelines.md) · [Jenkins local](docs/guides/03-jenkins-local.md) · [sin CI](docs/guides/04-sin-ci.md).
+3. Evidencia en PDF de cada prueba (una captura por paso): [docs/guides/05-evidencia-pdf.md](docs/guides/05-evidencia-pdf.md).
 
 Sitio de práctica con defectos intencionales: no uses datos reales.

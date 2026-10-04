@@ -50,6 +50,14 @@ jobs:
           name: resultados-${{ matrix.persona }}
           path: |
             target/surefire-reports
-            target/screenshots
+          if-no-files-found: ignore
+          retention-days: 14
+
+      # Evidencia en PDF: un PDF por caso de prueba, con una captura por paso
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidencia-${{ matrix.persona }}
+          path: target/evidence
           if-no-files-found: ignore
           retention-days: 14

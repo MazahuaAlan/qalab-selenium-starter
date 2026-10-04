@@ -36,14 +36,31 @@ args=(-sS -w '\n%{http_code}' -X POST "$URL" -H "Authorization: Bearer $TOKEN"
   -F "engine=$engine" -F "branch=$branch" -F "commit=$commit" -F "actor=$actor" -F "trigger=$trigger"
   -F "target=$target" -F "external_id=$ext" -F "build_url=$build_url" -F "env=$env_json")
 for f in "${xmls[@]}"; do args+=(-F "junit=@$f;type=application/xml"); done
-n=0
-for f in target/screenshots/*.png; do
-  [ "$n" -ge 20 ] && break
-  size=$(wc -c < "$f"); [ "$size" -gt 2000000 ] && continue
-  args+=(-F "files=@$f;type=image/png"); n=$((n+1))
-done
-
 resp="$(curl "${args[@]}")"; code="${resp##*$'\n'}"; body="${resp%$'\n'*}"
 if [ "$code" = "201" ]; then echo "report.sh: resultados enviados ($engine, usuario $target): $body"
 else echo "report.sh: el panel respondió $code: $body" >&2; fi
+
+# --- evidencia en PDF: un PDF por prueba, en lotes de hasta 10 por petición (campo multipart «file» repetido) ---
+if [ "$code" = "201" ]; then
+  run_id="$(printf '%s' "$body" | sed -n 's/.*"run_id"[[:space:]]*:[[:space:]]*"\{0,1\}\([^",} ]*\).*/\1/p' | head -n1)"
+  pdfs=(target/evidence/*/*.pdf target/evidence/*.pdf)
+  if [ -n "$run_id" ] && [ ${#pdfs[@]} -gt 0 ]; then
+    BASE="${URL%/api/pipelines/ingest}"
+    EV_URL="$BASE/api/pipelines/runs/$run_id/evidence"
+    ok=0; bad=0
+    post() { curl -sS -o /dev/null -w '%{http_code}' -X POST "$EV_URL" -H "Authorization: Bearer $TOKEN" "$@" 2>/dev/null || echo 000; }
+    i=0
+    while [ $i -lt ${#pdfs[@]} ]; do
+      batch=("${pdfs[@]:$i:10}"); i=$((i+10))
+      fargs=(); for f in "${batch[@]}"; do fargs+=(-F "file=@$f;type=application/pdf"); done
+      c="$(post "${fargs[@]}")"
+      if [[ "$c" == 2* ]]; then ok=$((ok+${#batch[@]})); continue; fi
+      for f in "${batch[@]}"; do   # el lote falló: se reintenta archivo por archivo
+        c="$(post -F "file=@$f;type=application/pdf")"
+        if [[ "$c" == 2* ]]; then ok=$((ok+1)); else bad=$((bad+1)); fi
+      done
+    done
+    echo "report.sh: $ok PDF subidos, $bad fallidos"
+  fi
+fi
 exit 0   # reportar nunca debe romper tu pipeline

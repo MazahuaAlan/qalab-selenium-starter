@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.events.WebDriverListener;
 
 /** Convierte cada acción de Selenium (abrir, clic, escribir, limpiar) en un paso con captura. */
-final class EvidenceListener implements WebDriverListener {
+public final class EvidenceListener implements WebDriverListener {
     private final WebDriver raw;
     private String pendingClick = "";
 
