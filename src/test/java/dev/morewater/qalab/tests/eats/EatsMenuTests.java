@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import dev.morewater.qalab.core.BaseTest;
 import dev.morewater.qalab.pages.eats.EatsPage;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -49,7 +48,6 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @Disabled("Diferencia real: /eats/restaurant/?id=r8 (cerrado) carga el menú con botones Agregar y permite pedir; la validación solo existe en la lista")
     @DisplayName("Un restaurante cerrado no debe poderse pedir escribiendo la URL (CP-EATS-015)")
     void closedRestaurantCannotBeOrderedByUrl() {
         EatsPage eats = new EatsPage(driver);
