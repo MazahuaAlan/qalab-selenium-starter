@@ -21,8 +21,8 @@ class CaosTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Abrir y cerrar el panel de caos (CP-PLAT-046)")
-    void abrirYCerrarPanelDeCaos() {
+    @DisplayName("A_PLAT_046_AbrirYCerrarElPanelDeCaos")
+    void A_PLAT_046_AbrirYCerrarElPanelDeCaos() {
         var p = new PlatformPage(driver).open("/");
         assertThat(p.chaosToggleText()).startsWith("Caos");
         assertThat(p.chaosToggleExpanded()).isEqualTo("false");
@@ -37,8 +37,8 @@ class CaosTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Controles del panel fijan el estado (CP-PLAT-047)")
-    void controlesDelPanelFijanElEstado() {
+    @DisplayName("A_PLAT_047_ControlesDelPanelFijanElEstado")
+    void A_PLAT_047_ControlesDelPanelFijanElEstado() {
         var p = new PlatformPage(driver).open("/");
         p.openChaosPanelIfClosed();
         p.setRange("chaos-latency", 1500);
@@ -57,8 +57,8 @@ class CaosTests extends NoSessionTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Parámetros por URL aplican caos (CP-PLAT-048)")
-    void parametrosPorUrlAplicanCaos() {
+    @DisplayName("A_PLAT_048_ParametrosPorURLAplicanCaos")
+    void A_PLAT_048_ParametrosPorURLAplicanCaos() {
         var p = new PlatformPage(driver).open("/?latency=1500&fail=20&corrupt=10&seed=7");
         p.until(() -> p.chaosToggleText().contains("activo"));
         assertChaos(p, 1500, 20, 10, 7);
@@ -69,8 +69,8 @@ class CaosTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Valores no numéricos por URL se ignoran (CP-PLAT-050)")
-    void valoresNoNumericosSeIgnoran() {
+    @DisplayName("A_PLAT_050_ValoresNoNumericosPorURLSeIgnoran")
+    void A_PLAT_050_ValoresNoNumericosPorURLSeIgnoran() {
         var p = new PlatformPage(driver).open("/?seed=abc&fail=xyz&latency=");
         assertChaos(p, 0, 0, 0, 1);
         assertThat(p.chaosToggleText()).doesNotContain("activo");
@@ -78,8 +78,8 @@ class CaosTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Fallos fail=100 hacen fallar toda petición (CP-PLAT-051)")
-    void fail100HaceFallarTodaPeticion() {
+    @DisplayName("A_PLAT_051_FallosFail100HacenFallarTodaPeticion")
+    void A_PLAT_051_FallosFail100HacenFallarTodaPeticion() {
         var id = new IdPage(driver).openId("?fail=100");
         id.clickPersona("estandar");
         for (int i = 1; i <= 3; i++) {

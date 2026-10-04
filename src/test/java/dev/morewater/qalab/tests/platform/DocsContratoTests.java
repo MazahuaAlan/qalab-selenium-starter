@@ -17,8 +17,8 @@ class DocsContratoTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] Tabla de defectos incluye los dos ids platform.* (CP-PLAT-042)")
-    void tablaIncluyeIdsPlatform() {
+    @DisplayName("[platform.session_expiry] A_PLAT_042_TablaDeDefectosIncluyeLosDosIdsPlatform")
+    void A_PLAT_042_TablaDeDefectosIncluyeLosDosIdsPlatform() {
         var h = new HomeDocsPage(driver).openBugsTable();
         int filas = h.bugRows().size();
         assertThat(filas).isPositive();
@@ -32,9 +32,9 @@ class DocsContratoTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[platform.login_locked] Contrato /bugs.json válido y consistente con la tabla (CP-PLAT-043)")
+    @DisplayName("[platform.login_locked] A_PLAT_043_ContratoBugsJsonValidoYConsistenteConLaTabla")
     @SuppressWarnings("unchecked")
-    void contratoBugsJson() {
+    void A_PLAT_043_ContratoBugsJsonValidoYConsistenteConLaTabla() {
         var h = new HomeDocsPage(driver).openBugsTable();
         int filas = h.bugRows().size();
         Map<String, Object> r = h.fetchJson("/bugs.json");
@@ -58,9 +58,9 @@ class DocsContratoTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] Cada persona de bugs.json referencia ids existentes (CP-PLAT-044)")
+    @DisplayName("[platform.session_expiry] A_PLAT_044_CadaPersonaDeBugsJsonReferenciaIdsExistentes")
     @SuppressWarnings("unchecked")
-    void personasReferencianIdsExistentes() {
+    void A_PLAT_044_CadaPersonaDeBugsJsonReferenciaIdsExistentes() {
         var h = new HomeDocsPage(driver).openHome();
         Map<String, Object> json = (Map<String, Object>) h.fetchJson("/bugs.json").get("json");
         Set<Object> ids = ((List<Map<String, Object>>) json.get("bugs")).stream().map(b -> b.get("id")).collect(Collectors.toSet());

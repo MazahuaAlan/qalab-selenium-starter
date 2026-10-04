@@ -14,8 +14,8 @@ class CareSessionTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Cerrar sesión (CP-CARE-006)")
-    void logout() {
+    @DisplayName("A_CARE_006_CerrarSesion")
+    void A_CARE_006_CerrarSesion() {
         CarePage care = new CarePage(driver);
         care.openPath("/care/");
         care.clickOn("logout");
@@ -37,8 +37,8 @@ class CareSessionTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] Persona con sesión corta: la sesión no debe caducar a los 90 s (CP-CARE-008)")
-    void sessionDoesNotExpireAt90Seconds() {
+    @DisplayName("[platform.session_expiry] A_CARE_008_PersonaConSesionCortaLaSesionNoDebeCaducarALos90S")
+    void A_CARE_008_PersonaConSesionCortaLaSesionNoDebeCaducarALos90S() {
         CarePage care = new CarePage(driver);
         care.completeProfile();
         care.toStep2("general", 0);

@@ -33,8 +33,8 @@ class PricingTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("El desglose de impuestos cuadra (CP-STAY-044)")
-    void taxBreakdownAddsUp() {
+    @DisplayName("A_STAY_044_ElDesgloseDeImpuestosCuadra")
+    void A_STAY_044_ElDesgloseDeImpuestosCuadra() {
         Plan p = defaultPlan(14);
         StayBookPage b = startBooking(p);
         assertSummaryMatches(b, p);
@@ -43,8 +43,8 @@ class PricingTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Coherencia de precios entre hotel, resumen y confirmación (CP-STAY-046)")
-    void priceIsConsistentAcrossScreens() {
+    @DisplayName("A_STAY_046_CoherenciaDePreciosEntreHotelResumenYConfirmacion")
+    void A_STAY_046_CoherenciaDePreciosEntreHotelResumenYConfirmacion() {
         Plan p = defaultPlan(14);
         StayHotelPage h = openHotel(p);
         Matcher m = Pattern.compile("total con impuestos (\\$[\\d,]+\\.\\d{2})").matcher(h.roomText(p.roomIdx()));
@@ -64,8 +64,8 @@ class PricingTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("La cantidad de noches del resumen coincide con las fechas elegidas (CP-STAY-047)")
-    void summaryNightsMatchChosenDates() {
+    @DisplayName("A_STAY_047_LaCantidadDeNochesDelResumenCoincideConLasFechasElegidas")
+    void A_STAY_047_LaCantidadDeNochesDelResumenCoincideConLasFechasElegidas() {
         Plan p = plan("Torre Nimbo", 0, 14, 5);
         StayBookPage b = startBooking(p);
         assertSummaryMatches(b, p);
@@ -74,8 +74,8 @@ class PricingTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.nights_mismatch] El total cuenta una noche menos de las elegidas (stay.nights_mismatch) (CP-STAY-098)")
-    void totalCountsAllChosenNights() {
+    @DisplayName("[stay.nights_mismatch] A_STAY_098_ElTotalCuentaUnaNocheMenosDeLasElegidasStayNightsMismatch")
+    void A_STAY_098_ElTotalCuentaUnaNocheMenosDeLasElegidasStayNightsMismatch() {
         Plan p = defaultPlan(14);
         StayHotelPage h = openHotel(p);
         String cardTotal = mxn(p.quote().total());
@@ -90,8 +90,8 @@ class PricingTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.tax_double] El impuesto sobre hospedaje se suma dos veces (stay.tax_double) (CP-STAY-099)")
-    void lodgingTaxCountsOnce() {
+    @DisplayName("[stay.tax_double] A_STAY_099_ElImpuestoSobreHospedajeSeSumaDosVecesStayTaxDouble")
+    void A_STAY_099_ElImpuestoSobreHospedajeSeSumaDosVecesStayTaxDouble() {
         Plan p = defaultPlan(14);
         Quote q = p.quote();
         StayBookPage b = startBooking(p);

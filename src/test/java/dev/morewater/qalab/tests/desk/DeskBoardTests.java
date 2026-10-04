@@ -15,8 +15,8 @@ class DeskBoardTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Estructura inicial del tablero con cuatro columnas y contadores (CP-DESK-001)")
-    void initialBoardHasFourColumnsWithCounters() {
+    @DisplayName("A_DESK_001_EstructuraInicialDelTableroConCuatroColumnasYContadores")
+    void A_DESK_001_EstructuraInicialDelTableroConCuatroColumnasYContadores() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         for (String col : DeskBoardPage.COLUMNS) assertThat(board.count(col)).as("contador de " + col).isEqualTo("2");
         assertThat(board.cardIds("nuevo")).containsExactlyInAnyOrder("DK-1", "DK-2");
@@ -27,8 +27,8 @@ class DeskBoardTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Contenido de una tarjeta del tablero (CP-DESK-002)")
-    void cardShowsItsContent() {
+    @DisplayName("A_DESK_002_ContenidoDeUnaTarjetaDelTablero")
+    void A_DESK_002_ContenidoDeUnaTarjetaDelTablero() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         assertThat(board.openLink("DK-1").getText().trim()).isEqualTo("DK-1");
         assertThat(board.openLink("DK-1").getAttribute("href")).contains("/desk/ticket/?id=DK-1");
@@ -41,8 +41,8 @@ class DeskBoardTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Insignia de prioridad dentro de Shadow DOM con colores correctos (CP-DESK-003)")
-    void priorityBadgeInShadowDomHasCorrectColors() {
+    @DisplayName("A_DESK_003_InsigniaDePrioridadDentroDeShadowDOMConColoresCorrectos")
+    void A_DESK_003_InsigniaDePrioridadDentroDeShadowDOMConColoresCorrectos() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         WebElement high = board.card("DK-1");
         assertThat(board.badgeText(high)).isEqualTo("Alta");
@@ -60,8 +60,8 @@ class DeskBoardTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Persistencia del tablero al recargar la página (CP-DESK-005)")
-    void boardPersistsAfterReload() {
+    @DisplayName("A_DESK_005_PersistenciaDelTableroAlRecargarLaPagina")
+    void A_DESK_005_PersistenciaDelTableroAlRecargarLaPagina() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         assertThat(board.move("DK-1", "progreso")).isEqualTo("DK-1 movido a En progreso");
         assertThat(board.count("progreso")).isEqualTo("3");

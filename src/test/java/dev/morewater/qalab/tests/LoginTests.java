@@ -14,15 +14,15 @@ class LoginTests {
     void tearDown() { DriverFactory.quit(); }
 
     @Test
-    @DisplayName("Una contraseña incorrecta muestra un mensaje de error")
-    void wrongPasswordShowsError() {
+    @DisplayName("A_PLAT_901_UnaContrasenaIncorrectaMuestraUnMensajeDeError")
+    void A_PLAT_901_UnaContrasenaIncorrectaMuestraUnMensajeDeError() {
         var login = new LoginPage(DriverFactory.create()).open().loginAs("estandar", "contraseña-mala");
         assertThat(login.errorMessage()).contains("incorrectos");
     }
 
     @Test
-    @DisplayName("El usuario bloqueado no puede entrar y ve un mensaje claro")
-    void lockedUserSeesClearMessage() {
+    @DisplayName("A_PLAT_902_ElUsuarioBloqueadoNoPuedeEntrarYVeUnMensajeClaro")
+    void A_PLAT_902_ElUsuarioBloqueadoNoPuedeEntrarYVeUnMensajeClaro() {
         var login = new LoginPage(DriverFactory.create()).open().loginAs("bloqueado", "qalab123");
         assertThat(login.errorMessage()).containsIgnoringCase("bloqueado");
     }

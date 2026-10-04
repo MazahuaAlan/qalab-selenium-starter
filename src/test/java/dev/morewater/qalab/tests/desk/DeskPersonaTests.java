@@ -25,8 +25,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] La sesión de «expira» caduca a los 90 s sin aviso (CP-DESK-084)")
-    void sessionSurvivesMoreThanNinetySeconds() {
+    @DisplayName("[platform.session_expiry] A_DESK_084_LaSesionDeExpiraCaducaALos90SSinAviso")
+    void A_DESK_084_LaSesionDeExpiraCaducaALos90SSinAviso() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.advanceClock(95_000); // equivale a trabajar 95 s en el tablero
         boolean redirected;
@@ -43,8 +43,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[desk.slow_board] Persona lento: el tablero tarda 4 s en cargar (CP-DESK-085)")
-    void boardLoadsQuickly() {
+    @DisplayName("[desk.slow_board] A_DESK_085_PersonaLentoElTableroTarda4SEnCargar")
+    void A_DESK_085_PersonaLentoElTableroTarda4SEnCargar() {
         DeskBoardPage board = new DeskBoardPage(driver).openWithoutWaiting();
         long t0 = System.nanoTime();
         board.waitForBoard();
@@ -56,8 +56,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[desk.slow_save] Persona lento: guardar un ticket tarda 4 s (CP-DESK-086)")
-    void saveTicketQuickly() {
+    @DisplayName("[desk.slow_save] A_DESK_086_PersonaLentoGuardarUnTicketTarda4S")
+    void A_DESK_086_PersonaLentoGuardarUnTicketTarda4S() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.title("Ticket lento de prueba").describe("Descripción suficiente para el ticket");
         long t0 = System.nanoTime();
@@ -70,8 +70,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[desk.flaky_move] Persona intermitente: mover falla al azar y la interfaz no revierte (CP-DESK-087)")
-    void failedMoveRevertsCard() {
+    @DisplayName("[desk.flaky_move] A_DESK_087_PersonaIntermitenteMoverFallaAlAzarYLaInterfazNoRevierte")
+    void A_DESK_087_PersonaIntermitenteMoverFallaAlAzarYLaInterfazNoRevierte() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.setChaosFailPct(100); // determinista: toda petición de mover falla
         String toast = board.move("DK-2", "revision");
@@ -86,8 +86,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[desk.flaky_create] Persona intermitente: creación fallida duplica el ticket al reintentar (CP-DESK-088)")
-    void failedCreationDoesNotCreateTicket() {
+    @DisplayName("[desk.flaky_create] A_DESK_088_PersonaIntermitenteCreacionFallidaDuplicaElTicketAl")
+    void A_DESK_088_PersonaIntermitenteCreacionFallidaDuplicaElTicketAl() {
         String title = "Ticket intermitente 1";
         DeskNewPage form = new DeskNewPage(driver).open();
         form.title(title).describe("Descripción suficiente para el ticket");
@@ -111,8 +111,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[desk.visual_priority] Persona visual: colores de prioridad invertidos (CP-DESK-089)")
-    void priorityColorsAreNotInverted() {
+    @DisplayName("[desk.visual_priority] A_DESK_089_PersonaVisualColoresDePrioridadInvertidos")
+    void A_DESK_089_PersonaVisualColoresDePrioridadInvertidos() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         WebElement high = board.card("DK-1");
         assertThat(board.badgeText(high)).isEqualTo("Alta");
@@ -128,8 +128,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("opcional")
-    @DisplayName("[desk.visual_counts] Persona visual: el contador de columna suma una tarjeta de más (CP-DESK-090)")
-    void columnCountersMatchCards() {
+    @DisplayName("[desk.visual_counts] A_DESK_090_PersonaVisualElContadorDeColumnaSumaUnaTarjetaDeMas")
+    void A_DESK_090_PersonaVisualElContadorDeColumnaSumaUnaTarjetaDeMas() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         for (String col : DeskBoardPage.COLUMNS) {
             assertThat(board.countValue(col)).as("contador de " + col).isEqualTo(board.cardIds(col).size());
@@ -144,8 +144,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[desk.amnesia_draft] Persona amnesia: el borrador del ticket se pierde al recargar (CP-DESK-091)")
-    void draftSurvivesReload() {
+    @DisplayName("[desk.amnesia_draft] A_DESK_091_PersonaAmnesiaElBorradorDelTicketSePierdeAlRecargar")
+    void A_DESK_091_PersonaAmnesiaElBorradorDelTicketSePierdeAlRecargar() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.title("Borrador que se perderá");
         driver.navigate().refresh();
@@ -156,8 +156,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[desk.edit_expires] Persona expira: editar un título más de 20 s expira sin aviso (CP-DESK-092)")
-    void titleEditBeyondTwentySecondsIsSaved() {
+    @DisplayName("[desk.edit_expires] A_DESK_092_PersonaExpiraEditarUnTituloMasDe20SExpiraSinAviso")
+    void A_DESK_092_PersonaExpiraEditarUnTituloMasDe20SExpiraSinAviso() {
         String title = "Nuevo título muy cuidadosamente redactado";
         DeskTicketPage ticket = new DeskTicketPage(driver).open("DK-3");
         ticket.startTitleEdit();
@@ -172,8 +172,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[desk.wip_ignored] Persona descuadre: el límite WIP no se aplica (CP-DESK-093)")
-    void wipLimitIsEnforced() {
+    @DisplayName("[desk.wip_ignored] A_DESK_093_PersonaDescuadreElLimiteWIPNoSeAplica")
+    void A_DESK_093_PersonaDescuadreElLimiteWIPNoSeAplica() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.move("DK-1", "progreso");
         assertThat(board.cardIds("progreso")).hasSize(3);
@@ -185,8 +185,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[desk.bulk_partial] Persona descuadre: la acción en lote omite el último ticket (CP-DESK-094)")
-    void bulkActionAppliesToAllSelected() {
+    @DisplayName("[desk.bulk_partial] A_DESK_094_PersonaDescuadreLaAccionEnLoteOmiteElUltimoTicket")
+    void A_DESK_094_PersonaDescuadreLaAccionEnLoteOmiteElUltimoTicket() {
         DeskListPage list = new DeskListPage(driver).open();
         list.check("DK-1");
         list.check("DK-2");
@@ -200,8 +200,8 @@ class DeskPersonaTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[desk.overdue_wrong] Persona descuadre: «Vencido» se marca el mismo día de la fecha límite (CP-DESK-095)")
-    void dueTodayIsNotOverdue() {
+    @DisplayName("[desk.overdue_wrong] A_DESK_095_PersonaDescuadreVencidoSeMarcaElMismoDiaDeLaFechaLimite")
+    void A_DESK_095_PersonaDescuadreVencidoSeMarcaElMismoDiaDeLaFechaLimite() {
         DeskNewPage form = new DeskNewPage(driver);
         String today = form.open().today();
         String id = form.createTicket("Ticket que vence hoy mismo", DeskNewPage.DEFAULT_DESC, today);

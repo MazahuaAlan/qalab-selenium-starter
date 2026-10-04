@@ -14,8 +14,8 @@ class BankMovementsTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Carga inicial: 45 movimientos, 10 por página (CP-BANK-050)")
-    void initialLoad() {
+    @DisplayName("A_BANK_050_CargaInicial45Movimientos10PorPagina")
+    void A_BANK_050_CargaInicial45Movimientos10PorPagina() {
         BankMovementsPage m = new BankMovementsPage(driver).open();
         assertThat(m.pageInfo()).isEqualTo("Mostrando 1–10 de 45");
         assertThat(m.rowCount()).isEqualTo(10);
@@ -26,8 +26,8 @@ class BankMovementsTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Búsqueda por concepto: insensible a mayúsculas y con espacio (CP-BANK-053)")
-    void searchIsCaseAndSpaceInsensitive() {
+    @DisplayName("A_BANK_053_BusquedaPorConceptoInsensibleAMayusculasYConEspacio")
+    void A_BANK_053_BusquedaPorConceptoInsensibleAMayusculasYConEspacio() {
         BankMovementsPage m = new BankMovementsPage(driver).open();
         m.search("nómina");
         assertThat(m.concepts()).isNotEmpty().allMatch(c -> c.contains("Nómina"));
@@ -45,8 +45,8 @@ class BankMovementsTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Filtro por tipo: solo cargos y solo abonos (CP-BANK-055)")
-    void typeFilter() {
+    @DisplayName("A_BANK_055_FiltroPorTipoSoloCargosYSoloAbonos")
+    void A_BANK_055_FiltroPorTipoSoloCargosYSoloAbonos() {
         BankMovementsPage m = new BankMovementsPage(driver).open();
         m.type("cargo");
         assertThat(m.rowCount()).isPositive();
@@ -67,8 +67,8 @@ class BankMovementsTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[bank.slow_movements] Persona lento: la tabla de movimientos tarda ~3.5 s (CP-BANK-062)")
-    void tableLoadsQuickly() {
+    @DisplayName("[bank.slow_movements] A_BANK_062_PersonaLentoLaTablaDeMovimientosTarda35S")
+    void A_BANK_062_PersonaLentoLaTablaDeMovimientosTarda35S() {
         BankMovementsPage m = new BankMovementsPage(driver);
         m.go("/bank/movements/");
         long ms = m.millisToFirstRow();
@@ -78,8 +78,8 @@ class BankMovementsTests extends BaseTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[bank.flaky_movements] Persona intermitente: movimientos fallan con 503 al azar y Reintentar funciona (CP-BANK-063)")
-    void movementsNeverFailAndRetryWorks() {
+    @DisplayName("[bank.flaky_movements] A_BANK_063_PersonaIntermitenteMovimientosFallanCon503AlAzarYReintentar")
+    void A_BANK_063_PersonaIntermitenteMovimientosFallanCon503AlAzarYReintentar() {
         BankMovementsPage m = new BankMovementsPage(driver);
         for (int i = 1; i <= 8; i++) {
             m.go("/bank/movements/");
@@ -99,8 +99,8 @@ class BankMovementsTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[bank.visual_signs] Persona visual: cargos en verde con «+» y abonos en rojo con «−» (CP-BANK-064)")
-    void signsAndColors() {
+    @DisplayName("[bank.visual_signs] A_BANK_064_PersonaVisualCargosEnVerdeConYAbonosEnRojoCon")
+    void A_BANK_064_PersonaVisualCargosEnVerdeConYAbonosEnRojoCon() {
         BankMovementsPage m = new BankMovementsPage(driver).open();
         m.type("cargo");
         assertThat(m.debit(0)).startsWith("−");
@@ -113,8 +113,8 @@ class BankMovementsTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[bank.visual_columns] Persona visual: encabezados Cargo y Abono intercambiados (CP-BANK-065)")
-    void headersMatchColumns() {
+    @DisplayName("[bank.visual_columns] A_BANK_065_PersonaVisualEncabezadosCargoYAbonoIntercambiados")
+    void A_BANK_065_PersonaVisualEncabezadosCargoYAbonoIntercambiados() {
         BankMovementsPage m = new BankMovementsPage(driver).open();
         assertThat(m.debitHeader()).startsWith("Cargo");
         assertThat(m.creditHeader()).isEqualTo("Abono");
@@ -125,8 +125,8 @@ class BankMovementsTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[bank.csv_total_mismatch] Persona descuadre: el CSV omite el último movimiento pero el total lo incluye (CP-BANK-070)")
-    void csvTotalMatchesRows() {
+    @DisplayName("[bank.csv_total_mismatch] A_BANK_070_PersonaDescuadreElCSVOmiteElUltimoMovimientoPeroElTotalLo")
+    void A_BANK_070_PersonaDescuadreElCSVOmiteElUltimoMovimientoPeroElTotalLo() {
         BankMovementsPage m = new BankMovementsPage(driver).open();
         String[] lines = m.exportCsv().strip().split("\n");
         assertThat(lines[0]).isEqualTo("fecha,concepto,app,cargo,abono");

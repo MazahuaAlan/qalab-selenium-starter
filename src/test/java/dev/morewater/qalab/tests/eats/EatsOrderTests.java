@@ -28,8 +28,8 @@ class EatsOrderTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Pedido exitoso: cobro, saldo y movimiento (CP-EATS-060)")
-    void successfulOrderChargesWallet() {
+    @DisplayName("A_EATS_060_PedidoExitosoCobroSaldoYMovimiento")
+    void A_EATS_060_PedidoExitosoCobroSaldoYMovimiento() {
         CheckoutPage co = dishToCheckout("r1", 0, 2);
         long total = co.total();
         long walletBefore = co.wallet();
@@ -48,8 +48,8 @@ class EatsOrderTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("El resumen del seguimiento coincide con el checkout (CP-EATS-065)")
-    void trackingSummaryMatchesCheckout() {
+    @DisplayName("A_EATS_065_ElResumenDelSeguimientoCoincideConElCheckout")
+    void A_EATS_065_ElResumenDelSeguimientoCoincideConElCheckout() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long suadero = eats.itemPriceCents("r1-1");
         eats.addDish("r1-1", null, 2);
@@ -72,8 +72,8 @@ class EatsOrderTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[eats.slow_order] Persona lenta: confirmar el pedido tarda más de 3.5 s (CP-EATS-067)")
-    void placingOrderIsQuick() {
+    @DisplayName("[eats.slow_order] A_EATS_067_PersonaLentaConfirmarElPedidoTardaMasDe35S")
+    void A_EATS_067_PersonaLentaConfirmarElPedidoTardaMasDe35S() {
         CheckoutPage co = dishToCheckout("r1", 0, 1);
         long t0 = System.currentTimeMillis();
         co.place();
@@ -83,8 +83,8 @@ class EatsOrderTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Los estados avanzan cada 6 segundos (CP-EATS-068)")
-    void statusAdvancesEverySixSeconds() {
+    @DisplayName("A_EATS_068_LosEstadosAvanzanCada6Segundos")
+    void A_EATS_068_LosEstadosAvanzanCada6Segundos() {
         CheckoutPage co = placedOrder();
         assertThat(co.status()).isEqualTo("Recibido");
         assertThat(co.stepCurrent(0)).isTrue();
@@ -105,8 +105,8 @@ class EatsOrderTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[eats.flaky_status] Persona intermitente: el seguimiento a veces retrocede un estado (CP-EATS-073)")
-    void statusNeverGoesBackwards() {
+    @DisplayName("[eats.flaky_status] A_EATS_073_PersonaIntermitenteElSeguimientoAVecesRetrocedeUnEstado")
+    void A_EATS_073_PersonaIntermitenteElSeguimientoAVecesRetrocedeUnEstado() {
         CheckoutPage co = placedOrder();
         co.advanceClock(7000);
         co.waitStatus("Preparando");
@@ -115,8 +115,8 @@ class EatsOrderTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cancelar a tiempo reembolsa el total (CP-EATS-074)")
-    void cancelRefundsTotal() {
+    @DisplayName("A_EATS_074_CancelarATiempoReembolsaElTotal")
+    void A_EATS_074_CancelarATiempoReembolsaElTotal() {
         CheckoutPage co = dishToCheckout("r1", 0, 1);
         long walletBefore = co.wallet();
         long total = co.total();

@@ -19,8 +19,8 @@ class CancelTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cancelación gratuita con 14 días de anticipación (CP-STAY-067)")
-    void freeCancellationWithTwoWeeksNotice() {
+    @DisplayName("A_STAY_067_CancelacionGratuitaCon14DiasDeAnticipacion")
+    void A_STAY_067_CancelacionGratuitaCon14DiasDeAnticipacion() {
         Plan p = defaultPlan(14);
         long total = p.quote().total();
         long start = search().walletCents();
@@ -62,8 +62,8 @@ class CancelTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cancelación tardía pierde la primera noche (CP-STAY-069)")
-    void lateCancellationLosesFirstNight() {
+    @DisplayName("A_STAY_069_CancelacionTardiaPierdeLaPrimeraNoche")
+    void A_STAY_069_CancelacionTardiaPierdeLaPrimeraNoche() {
         LocalDate tomorrow = today().plusDays(1);
         Plan p = planOn(tomorrow, 3);
         long total = p.quote().total();
@@ -77,8 +77,8 @@ class CancelTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.refund_wrong] El reembolso ignora la política (stay.refund_wrong) (CP-STAY-100)")
-    void refundMatchesAnnouncedAmount() {
+    @DisplayName("[stay.refund_wrong] A_STAY_100_ElReembolsoIgnoraLaPoliticaStayRefundWrong")
+    void A_STAY_100_ElReembolsoIgnoraLaPoliticaStayRefundWrong() {
         LocalDate tomorrow = today().plusDays(1);
         Plan p = planOn(tomorrow, 3);
         long[] r = lateCancellation(p, null);

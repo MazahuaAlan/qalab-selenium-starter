@@ -21,8 +21,8 @@ class BankBeneficiaryTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Alta de beneficiario nuevo con CLABE válida y guardado (CP-BANK-023)")
-    void newBeneficiaryIsSaved() {
+    @DisplayName("A_BANK_023_AltaDeBeneficiarioNuevoConCLABEValidaYGuardado")
+    void A_BANK_023_AltaDeBeneficiarioNuevoConCLABEValidaYGuardado() {
         BankTransferPage p = new BankTransferPage(driver).open().chooseBeneficiary("new");
         assertThat(p.clabeExample()).isEqualTo(DEMO_CLABE);
         assertThat(p.saveChecked()).isTrue();
@@ -37,8 +37,8 @@ class BankBeneficiaryTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("CLABE con longitud incorrecta o con letras (CP-BANK-024)")
-    void clabeLengthAndLetters() {
+    @DisplayName("A_BANK_024_CLABEConLongitudIncorrectaOConLetras")
+    void A_BANK_024_CLABEConLongitudIncorrectaOConLetras() {
         BankTransferPage p = newBen("Carla Núñez", "123");
         for (String bad : new String[] {"123", "90118000009999999", "9011800000999999920", "90118000009999999A"}) {
             p.setValue("bank-ben-clabe", bad);
@@ -50,8 +50,8 @@ class BankBeneficiaryTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("CLABE con dígito verificador incorrecto (CP-BANK-026)")
-    void clabeCheckDigit() {
+    @DisplayName("A_BANK_026_CLABEConDigitoVerificadorIncorrecto")
+    void A_BANK_026_CLABEConDigitoVerificadorIncorrecto() {
         BankTransferPage p = new BankTransferPage(driver).open().chooseBeneficiary("new");
         String ok = p.clabeExample();
         int last = Character.getNumericValue(ok.charAt(17));
@@ -63,8 +63,8 @@ class BankBeneficiaryTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("No guardar el beneficiario nuevo (CP-BANK-029)")
-    void doNotSaveBeneficiary() {
+    @DisplayName("A_BANK_029_NoGuardarElBeneficiarioNuevo")
+    void A_BANK_029_NoGuardarElBeneficiarioNuevo() {
         BankTransferPage p = new BankTransferPage(driver).open().chooseBeneficiary("new");
         p.toggleSave();
         assertThat(p.saveChecked()).isFalse();
@@ -77,8 +77,8 @@ class BankBeneficiaryTests extends BaseTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("No se duplica un beneficiario con CLABE ya guardada (CP-BANK-030)")
-    void noDuplicateBeneficiary() {
+    @DisplayName("A_BANK_030_NoSeDuplicaUnBeneficiarioConCLABEYaGuardada")
+    void A_BANK_030_NoSeDuplicaUnBeneficiarioConCLABEYaGuardada() {
         BankTransferPage p = new BankTransferPage(driver).open();
         p.newBeneficiary("Ana T.", "901180000012345675").fill("100", "Prueba").next();
         assertThat(p.confirmName()).isEqualTo("Ana T.");
@@ -90,8 +90,8 @@ class BankBeneficiaryTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Se reconocen los cuatro bancos (900, 901, 902, 903) (CP-BANK-031)")
-    void fourBanksRecognized() {
+    @DisplayName("A_BANK_031_SeReconocenLosCuatroBancos900901902903")
+    void A_BANK_031_SeReconocenLosCuatroBancos900901902903() {
         String[][] cases = {
             {"900180009876543217", "MoreBank"}, {"902320000456789012", "Caja Aurora"},
             {"903010000765432107", "Banco Cóndor"}, {DEMO_CLABE, "Banco Nimbo"}};

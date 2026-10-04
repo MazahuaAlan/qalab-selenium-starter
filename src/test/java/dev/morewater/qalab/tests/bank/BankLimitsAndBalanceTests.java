@@ -18,9 +18,9 @@ class BankLimitsAndBalanceTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Límite diario acumulado entre varias transferencias (CP-BANK-088)")
+    @DisplayName("A_BANK_088_LimiteDiarioAcumuladoEntreVariasTransferencias")
     @Tag("slow")
-    void dailyLimitAccumulates() {
+    void A_BANK_088_LimiteDiarioAcumuladoEntreVariasTransferencias() {
         BankTransferPage p = new BankTransferPage(driver).complete("6000", "Primera");
         p.open().fill("4000.01", "Segunda").next();
         assertThat(p.amountError()).isEqualTo("Superas el límite diario de $10,000.00 (llevas $6,000.00).");
@@ -36,8 +36,8 @@ class BankLimitsAndBalanceTests extends BaseTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[bank.daily_limit_ignored] Persona descuadre: el límite diario de $10,000 no se aplica (CP-BANK-093)")
-    void dailyLimitIsEnforced() {
+    @DisplayName("[bank.daily_limit_ignored] A_BANK_093_PersonaDescuadreElLimiteDiarioDe10000NoSeAplica")
+    void A_BANK_093_PersonaDescuadreElLimiteDiarioDe10000NoSeAplica() {
         BankTransferPage p = new BankTransferPage(driver).open().fill("10500", "Grande").next();
         assertThat(p.amountError()).isEqualTo("Superas el límite diario de $10,000.00 (llevas $0.00).");
         assertThat(p.onConfirm()).isFalse();
@@ -45,8 +45,8 @@ class BankLimitsAndBalanceTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("El saldo se refleja igual en el chip y en el resumen tras transferir (CP-BANK-090)")
-    void balanceMatchesChipAndSummary() {
+    @DisplayName("A_BANK_090_ElSaldoSeReflejaIgualEnElChipYEnElResumenTrasTransferir")
+    void A_BANK_090_ElSaldoSeReflejaIgualEnElChipYEnElResumenTrasTransferir() {
         BankTransferPage p = new BankTransferPage(driver).complete("1500.50", "Renta de octubre");
         long expected = WALLET - 150_050;
         assertThat(p.walletCents()).isEqualTo(expected);
@@ -60,8 +60,8 @@ class BankLimitsAndBalanceTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Persistencia de saldos, beneficiarios y movimientos al recargar (CP-BANK-096)")
-    void dataPersistsAcrossTabs() {
+    @DisplayName("A_BANK_096_PersistenciaDeSaldosBeneficiariosYMovimientosAlRecargar")
+    void A_BANK_096_PersistenciaDeSaldosBeneficiariosYMovimientosAlRecargar() {
         BankHomePage h = new BankHomePage(driver).open();
         assertThat(h.submitMoveAndGetMessage(true, "500")).contains("realizado");
         BankTransferPage p = new BankTransferPage(driver).open().newBeneficiary("Carla Núñez", "901180000099999992").fill("100", "Prueba");

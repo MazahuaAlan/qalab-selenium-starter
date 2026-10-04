@@ -14,8 +14,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Agregar el mismo platillo y opciones suma a la misma línea (CP-EATS-024)")
-    void sameDishSumsIntoOneLine() {
+    @DisplayName("A_EATS_024_AgregarElMismoPlatilloYOpcionesSumaALaMismaLinea")
+    void A_EATS_024_AgregarElMismoPlatilloYOpcionesSumaALaMismaLinea() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long base = eats.itemPriceCents("r1-0");
         eats.addDish("r1-0", null, 2);
@@ -31,8 +31,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Opciones distintas generan líneas separadas (CP-EATS-025)")
-    void differentOptionsMakeSeparateLines() {
+    @DisplayName("A_EATS_025_OpcionesDistintasGeneranLineasSeparadas")
+    void A_EATS_025_OpcionesDistintasGeneranLineasSeparadas() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long base = eats.itemPriceCents("r1-0");
         eats.addDish("r1-0", null, 1);
@@ -46,8 +46,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Subtotal del carrito con varios productos (CP-EATS-026)")
-    void subtotalWithSeveralProducts() {
+    @DisplayName("A_EATS_026_SubtotalDelCarritoConVariosProductos")
+    void A_EATS_026_SubtotalDelCarritoConVariosProductos() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long suadero = eats.itemPriceCents("r1-1");
         eats.addDish("r1-1", null, 2);
@@ -62,8 +62,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Ajustar cantidades con + y −, y eliminar con − (CP-EATS-027)")
-    void adjustQuantitiesAndRemoveWithMinus() {
+    @DisplayName("A_EATS_027_AjustarCantidadesConYYEliminarCon")
+    void A_EATS_027_AjustarCantidadesConYYEliminarCon() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long base = eats.itemPriceCents("r1-0");
         eats.addDish("r1-0", null, 1);
@@ -84,8 +84,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("«Quitar» elimina la línea completa (CP-EATS-028)")
-    void removeDeletesWholeLine() {
+    @DisplayName("A_EATS_028_QuitarEliminaLaLineaCompleta")
+    void A_EATS_028_QuitarEliminaLaLineaCompleta() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long gringa = eats.itemPriceCents("r1-2");
         eats.addDish("r1-0", null, 4);
@@ -99,8 +99,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cambiar de restaurante pide confirmación para vaciar el carrito (CP-EATS-029)")
-    void switchingRestaurantAsksToEmptyCart() {
+    @DisplayName("A_EATS_029_CambiarDeRestaurantePideConfirmacionParaVaciarElCarrito")
+    void A_EATS_029_CambiarDeRestaurantePideConfirmacionParaVaciarElCarrito() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         eats.addDish("r1-0", null, 1);
         eats.openMenu("r2");
@@ -127,8 +127,8 @@ class EatsCartTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("El carrito se conserva al recargar la página (CP-EATS-030)")
-    void cartSurvivesReload() {
+    @DisplayName("A_EATS_030_ElCarritoSeConservaAlRecargarLaPagina")
+    void A_EATS_030_ElCarritoSeConservaAlRecargarLaPagina() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long unit = eats.itemPriceCents("r1-0") + 2500 + 1500;
         eats.addDish("r1-0", "md", 2, "queso");
@@ -150,8 +150,8 @@ class EatsCartTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[eats.amnesia_cart] Persona amnesia: el carrito se pierde al recargar (CP-EATS-034)")
-    void cartKeptOnReloadAtCheckout() {
+    @DisplayName("[eats.amnesia_cart] A_EATS_034_PersonaAmnesiaElCarritoSePierdeAlRecargar")
+    void A_EATS_034_PersonaAmnesiaElCarritoSePierdeAlRecargar() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         eats.addDish("r1-0", null, 1);
         eats.goCheckout();
@@ -163,8 +163,8 @@ class EatsCartTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[eats.cart_expires] Persona expira: el carrito se vacía solo a los 30 s (CP-EATS-035)")
-    void cartNotEmptiedAfter30Seconds() {
+    @DisplayName("[eats.cart_expires] A_EATS_035_PersonaExpiraElCarritoSeVaciaSoloALos30S")
+    void A_EATS_035_PersonaExpiraElCarritoSeVaciaSoloALos30S() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         eats.addDish("r1-0", null, 1);
         eats.goCheckout();

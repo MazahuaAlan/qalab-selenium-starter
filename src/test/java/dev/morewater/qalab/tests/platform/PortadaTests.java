@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
 class PortadaTests extends NoSessionTest {
     @Test
     @Tag("recomendado")
-    @DisplayName("Portada muestra héroe, accesos y mapa (CP-PLAT-001)")
-    void portadaMuestraHeroeAccesosYMapa() {
+    @DisplayName("A_PLAT_001_PortadaMuestraHeroeAccesosYMapa")
+    void A_PLAT_001_PortadaMuestraHeroeAccesosYMapa() {
         var h = new HomeDocsPage(driver).openHome();
         assertThat(h.heroTitle()).isEqualTo("Una ciudad de apps para romper");
         assertThat(h.homeLoginText()).isEqualTo("Entrar con un usuario de prueba");
@@ -27,8 +27,8 @@ class PortadaTests extends NoSessionTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Lista de seis apps con enlaces a cada app (CP-PLAT-002)")
-    void listaDeSeisApps() {
+    @DisplayName("A_PLAT_002_ListaDeSeisAppsConEnlacesACadaApp")
+    void A_PLAT_002_ListaDeSeisAppsConEnlacesACadaApp() {
         var h = new HomeDocsPage(driver).openHome();
         assertThat(h.appIds()).containsExactlyInAnyOrder("app-air", "app-bank", "app-stay", "app-eats", "app-care", "app-desk");
         assertThat(h.hrefOf("app-bank")).isEqualTo("/bank/");
@@ -39,8 +39,8 @@ class PortadaTests extends NoSessionTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Enlaces del pie y de la guía (CP-PLAT-004)")
-    void enlacesDelPie() {
+    @DisplayName("A_PLAT_004_EnlacesDelPieYDeLaGuia")
+    void A_PLAT_004_EnlacesDelPieYDeLaGuia() {
         var h = new HomeDocsPage(driver).openHome();
         h.clickFooter("docs");
         h.until(() -> h.path().equals("/docs/"));

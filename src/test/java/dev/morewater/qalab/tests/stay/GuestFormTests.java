@@ -17,8 +17,8 @@ class GuestFormTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Enviar el formulario vacío muestra todos los errores (CP-STAY-036)")
-    void emptyFormShowsAllErrors() {
+    @DisplayName("A_STAY_036_EnviarElFormularioVacioMuestraTodosLosErrores")
+    void A_STAY_036_EnviarElFormularioVacioMuestraTodosLosErrores() {
         StayBookPage b = form();
         long wallet = b.walletCents();
         b.clickConfirm();
@@ -36,8 +36,8 @@ class GuestFormTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Validación del nombre: mínimo 3 caracteres tras recortar (CP-STAY-037)")
-    void nameMinimumThreeCharsAfterTrim() {
+    @DisplayName("A_STAY_037_ValidacionDelNombreMinimo3CaracteresTrasRecortar")
+    void A_STAY_037_ValidacionDelNombreMinimo3CaracteresTrasRecortar() {
         StayBookPage b = form().fillValid();
         long wallet = b.walletCents();
         for (String invalid : new String[] {"Al", "  A  "}) {
@@ -52,8 +52,8 @@ class GuestFormTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Validación del correo electrónico (CP-STAY-038)")
-    void emailValidation() {
+    @DisplayName("A_STAY_038_ValidacionDelCorreoElectronico")
+    void A_STAY_038_ValidacionDelCorreoElectronico() {
         StayBookPage b = form().fillValid();
         for (String invalid : new String[] {"ana", "ana@example", "ana @example.com", "@example.com"}) {
             b.email(invalid).clickConfirm();
@@ -65,8 +65,8 @@ class GuestFormTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Validación del teléfono: exactamente 10 dígitos (CP-STAY-039)")
-    void phoneValidation() {
+    @DisplayName("A_STAY_039_ValidacionDelTelefonoExactamente10Digitos")
+    void A_STAY_039_ValidacionDelTelefonoExactamente10Digitos() {
         StayBookPage b = form().fillValid();
         for (String invalid : new String[] {"551234567", "55123456789", "55123abc78"}) {
             b.phone(invalid).clickConfirm();
@@ -78,8 +78,8 @@ class GuestFormTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Límite de peticiones especiales: 200 caracteres sí, 201 no (CP-STAY-040)")
-    void specialRequestsLimit() {
+    @DisplayName("A_STAY_040_LimiteDePeticionesEspeciales200CaracteresSi201No")
+    void A_STAY_040_LimiteDePeticionesEspeciales200CaracteresSi201No() {
         StayBookPage b = form().fillValid();
         long wallet = b.walletCents();
         b.notes("x".repeat(201));
@@ -94,8 +94,8 @@ class GuestFormTests extends StayTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Los datos del huésped se conservan al recargar (CP-STAY-043)")
-    void guestDataSurvivesReload() {
+    @DisplayName("A_STAY_043_LosDatosDelHuespedSeConservanAlRecargar")
+    void A_STAY_043_LosDatosDelHuespedSeConservanAlRecargar() {
         StayBookPage b = form().name("Ana Pérez López").email("ana@example.com").phone("5512345678").arrival("16:00")
                 .notes("Cama extra, por favor").terms(true);
         b.eventually(() -> assertThat(b.notesCount()).isEqualTo("21/200"));

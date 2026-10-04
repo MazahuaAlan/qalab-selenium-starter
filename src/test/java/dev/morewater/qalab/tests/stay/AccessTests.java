@@ -29,8 +29,8 @@ class AccessTests {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Acceso sin sesión redirige a login y regresa a Stay (CP-STAY-074)")
-    void anonymousAccessRedirectsToLoginAndBack() {
+    @DisplayName("A_STAY_074_AccesoSinSesionRedirigeALoginYRegresaAStay")
+    void A_STAY_074_AccesoSinSesionRedirigeALoginYRegresaAStay() {
         WebDriver d = DriverFactory.create();
         StaySearchPage stay = new StaySearchPage(d);
         stay.go("/stay/");

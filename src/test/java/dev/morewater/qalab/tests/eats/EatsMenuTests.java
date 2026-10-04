@@ -13,8 +13,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Menú de Taquería El Cóndor: pestaña Platillos (CP-EATS-011)")
-    void menuPlatillosTab() {
+    @DisplayName("A_EATS_011_MenuDeTaqueriaElCondorPestanaPlatillos")
+    void A_EATS_011_MenuDeTaqueriaElCondorPestanaPlatillos() {
         EatsPage eats = new EatsPage(driver);
         eats.go("/eats/restaurant/?id=r1");
         eats.waitMenu();
@@ -31,8 +31,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Cambiar de pestaña muestra otra categoría (CP-EATS-012)")
-    void switchingTabsShowsOtherCategory() {
+    @DisplayName("A_EATS_012_CambiarDePestanaMuestraOtraCategoria")
+    void A_EATS_012_CambiarDePestanaMuestraOtraCategoria() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         eats.tab(1);
         assertThat(eats.tabSelected(1)).isTrue();
@@ -48,8 +48,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Un restaurante cerrado no debe poderse pedir escribiendo la URL (CP-EATS-015)")
-    void closedRestaurantCannotBeOrderedByUrl() {
+    @DisplayName("A_EATS_015_UnRestauranteCerradoNoDebePodersePedirEscribiendoLaURL")
+    void A_EATS_015_UnRestauranteCerradoNoDebePodersePedirEscribiendoLaURL() {
         EatsPage eats = new EatsPage(driver);
         eats.go("/eats/restaurant/?id=r8");
         assertThat(eats.has("eats-add-r8-0")).as("botón Agregar en restaurante cerrado").isFalse();
@@ -58,8 +58,8 @@ class EatsMenuTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("recomendado")
-    @DisplayName("[eats.slow_menu] Persona lenta: el menú tarda más de 3.5 s (CP-EATS-016)")
-    void menuLoadsQuickly() {
+    @DisplayName("[eats.slow_menu] A_EATS_016_PersonaLentaElMenuTardaMasDe35S")
+    void A_EATS_016_PersonaLentaElMenuTardaMasDe35S() {
         EatsPage eats = new EatsPage(driver).openListReady();
         eats.openButton(0).click();
         long t0 = System.currentTimeMillis();
@@ -69,8 +69,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Diálogo de opciones con valores por defecto (CP-EATS-017)")
-    void dialogDefaults() {
+    @DisplayName("A_EATS_017_DialogoDeOpcionesConValoresPorDefecto")
+    void A_EATS_017_DialogoDeOpcionesConValoresPorDefecto() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long base = eats.itemPriceCents("r1-0");
         eats.openDialog("r1-0");
@@ -91,8 +91,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Cálculo por tamaño del platillo (CP-EATS-018)")
-    void sizeSurcharge() {
+    @DisplayName("A_EATS_018_CalculoPorTamanoDelPlatillo")
+    void A_EATS_018_CalculoPorTamanoDelPlatillo() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long base = eats.itemPriceCents("r1-0");
         eats.openDialog("r1-0");
@@ -107,8 +107,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Extras y cantidad en el total del diálogo y del carrito (CP-EATS-019)")
-    void extrasAndQuantityInTotals() {
+    @DisplayName("A_EATS_019_ExtrasYCantidadEnElTotalDelDialogoYDelCarrito")
+    void A_EATS_019_ExtrasYCantidadEnElTotalDelDialogoYDelCarrito() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long unit = eats.itemPriceCents("r1-0") + 5000 + 1500 + 2500;
         eats.openDialog("r1-0");
@@ -127,8 +127,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Límites de cantidad en el diálogo: 1 a 10 (CP-EATS-021)")
-    void quantityLimits() {
+    @DisplayName("A_EATS_021_LimitesDeCantidadEnElDialogo1A10")
+    void A_EATS_021_LimitesDeCantidadEnElDialogo1A10() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         long base = eats.itemPriceCents("r1-0");
         eats.openDialog("r1-0");
@@ -145,8 +145,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Notas para la cocina: máximo 60 caracteres y visibles en el carrito (CP-EATS-022)")
-    void kitchenNotesLimit() {
+    @DisplayName("A_EATS_022_NotasParaLaCocinaMaximo60CaracteresYVisiblesEnElCarrito")
+    void A_EATS_022_NotasParaLaCocinaMaximo60CaracteresYVisiblesEnElCarrito() {
         String note = "Sin cebolla, con mucha salsa verde y las tortillas bien calientitas por favor";
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         eats.openDialog("r1-0");
@@ -158,8 +158,8 @@ class EatsMenuTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Cerrar el diálogo sin agregar (Cancelar y Escape) (CP-EATS-023)")
-    void closeDialogWithoutAdding() {
+    @DisplayName("A_EATS_023_CerrarElDialogoSinAgregarCancelarYEscape")
+    void A_EATS_023_CerrarElDialogoSinAgregarCancelarYEscape() {
         EatsPage eats = new EatsPage(driver).openMenu("r1");
         eats.openDialog("r1-0");
         eats.cancelDialog();

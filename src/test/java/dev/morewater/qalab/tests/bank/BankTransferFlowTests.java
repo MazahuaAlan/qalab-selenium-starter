@@ -18,8 +18,8 @@ class BankTransferFlowTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Comprobante con todos los campos (CP-BANK-043)")
-    void receiptHasAllFields() {
+    @DisplayName("A_BANK_043_ComprobanteConTodosLosCampos")
+    void A_BANK_043_ComprobanteConTodosLosCampos() {
         BankTransferPage p = new BankTransferPage(driver).complete("1500.50", "Renta de octubre");
         BankReceiptPage r = new BankReceiptPage(driver).waitLoaded();
         assertThat(r.title()).isEqualTo("Transferencia enviada");
@@ -36,8 +36,8 @@ class BankTransferFlowTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("El débito coincide con el comprobante (sin comisión) (CP-BANK-044)")
-    void debitMatchesReceipt() {
+    @DisplayName("A_BANK_044_ElDebitoCoincideConElComprobanteSinComision")
+    void A_BANK_044_ElDebitoCoincideConElComprobanteSinComision() {
         BankTransferPage p = new BankTransferPage(driver).complete("1500.50", "Renta de octubre");
         BankReceiptPage r = new BankReceiptPage(driver).waitLoaded();
         String folio = r.folio();
@@ -50,9 +50,9 @@ class BankTransferFlowTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("[bank.transfer_fee_mismatch] Persona descuadre: se descuenta una comisión oculta de $5.00 (CP-BANK-049)")
+    @DisplayName("[bank.transfer_fee_mismatch] A_BANK_049_PersonaDescuadreSeDescuentaUnaComisionOcultaDe500")
     @Tag("bug")
-    void noHiddenFee() {
+    void A_BANK_049_PersonaDescuadreSeDescuentaUnaComisionOcultaDe500() {
         BankTransferPage p = new BankTransferPage(driver).complete("200", "Pago de prueba");
         BankReceiptPage r = new BankReceiptPage(driver).waitLoaded();
         assertThat(r.amount()).isEqualTo("$200.00");
@@ -64,8 +64,8 @@ class BankTransferFlowTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Transferencia propia aparece primera en Movimientos y persiste (CP-BANK-060)")
-    void ownTransferIsFirstAndPersists() {
+    @DisplayName("A_BANK_060_TransferenciaPropiaAparecePrimeraEnMovimientosYPersiste")
+    void A_BANK_060_TransferenciaPropiaAparecePrimeraEnMovimientosYPersiste() {
         new BankTransferPage(driver).complete("100", "Pago de prueba");
         BankMovementsPage m = new BankMovementsPage(driver).open();
         long total = totalRows(m);
@@ -87,8 +87,8 @@ class BankTransferFlowTests extends BaseTest {
     @Test
     @Tag("recomendado")
     @Tag("bug")
-    @DisplayName("[bank.slow_transfer] Persona lento: confirmar la transferencia tarda ~4 s (CP-BANK-040)")
-    void confirmIsFast() {
+    @DisplayName("[bank.slow_transfer] A_BANK_040_PersonaLentoConfirmarLaTransferenciaTarda4S")
+    void A_BANK_040_PersonaLentoConfirmarLaTransferenciaTarda4S() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("100", "Pago de prueba").sendCode();
         long ms = p.submitCorrectCodeMillis();
         assertThat(ms).as("ms hasta el comprobante").isLessThan(2_500);
@@ -98,8 +98,8 @@ class BankTransferFlowTests extends BaseTest {
     @Tag("obligatorio")
     @Tag("bug")
     @Tag("slow")
-    @DisplayName("[bank.flaky_transfer] Persona intermitente: transferencia fallida ya debitó y el reintento duplica el cargo (CP-BANK-041)")
-    void failedTransferDoesNotChargeAndRetryChargesOnce() {
+    @DisplayName("[bank.flaky_transfer] A_BANK_041_PersonaIntermitenteTransferenciaFallidaYaDebitoYElReintento")
+    void A_BANK_041_PersonaIntermitenteTransferenciaFallidaYaDebitoYElReintento() {
         BankTransferPage p = new BankTransferPage(driver).open();
         p.setWallet(2_000_000);
         long amount = 10_000;
@@ -122,8 +122,8 @@ class BankTransferFlowTests extends BaseTest {
     @Tag("obligatorio")
     @Tag("bug")
     @Tag("slow")
-    @DisplayName("[bank.otp_short] Persona expira: el código SMS caduca a los 10 s (CP-BANK-042)")
-    void codeDoesNotExpireAfter10Seconds() {
+    @DisplayName("[bank.otp_short] A_BANK_042_PersonaExpiraElCodigoSMSCaducaALos10S")
+    void A_BANK_042_PersonaExpiraElCodigoSMSCaducaALos10S() {
         BankTransferPage p = new BankTransferPage(driver).open().toConfirm("100", "Pago de prueba").sendCode();
         long t0 = System.currentTimeMillis();
         new WebDriverWait(driver, Duration.ofSeconds(20)).until(d -> System.currentTimeMillis() - t0 > 11_000);

@@ -17,8 +17,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Resumen muestra saldos iniciales y CLABE (CP-BANK-001)")
-    void summaryShowsInitialBalances() {
+    @DisplayName("A_BANK_001_ResumenMuestraSaldosInicialesYCLABE")
+    void A_BANK_001_ResumenMuestraSaldosInicialesYCLABE() {
         BankHomePage h = new BankHomePage(driver).open();
         assertThat(h.balanceMainText()).isEqualTo("$66,000.00");
         assertThat(h.balanceSavingsText()).isEqualTo("$5,000.00");
@@ -28,8 +28,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Accesos rápidos del resumen navegan a Transferir y Movimientos (CP-BANK-002)")
-    void quickLinksNavigate() {
+    @DisplayName("A_BANK_002_AccesosRapidosDelResumenNaveganATransferirYMovimientos")
+    void A_BANK_002_AccesosRapidosDelResumenNaveganATransferirYMovimientos() {
         new BankHomePage(driver).open();
         driver.findElement(org.openqa.selenium.By.cssSelector("[data-test='bank-go-transfer']")).click();
         assertThat(waitUrl("/bank/transfer")).isTrue();
@@ -49,8 +49,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Últimos movimientos: 5 elementos del más reciente al más antiguo (CP-BANK-003)")
-    void recentMovementsFiveInOrder() {
+    @DisplayName("A_BANK_003_UltimosMovimientos5ElementosDelMasRecienteAlMasAntiguo")
+    void A_BANK_003_UltimosMovimientos5ElementosDelMasRecienteAlMasAntiguo() {
         BankHomePage h = new BankHomePage(driver).open();
         assertThat(h.recentItems()).hasSize(5);
         // El primero coincide con la primera fila de Movimientos ordenada por fecha (descendente por defecto).
@@ -63,8 +63,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Traspaso de la cuenta MoreWater al ahorro (CP-BANK-005)")
-    void moveMainToSavings() {
+    @DisplayName("A_BANK_005_TraspasoDeLaCuentaMoreWaterAlAhorro")
+    void A_BANK_005_TraspasoDeLaCuentaMoreWaterAlAhorro() {
         BankHomePage h = new BankHomePage(driver).open();
         String msg = h.submitMoveAndGetMessage(true, "1000");
         assertThat(msg).isEqualTo("Traspaso de $1,000.00 realizado.");
@@ -78,8 +78,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Traspaso del ahorro a la cuenta MoreWater (CP-BANK-006)")
-    void moveSavingsToMain() {
+    @DisplayName("A_BANK_006_TraspasoDelAhorroALaCuentaMoreWater")
+    void A_BANK_006_TraspasoDelAhorroALaCuentaMoreWater() {
         BankHomePage h = new BankHomePage(driver).open();
         assertThat(h.submitMoveAndGetMessage(false, "2000.50")).isEqualTo("Traspaso de $2,000.50 realizado.");
         assertThat(h.mainCents()).isEqualTo(WALLET + 200_050);
@@ -90,8 +90,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Traspaso: monto vacío, cero, negativo o no numérico (CP-BANK-007)")
-    void moveRejectsInvalidAmounts() {
+    @DisplayName("A_BANK_007_TraspasoMontoVacioCeroNegativoONoNumerico")
+    void A_BANK_007_TraspasoMontoVacioCeroNegativoONoNumerico() {
         BankHomePage h = new BankHomePage(driver).open();
         String first = h.recentText(0);
         for (String v : new String[] {"", "0", "-100", "abc", "0.004"}) {
@@ -105,8 +105,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Traspaso: saldo insuficiente en la cuenta de origen (CP-BANK-008)")
-    void moveRejectsInsufficientFunds() {
+    @DisplayName("A_BANK_008_TraspasoSaldoInsuficienteEnLaCuentaDeOrigen")
+    void A_BANK_008_TraspasoSaldoInsuficienteEnLaCuentaDeOrigen() {
         BankHomePage h = new BankHomePage(driver).open();
         String over = String.format("%.2f", (WALLET + 1) / 100.0);
         assertThat(h.submitMoveAndGetMessage(true, over)).isEqualTo("Saldo insuficiente en la cuenta de origen.");
@@ -117,8 +117,8 @@ class BankHomeTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Los traspasos persisten al recargar y aparecen en Movimientos (CP-BANK-010)")
-    void movesPersistAndShowInMovements() {
+    @DisplayName("A_BANK_010_LosTraspasosPersistenAlRecargarYAparecenEnMovimientos")
+    void A_BANK_010_LosTraspasosPersistenAlRecargarYAparecenEnMovimientos() {
         BankHomePage h = new BankHomePage(driver).open();
         assertThat(h.submitMoveAndGetMessage(true, "1000")).contains("realizado");
         h.reload();

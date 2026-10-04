@@ -18,8 +18,8 @@ class CareAccessTests {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Inicio de sesión exitoso del usuario estándar (CP-CARE-001)")
-    void loginSucceeds() {
+    @DisplayName("A_CARE_001_InicioDeSesionExitosoDelUsuarioEstandar")
+    void A_CARE_001_InicioDeSesionExitosoDelUsuarioEstandar() {
         WebDriver driver = DriverFactory.create();
         LoginPage login = new LoginPage(driver).open();
         CarePage care = new CarePage(driver);
@@ -33,8 +33,8 @@ class CareAccessTests {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Contraseña incorrecta (CP-CARE-002)")
-    void wrongPassword() {
+    @DisplayName("A_CARE_002_ContrasenaIncorrecta")
+    void A_CARE_002_ContrasenaIncorrecta() {
         WebDriver driver = DriverFactory.create();
         LoginPage login = new LoginPage(driver).open().loginAs("estandar", "incorrecta1");
         assertThat(login.errorMessage()).isEqualTo("No se pudo entrar. Usuario o contraseña incorrectos.");
@@ -46,8 +46,8 @@ class CareAccessTests {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Redirección a login y retorno a la ruta solicitada (CP-CARE-005)")
-    void redirectsToLoginAndBack() {
+    @DisplayName("A_CARE_005_RedireccionALoginYRetornoALaRutaSolicitada")
+    void A_CARE_005_RedireccionALoginYRetornoALaRutaSolicitada() {
         WebDriver driver = DriverFactory.create();
         CarePage care = new CarePage(driver);
         care.openPath("/care/appointments/");

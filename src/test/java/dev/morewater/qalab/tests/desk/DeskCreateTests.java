@@ -17,8 +17,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Crear ticket válido con valores por defecto (CP-DESK-023)")
-    void createTicketWithDefaults() {
+    @DisplayName("A_DESK_023_CrearTicketValidoConValoresPorDefecto")
+    void A_DESK_023_CrearTicketValidoConValoresPorDefecto() {
         DeskNewPage form = new DeskNewPage(driver).open();
         String expectedId = "DK-" + (form.ticketCounter() + 1);
         form.title("Revisar el cálculo de impuestos").describe(DeskNewPage.DEFAULT_DESC);
@@ -41,8 +41,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Crear ticket con todos los campos informados (CP-DESK-024)")
-    void createTicketWithAllFields() {
+    @DisplayName("A_DESK_024_CrearTicketConTodosLosCamposInformados")
+    void A_DESK_024_CrearTicketConTodosLosCamposInformados() {
         DeskNewPage form = new DeskNewPage(driver).open();
         String due = form.todayPlus(7);
         form.title("Falla el login con contraseñas largas").kind("bug").priority("alta").assignee("Diego")
@@ -61,8 +61,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Validación: enviar el formulario vacío (CP-DESK-025)")
-    void emptyFormShowsValidationErrors() {
+    @DisplayName("A_DESK_025_ValidacionEnviarElFormularioVacio")
+    void A_DESK_025_ValidacionEnviarElFormularioVacio() {
         DeskNewPage form = new DeskNewPage(driver).open();
         long before = form.ticketsInState();
         form.submit();
@@ -75,8 +75,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Límite del título: 4 caracteres falla, 5 es válido (CP-DESK-026)")
-    void titleLengthBoundary() {
+    @DisplayName("A_DESK_026_LimiteDelTitulo4CaracteresFalla5EsValido")
+    void A_DESK_026_LimiteDelTitulo4CaracteresFalla5EsValido() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.describe("Descripción de diez o más");
         form.title("abcd").submit();
@@ -90,8 +90,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Límite de descripción: 9, 10, 600 y 601 caracteres (CP-DESK-027)")
-    void descriptionLengthBoundaries() {
+    @DisplayName("A_DESK_027_LimiteDeDescripcion910600Y601Caracteres")
+    void A_DESK_027_LimiteDeDescripcion910600Y601Caracteres() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.title("Título válido");
         form.describeInstantly("a".repeat(9)).submit();
@@ -115,8 +115,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Fecha límite: pasada falla; hoy y futura son válidas (CP-DESK-028)")
-    void dueDateBoundaries() {
+    @DisplayName("A_DESK_028_FechaLimitePasadaFallaHoyYFuturaSonValidas")
+    void A_DESK_028_FechaLimitePasadaFallaHoyYFuturaSonValidas() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.title("Ticket con fecha").describe(DeskNewPage.DEFAULT_DESC);
         form.due(form.todayPlus(-1)).submit();
@@ -135,8 +135,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("El ticket se crea con el siguiente id consecutivo (CP-DESK-030)")
-    void ticketsGetConsecutiveIds() {
+    @DisplayName("A_DESK_030_ElTicketSeCreaConElSiguienteIdConsecutivo")
+    void A_DESK_030_ElTicketSeCreaConElSiguienteIdConsecutivo() {
         DeskNewPage form = new DeskNewPage(driver);
         form.open();
         long counter = form.ticketCounter();
@@ -150,8 +150,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Ticket creado aparece en tablero y lista con estado Nuevo (CP-DESK-032)")
-    void createdTicketAppearsInBoardAndList() {
+    @DisplayName("A_DESK_032_TicketCreadoApareceEnTableroYListaConEstadoNuevo")
+    void A_DESK_032_TicketCreadoApareceEnTableroYListaConEstadoNuevo() {
         DeskNewPage form = new DeskNewPage(driver);
         int nuevoBefore = new DeskBoardPage(driver).open().countValue("nuevo");
         String id = form.createTicket("Integración tablero y lista", DeskNewPage.DEFAULT_DESC);
@@ -163,8 +163,8 @@ class DeskCreateTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Aplicar negrita en el editor (CP-DESK-033)")
-    void boldInEditor() {
+    @DisplayName("A_DESK_033_AplicarNegritaEnElEditor")
+    void A_DESK_033_AplicarNegritaEnElEditor() {
         DeskNewPage form = new DeskNewPage(driver).open();
         form.describe("Pasos para reproducir ");
         form.toggleBold();

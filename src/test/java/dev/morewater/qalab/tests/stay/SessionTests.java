@@ -13,8 +13,8 @@ class SessionTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[platform.session_expiry] La sesión caduca a los 90 s sin aviso (platform.session_expiry) (CP-STAY-089)")
-    void sessionDoesNotExpireSilentlyMidBooking() {
+    @DisplayName("[platform.session_expiry] A_STAY_089_LaSesionCaducaALos90SSinAvisoPlatformSessionExpiry")
+    void A_STAY_089_LaSesionCaducaALos90SSinAvisoPlatformSessionExpiry() {
         StayBookPage b = startBooking(defaultPlan(14));
         b.ageSession(95); // simula 95 s desde el inicio de sesión sin esperarlos
         b.reload();

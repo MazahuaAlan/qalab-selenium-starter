@@ -14,8 +14,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Mover una tarjeta con el selector «Mover a» (CP-DESK-011)")
-    void moveWithSelector() {
+    @DisplayName("A_DESK_011_MoverUnaTarjetaConElSelectorMoverA")
+    void A_DESK_011_MoverUnaTarjetaConElSelectorMoverA() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         int nuevoBefore = board.countValue("nuevo");
         int progresoBefore = board.countValue("progreso");
@@ -32,8 +32,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Mover una tarjeta con arrastrar y soltar (HTML5) (CP-DESK-012)")
-    void moveWithDragAndDrop() {
+    @DisplayName("A_DESK_012_MoverUnaTarjetaConArrastrarYSoltarHTML5")
+    void A_DESK_012_MoverUnaTarjetaConArrastrarYSoltarHTML5() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         assertThat(board.cardDraggable("DK-2")).isTrue();
         int revisionBefore = board.countValue("revision");
@@ -48,8 +48,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Alternativa por teclado al arrastre (CP-DESK-013)")
-    void keyboardAlternativeToDrag() {
+    @DisplayName("A_DESK_013_AlternativaPorTecladoAlArrastre")
+    void A_DESK_013_AlternativaPorTecladoAlArrastre() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         int hechoBefore = board.countValue("hecho");
         String previous = board.currentToast();
@@ -61,8 +61,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Mover tarjeta de Hecho a Nuevo (cualquier salto de estado) (CP-DESK-015)")
-    void moveBackwardsAcrossColumns() {
+    @DisplayName("A_DESK_015_MoverTarjetaDeHechoANuevoCualquierSaltoDeEstado")
+    void A_DESK_015_MoverTarjetaDeHechoANuevoCualquierSaltoDeEstado() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         int nuevoBefore = board.countValue("nuevo");
         int hechoBefore = board.countValue("hecho");
@@ -76,8 +76,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Mover a «En progreso» con 2 tickets es permitido y llega a 3 (CP-DESK-018)")
-    void moveIntoProgressBelowLimitIsAllowed() {
+    @DisplayName("A_DESK_018_MoverAEnProgresoCon2TicketsEsPermitidoYLlegaA3")
+    void A_DESK_018_MoverAEnProgresoCon2TicketsEsPermitidoYLlegaA3() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         assertThat(board.count("progreso")).isEqualTo("2");
         assertThat(board.move("DK-1", "progreso")).isEqualTo("DK-1 movido a En progreso");
@@ -86,8 +86,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Cuarto ticket en «En progreso» es rechazado por límite WIP (selector) (CP-DESK-019)")
-    void fourthTicketInProgressIsRejected() {
+    @DisplayName("A_DESK_019_CuartoTicketEnEnProgresoEsRechazadoPorLimiteWIPSelector")
+    void A_DESK_019_CuartoTicketEnEnProgresoEsRechazadoPorLimiteWIPSelector() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.move("DK-1", "progreso");
         assertThat(board.count("progreso")).isEqualTo("3");
@@ -103,8 +103,8 @@ class DeskMoveTests extends BaseTest {
 
     @Test
     @Tag("recomendado")
-    @DisplayName("Liberar espacio en «En progreso» permite volver a mover (CP-DESK-021)")
-    void freeingProgressSpaceAllowsNewMove() {
+    @DisplayName("A_DESK_021_LiberarEspacioEnEnProgresoPermiteVolverAMover")
+    void A_DESK_021_LiberarEspacioEnEnProgresoPermiteVolverAMover() {
         DeskBoardPage board = new DeskBoardPage(driver).open();
         board.move("DK-1", "progreso");
         assertThat(board.count("progreso")).isEqualTo("3");

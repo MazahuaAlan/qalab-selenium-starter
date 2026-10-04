@@ -16,8 +16,8 @@ class AirAccessTests {
     void tearDown() { DriverFactory.quit(); }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Acceso a /air/ sin sesión redirige a login y regresa (CP-AIR-104)")
-    void anonymousAccessRedirectsToLoginAndBack() {
+    @DisplayName("A_AIR_104_AccesoAAirSinSesionRedirigeALoginYRegresa")
+    void A_AIR_104_AccesoAAirSinSesionRedirigeALoginYRegresa() {
         var driver = DriverFactory.create();
         AirFlowPage air = new AirFlowPage(driver).openPath("/air/trips/");
         air.waitPath("/id");

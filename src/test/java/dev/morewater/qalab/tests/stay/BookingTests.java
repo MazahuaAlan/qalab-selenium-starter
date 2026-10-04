@@ -17,8 +17,8 @@ class BookingTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("Reserva completa y cobro único (CP-STAY-049)")
-    void completeBookingChargesOnce() {
+    @DisplayName("A_STAY_049_ReservaCompletaYCobroUnico")
+    void A_STAY_049_ReservaCompletaYCobroUnico() {
         Plan p = defaultPlan(14);
         long total = p.quote().total();
         StayBookPage b = startBooking(p);
@@ -44,8 +44,8 @@ class BookingTests extends StayTest {
 
     @Test
     @Tag("obligatorio")
-    @DisplayName("El movimiento del cobro aparece en la billetera (CP-STAY-050)")
-    void chargeShowsInWallet() {
+    @DisplayName("A_STAY_050_ElMovimientoDelCobroApareceEnLaBilletera")
+    void A_STAY_050_ElMovimientoDelCobroApareceEnLaBilletera() {
         Plan p = defaultPlan(14);
         long total = p.quote().total();
         long start = search().walletCents();
@@ -66,8 +66,8 @@ class BookingTests extends StayTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Confirmación inexistente por URL (CP-STAY-055)")
-    void unknownConfirmationCode() {
+    @DisplayName("A_STAY_055_ConfirmacionInexistentePorURL")
+    void A_STAY_055_ConfirmacionInexistentePorURL() {
         StayConfirmationPage c = confirmation().open("ST0000");
         c.waitNotFound();
         assertThat(c.bodyText()).contains("No encontramos esa reserva.");
@@ -79,8 +79,8 @@ class BookingTests extends StayTest {
 
     @Test
     @Tag("opcional")
-    @DisplayName("Pantalla de confirmación: contenido y enlaces (CP-STAY-056)")
-    void confirmationScreenContentAndLinks() {
+    @DisplayName("A_STAY_056_PantallaDeConfirmacionContenidoYEnlaces")
+    void A_STAY_056_PantallaDeConfirmacionContenidoYEnlaces() {
         Plan p = defaultPlan(14);
         StayConfirmationPage c = startBooking(p).fillValid().confirmOk();
         assertThat(c.statusRole()).isTrue();
@@ -99,8 +99,8 @@ class BookingTests extends StayTest {
     @Test
     @Tag("obligatorio")
     @Tag("bug")
-    @DisplayName("[stay.flaky_booking] Si falla la confirmación la reserva se crea y el reintento la duplica (stay.flaky_booking) (CP-STAY-093)")
-    void failedConfirmationLeavesNoBookingAndRetryCreatesOne() {
+    @DisplayName("[stay.flaky_booking] A_STAY_093_SiFallaLaConfirmacionLaReservaSeCreaYElReintentoLaDuplica")
+    void A_STAY_093_SiFallaLaConfirmacionLaReservaSeCreaYElReintentoLaDuplica() {
         Plan p = defaultPlan(14);
         long total = p.quote().total();
         StayBookPage b = startBooking(p).fillValid();

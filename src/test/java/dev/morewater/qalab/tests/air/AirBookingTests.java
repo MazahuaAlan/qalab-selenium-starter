@@ -14,8 +14,8 @@ import org.junit.jupiter.api.Test;
 class AirBookingTests extends BaseTest {
 
     @Test @Tag("obligatorio")
-    @DisplayName("Pago exitoso con billetera: descuenta una sola vez y confirma (CP-AIR-068)")
-    void walletPaymentChargesOnce() {
+    @DisplayName("A_AIR_068_PagoExitosoConBilleteraDescuentaUnaSolaVezYConfirma")
+    void A_AIR_068_PagoExitosoConBilleteraDescuentaUnaSolaVezYConfirma() {
         AirFlowPage a = new AirFlowPage(driver).toPayment(1);
         long before = a.walletCents();
         long total = a.total();
@@ -29,8 +29,8 @@ class AirBookingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Confirmación muestra los datos de la reserva (CP-AIR-086)")
-    void confirmationShowsBookingData() {
+    @DisplayName("A_AIR_086_ConfirmacionMuestraLosDatosDeLaReserva")
+    void A_AIR_086_ConfirmacionMuestraLosDatosDeLaReserva() {
         AirFlowPage a = new AirFlowPage(driver).toPayment(2);
         long total = a.total();
         String seats = a.textOf("air-sum-seats");
@@ -43,8 +43,8 @@ class AirBookingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Mis viajes lista la reserva con estado confirmada (CP-AIR-089)")
-    void tripsListsBooking() {
+    @DisplayName("A_AIR_089_MisViajesListaLaReservaConEstadoConfirmada")
+    void A_AIR_089_MisViajesListaLaReservaConEstadoConfirmada() {
         AirFlowPage a = new AirFlowPage(driver).toPayment(1);
         long total = a.total();
         String code = a.payAndConfirm();
@@ -57,8 +57,8 @@ class AirBookingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Cancelar reserva reembolsa el 90 % (CP-AIR-091)")
-    void cancelRefundsNinetyPercent() {
+    @DisplayName("A_AIR_091_CancelarReservaReembolsaEl90")
+    void A_AIR_091_CancelarReservaReembolsaEl90() {
         AirFlowPage a = new AirFlowPage(driver).toPayment(1);
         long start = a.walletCents();
         long total = a.total();
@@ -77,8 +77,8 @@ class AirBookingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("Check-in exitoso y pase de abordar (CP-AIR-095)")
-    void checkInGeneratesBoardingPass() {
+    @DisplayName("A_AIR_095_CheckInExitosoYPaseDeAbordar")
+    void A_AIR_095_CheckInExitosoYPaseDeAbordar() {
         AirFlowPage a = new AirFlowPage(driver).toPayment(1);
         String seat = a.textOf("air-sum-seats");
         String code = a.payAndConfirm();
@@ -95,8 +95,8 @@ class AirBookingTests extends BaseTest {
     }
 
     @Test @Tag("obligatorio")
-    @DisplayName("El borrador de reserva se conserva al recargar (estandar) (CP-AIR-102)")
-    void draftSurvivesReload() {
+    @DisplayName("A_AIR_102_ElBorradorDeReservaSeConservaAlRecargarEstandar")
+    void A_AIR_102_ElBorradorDeReservaSeConservaAlRecargarEstandar() {
         AirFlowPage a = new AirFlowPage(driver).open().search("MEX", "MTY", 1).selectFirstFlight();
         a.typeInto("air-first-0", "Ana0");
         String summary = a.flightSummary();

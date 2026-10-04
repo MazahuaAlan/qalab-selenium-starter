@@ -22,8 +22,8 @@ class ExpiraTests extends BaseTest {
     @Tag("bug")
     @Tag("slow")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] La sesión no caduca a los 90 s en una pantalla pública (CP-PLAT-027)")
-    void sesionEstableEnPantallaPublica() {
+    @DisplayName("[platform.session_expiry] A_PLAT_027_LaSesionNoCaducaALos90SEnUnaPantallaPublica")
+    void A_PLAT_027_LaSesionNoCaducaALos90SEnUnaPantallaPublica() {
         var p = new IdPage(driver);
         p.open("/docs/");
         assertThat(p.hasUserChip()).isTrue();
@@ -36,8 +36,8 @@ class ExpiraTests extends BaseTest {
     @Tag("bug")
     @Tag("slow")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] En /wallet/ la sesión se conserva o, si caduca, se muestra el aviso (CP-PLAT-028)")
-    void walletConservaSesionOAvisa() {
+    @DisplayName("[platform.session_expiry] A_PLAT_028_EnWalletLaSesionSeConservaOSiCaducaSeMuestraElAviso")
+    void A_PLAT_028_EnWalletLaSesionSeConservaOSiCaducaSeMuestraElAviso() {
         var w = new WalletPage(driver).openWallet();
         assertThat(w.hasBalance()).isTrue();
         w.waitSessionLost(ESPERA_S);
@@ -50,8 +50,8 @@ class ExpiraTests extends BaseTest {
     @Test
     @Tag("bug")
     @Tag("obligatorio")
-    @DisplayName("[platform.session_expiry] Reentrar tras expirar y recuperar sesión (CP-PLAT-031)")
-    void reentrarTrasExpirarRecuperaSesion() {
+    @DisplayName("[platform.session_expiry] A_PLAT_031_ReentrarTrasExpirarYRecuperarSesion")
+    void A_PLAT_031_ReentrarTrasExpirarYRecuperarSesion() {
         var p = new IdPage(driver);
         p.open("/");
         p.setWallet(777_700);
