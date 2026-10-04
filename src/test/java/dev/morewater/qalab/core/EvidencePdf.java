@@ -57,7 +57,9 @@ final class EvidencePdf {
                 PdfPCell cell = new PdfPCell();
                 cell.setBorder(com.lowagie.text.Rectangle.NO_BORDER);
                 cell.setPaddingTop(10);
-                cell.addElement(new Paragraph("Paso " + (++i) + " · " + s.label(), STEP));
+                Paragraph lbl = new Paragraph("Paso " + (++i) + " · " + s.label(), STEP);
+                lbl.setSpacingAfter(4);
+                cell.addElement(lbl);
                 Image img = Image.getInstance(s.jpeg());
                 img.scaleToFit(IMG_WIDTH, 330);
                 img.setBorder(com.lowagie.text.Rectangle.BOX);
